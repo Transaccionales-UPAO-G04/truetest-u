@@ -6,12 +6,12 @@ El proposito de **TrueTest U** es orientar de manera adecuada a los estudiantes 
 
 ### Colaboradores del Proyecto
 
-| **Nombre**                        | **Rol**                                     | **Perfil**                                                 |
-|-----------------------------------|---------------------------------------------|------------------------------------------------------------|
-| Henry Antonio Mendoza Puerta      | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
-| Angelmauricio Rogger Oncoy Patricio| (aun no se que rol se toma) |[LinkedIn](https://www.linkedin.com/in/angel-oncoy-0843822a6/)|
-| compañero                         | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
-| compañero                         | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+| **Nombre**                          | **Rol**                                     | **Perfil**                                                 |
+|-------------------------------------|---------------------------------------------|------------------------------------------------------------|
+| Henry Antonio Mendoza Puerta        | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+| Angelmauricio Rogger Oncoy Patricio | (aun no se que rol se toma) |[LinkedIn](https://www.linkedin.com/in/angel-oncoy-0843822a6/)|
+| Vidal Rodríguez Fabrizio            | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+| compañero                           | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
 
 ### Revisa el Progreso del Proyecto TrueTest U
 
