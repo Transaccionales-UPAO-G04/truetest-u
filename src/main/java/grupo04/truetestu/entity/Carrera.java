@@ -12,4 +12,13 @@ import java.util.List;
 
 public class Carrera {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idCarrera;
+
+    @Column(name= "puntaje_aproximado", nullable = false)
+    private int puntajeAproximado;
+
+    @Column(name= "descripcion_carrera", nullable = false, columnDefinition = "TEXT")
+    private String descripcionCarrera;
 }

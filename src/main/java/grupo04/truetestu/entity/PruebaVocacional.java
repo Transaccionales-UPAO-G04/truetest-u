@@ -1,12 +1,6 @@
 package grupo04.truetestu.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-import java.time.LocalDate;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,14 +9,14 @@ import java.util.List;
 
 @Data
 @Entity
-
+@Table(name = "prueba_vocacional")
 public class PruebaVocacional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int idPruebaVocacional;
 
-    @Column(name= "nro_prueba", nullable = false) //length=longitud, si es string se convertirá a varchar, por ejemplo
+    @Column(name= "nro_prueba", nullable = false)
     private int nroPrueba;
 
     @Column(name= "fecha", nullable = false)
@@ -31,4 +25,12 @@ public class PruebaVocacional {
     @Column(name= "descripcion_prueba", nullable = false, columnDefinition = "TEXT")
     private String descripcionPrueba;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
+            foreignKey = @ForeignKey(name = "FK_prueba_estudiante"))
+    private Estudiante estudiante;
+
+    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
+    private List<ResultadoPrueba> pruebas;
 }
