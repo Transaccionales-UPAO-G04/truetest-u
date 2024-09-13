@@ -28,7 +28,7 @@ Mira cómo va avanzando nuestro trabajo visitando el siguiente enlace: [Tablero 
 
 ### Funcionalidades de la Aplicación TestTrue U
 
-#### **Módulo de Gestión de Usuarios**
+#### **Módulo de algo**
 
 - **Creación de Usuarios e Inicio de Sesión:**
     - Permitir a los usuarios registrarse en la plataforma.
