@@ -28,12 +28,11 @@ public class Sesion {
     @Column(name = "link", nullable = false)
     private String link;
 
-    // Relación con Estudiante (Many-to-One)
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_sesion_estudiante"))
     private Estudiante estudiante;
 
-    // Relación con Mentor (Many-to-One)
     @ManyToOne
     @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor", foreignKey = @ForeignKey(name = "FK_sesion_mentor"))
     private Mentor mentor;
