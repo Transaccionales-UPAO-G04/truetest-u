@@ -10,8 +10,13 @@ El proposito de **TrueTest U** es orientar de manera adecuada a los estudiantes 
 |-------------------------------------|---------------------------------------------|------------------------------------------------------------|
 | Henry Antonio Mendoza Puerta        | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
 | Angelmauricio Rogger Oncoy Patricio | (aun no se que rol se toma) |[LinkedIn](https://www.linkedin.com/in/angel-oncoy-0843822a6/)|
+<<<<<<< HEAD
 | Vidal Rodríguez Fabrizio            | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/feed/?trk=404_page)           |
 | compañero                           | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+=======
+| Vidal Rodríguez Fabrizio            | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+| Salirrosas Vasquez Jhordy           | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+>>>>>>> 23b157b40a2f639b1051a43ea50b08b4b770aad4
 
 ### Revisa el Progreso del Proyecto TrueTest U
 
