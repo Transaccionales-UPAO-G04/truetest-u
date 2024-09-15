@@ -11,14 +11,9 @@ public class Respuestas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String idOpcion;
+    private int idRespuesta;
 
-    @Column (name = "opciones", nullable = false, length = 50)
+    @Column (name = "opciones", nullable = false, length = 150)
     private String opciones;
-
-    @ManyToOne
-    @JoinColumn (name = "id_pregunta",referencedColumnName = "pregunta"
-    , foreignKey = @ForeignKey(name = "FK_pregunta_respuestas"))
-    private Preguntas preguntas;
 
 }

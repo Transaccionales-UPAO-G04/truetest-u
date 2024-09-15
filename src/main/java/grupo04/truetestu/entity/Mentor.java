@@ -17,26 +17,13 @@ public class Mentor {
     @Column(name = "nombre_mentor", nullable = false, length = 50)
     private String nombreMentor;
 
-    @Column(name = "experiencia", nullable = false, length = 100)
+    @Column(name = "experiencia", nullable = false, columnDefinition = "TEXT")
     private String experiencia;
 
-    @Column(name = "nombre_especialidad", nullable = false, length = 50)
-    private String nombreEspecialidad;
+    @Column(name = "especialidad", nullable = false, length = 50)
+    private String especialidad;
 
     @Column(name = "nro_asesorias", nullable = false)
     private int nroAsesorias;
-
-    // Relación OneToMany con Horario
-    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
-    private List<Horario> horarios;
-
-    // Métodos adicionales si es necesario
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "id_horario", referencedColumnName = "idHorario",
-            foreignKey = @ForeignKey(name = "FK_mentor_horario"))
-    private Horario horario;
-
 
 }

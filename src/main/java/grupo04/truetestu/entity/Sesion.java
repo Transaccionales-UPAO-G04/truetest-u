@@ -1,5 +1,6 @@
 package grupo04.truetestu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,11 +31,13 @@ public class Sesion {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_sesion_estudiante"))
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
+            foreignKey = @ForeignKey(name = "FK_sesion_estudiante"))
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor", foreignKey = @ForeignKey(name = "FK_sesion_mentor"))
-    private Mentor mentor;
+    @JoinColumn(name = "id_horario", referencedColumnName = "idHorario",
+            foreignKey = @ForeignKey(name = "FK_sesion_horario"))
+    private Horario horario;
 
 }

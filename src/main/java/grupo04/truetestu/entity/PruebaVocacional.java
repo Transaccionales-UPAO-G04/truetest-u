@@ -22,9 +22,6 @@ public class PruebaVocacional {
     @Column(name= "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name= "descripcion_prueba", nullable = false, columnDefinition = "TEXT")
-    private String descripcionPrueba;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",

@@ -1,5 +1,6 @@
 package grupo04.truetestu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import grupo04.truetestu.enums.EstadoEstudiante;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,12 +14,21 @@ public class Estudiante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEstudiante;
 
-    @Column(name= "nombre_estudiante", nullable = false, length = 50)
+    @Column(name= "nombre_estudiante", nullable = false, length = 100)
     private String nombreEstudiante;
 
-    @Column(name= "contraseña", nullable = false, length = 50)
+    @Column(name= "email", nullable = false, length = 150, unique = true)
+    private String email;
+
+    @Column(name= "contraseña", nullable = false, length = 100)
     private String contraseña;
 
     @Enumerated(EnumType.STRING)
     private EstadoEstudiante estadoEstudiante;
+
+
+    @OneToOne
+    @JoinColumn (name = "id_plan",referencedColumnName = "idPlan"
+            , foreignKey = @ForeignKey(name = "FK_estudiante_plan"))
+    private Plan plan;
 }

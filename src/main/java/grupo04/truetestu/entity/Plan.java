@@ -24,15 +24,10 @@ public class Plan {
     @Column(name = "descripcion_plan", nullable = false, columnDefinition = "TEXT")
     private String descripcionPlan;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_inicio", nullable = false)
     private Date fechaInicio;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_fin")
     private Date fechaFin;
 
-    // Relación 1:N con Pago
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Pago> pagos;
 }

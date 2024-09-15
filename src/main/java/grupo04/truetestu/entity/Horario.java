@@ -1,5 +1,6 @@
 package grupo04.truetestu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalTime;
@@ -22,11 +23,10 @@ public class Horario {
     @Column(name = "hora_fin", nullable = false)
     private LocalTime horaFin;
 
-    // Relación ManyToOne con Mentor
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "mentor_id", nullable = false)
+    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
+            foreignKey = @ForeignKey(name = "FK_horario_mentor"))
     private Mentor mentor;
-
-    // Métodos adicionales si es necesario
 }
 

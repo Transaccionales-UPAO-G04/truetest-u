@@ -1,5 +1,6 @@
 package grupo04.truetestu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -31,8 +32,8 @@ public class Pago {
             foreignKey = @ForeignKey(name = "FK_pago_estudiante"))
     private Estudiante estudiante;
 
-    // Relación Muchos a Uno con Plan
-    @ManyToOne
+    @JsonIgnore
+    @OneToOne
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan",
             foreignKey = @ForeignKey(name = "FK_pago_plan"))
     private Plan plan;
