@@ -3,18 +3,16 @@ package grupo04.truetestu.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "Carreras")
+@Table(name = "carreras")
 
 public class Carrera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCarrera;
+        private long idCarrera;
 
     @Column(name= "puntaje_aproximado", nullable = false)
     private int puntajeAproximado;
