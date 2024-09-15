@@ -1,5 +1,6 @@
 package grupo04.truetestu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -30,4 +31,12 @@ public class Mentor {
     private List<Horario> horarios;
 
     // Métodos adicionales si es necesario
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_horario", referencedColumnName = "idHorario",
+            foreignKey = @ForeignKey(name = "FK_mentor_horario"))
+    private Horario horario;
+
+
 }
