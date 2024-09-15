@@ -19,9 +19,6 @@ public class Estudiante {
     @Column(name= "contraseña", nullable = false, length = 50)
     private String contraseña;
 
-    @Column(name= "es_premium", nullable = false)
-    private boolean esPremium;
-
     @Enumerated(EnumType.STRING)
     private EstadoEstudiante estadoEstudiante;
 }
