@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name= "Preguntas")
+@Table(name= "preguntas")
 
 public class Preguntas {
 
@@ -19,7 +19,7 @@ public class Preguntas {
         private int punto;
 
         @ManyToOne
-        @JoinColumn(name = "PruebaVocational_id", referencedColumnName = "idPruebaVocacional"
+        @JoinColumn(name = "id_PruebaVocational", referencedColumnName = "idPruebaVocacional"
         , foreignKey = @ForeignKey(name = "FK_purchase_customer"))
         private PruebaVocacional pruebaVocacional;
 

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Carreras")
+@Table(name = "carreras")
 
 public class Carrera {
 
