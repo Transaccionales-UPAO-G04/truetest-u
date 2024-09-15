@@ -17,7 +17,7 @@ public class Respuestas {
     private String opciones;
 
     @ManyToOne
-    @JoinColumn (name = "pregunta_id",referencedColumnName = "pregunta"
+    @JoinColumn (name = "id_pregunta",referencedColumnName = "pregunta"
     , foreignKey = @ForeignKey(name = "FK_pregunta_respuestas"))
     private Preguntas preguntas;
 
