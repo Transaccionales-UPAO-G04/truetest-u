@@ -1,10 +1,9 @@
 
-package grupo04.truetestu.entity;
+package grupo04.truetestu.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity

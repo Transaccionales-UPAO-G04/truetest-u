@@ -1,4 +1,4 @@
-package grupo04.truetestu.entity;
+package grupo04.truetestu.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

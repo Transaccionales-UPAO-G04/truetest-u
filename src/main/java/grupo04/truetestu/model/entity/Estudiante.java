@@ -1,7 +1,6 @@
-package grupo04.truetestu.entity;
+package grupo04.truetestu.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import grupo04.truetestu.enums.EstadoEstudiante;
+import grupo04.truetestu.model.enums.EstadoEstudiante;
 import jakarta.persistence.*;
 import lombok.Data;
 
