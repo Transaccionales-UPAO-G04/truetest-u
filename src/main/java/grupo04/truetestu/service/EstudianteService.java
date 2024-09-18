@@ -5,5 +5,6 @@ import grupo04.truetestu.model.entity.Estudiante;
 public interface EstudianteService {
 
     Estudiante registerEstudiante(Estudiante estudiante);
+    Estudiante sesionEstudiante(Estudiante estudiante);
 
 }

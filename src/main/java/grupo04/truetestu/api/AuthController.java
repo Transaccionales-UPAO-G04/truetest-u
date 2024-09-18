@@ -14,9 +14,20 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final EstudianteService estudianteService;
-@PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<Estudiante> register(@RequestBody @Valid Estudiante estudiante) {
         Estudiante newEstudiante = estudianteService.registerEstudiante(estudiante);
         return new ResponseEntity<>(newEstudiante, HttpStatus.CREATED);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Estudiante estudiante) {
+        try {
+            Estudiante estudianteExistente = estudianteService.sesionEstudiante(estudiante);
+            return ResponseEntity.ok("INICIO DE SESION EXITOSO");
+        } catch (RuntimeException e) {
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
 }
