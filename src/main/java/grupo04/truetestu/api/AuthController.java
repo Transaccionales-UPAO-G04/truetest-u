@@ -14,9 +14,16 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final EstudianteService estudianteService;
-@PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<Estudiante> register(@RequestBody @Valid Estudiante estudiante) {
         Estudiante newEstudiante = estudianteService.registerEstudiante(estudiante);
         return new ResponseEntity<>(newEstudiante, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Estudiante> updateEstudiante(@PathVariable int id,
+                                                       @RequestBody Estudiante estudiante) {
+        Estudiante updateEstudainte = estudianteService.update(id,estudiante);
+        return  new ResponseEntity<Estudiante>(updateEstudainte, HttpStatus.OK);
     }
 }

@@ -6,4 +6,7 @@ public interface EstudianteService {
 
     Estudiante registerEstudiante(Estudiante estudiante);
 
+    Estudiante findById(int id);
+
+    Estudiante update(Integer id, Estudiante updateEstudiante);
 }
