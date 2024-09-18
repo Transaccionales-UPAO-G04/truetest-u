@@ -6,12 +6,13 @@ El proposito de **TrueTest U** es orientar de manera adecuada a los estudiantes 
 
 ### Colaboradores del Proyecto
 
-| **Nombre**                          | **Rol**                   | **Perfil**                                                 |
-|-------------------------------------|---------------------------|------------------------------------------------------------|
-| Angelmauricio Rogger Oncoy Patricio | Desarrallador de software |[LinkedIn](https://www.linkedin.com/in/angel-oncoy-0843822a6/)|
-| Briyan Anthony Dávila Ortiz         | Desarrallador de software        | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
-| Vidal Rodríguez Fabrizio            | Desarrallador de software        | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
-| Salirrosas Vasquez Jhordy           | Desarrallador de software        | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+| **Nombre**                          | **Rol**                           | **Perfil**                                                   |
+|-------------------------------------|---------------------------        |------------------------------------------------------------|
+| Oncoy Patricio Angelmauricio Rogger | Desarrallador de software         |[LinkedIn](https://www.linkedin.com/in/angel-oncoy-0843822a6/)|
+| Dávila Ortiz Briyan Anthony         | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/briyan-dávila-ortiz)           |
+| Vidal Rodríguez Fabrizio            | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/fabrizio-vidal-rodriguez-b8aa98328/)|
+| Salirrosas Vasquez Jhordy           | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/jhordy-salirrosas-30b52b259/)           |
+| Rodriguez Lara Franklin Renato      | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
 
 ### Revisa el Progreso del Proyecto TrueTest U
 
@@ -28,50 +29,53 @@ Mira cómo va avanzando nuestro trabajo visitando el siguiente enlace: [Tablero 
 
 ### Funcionalidades de la Aplicación TestTrue U
 
-#### **Módulo de algo**
+#### **Módulo de Gestión de Usuarios:**
 
-- **Creación de Usuarios e Inicio de Sesión:**
-    - Permitir a los usuarios registrarse en la plataforma.
+- **Creación de Estudiantes e Inicio de Sesión:**
+    - Permitir a los Estudiantes registrarse en la plataforma.
     - Facilitar el inicio de sesión para acceder a la cuenta personal.
     - Mantener la seguridad de las credenciales de los usuarios.
+    - Poder inhabilitar y eliminar la cuenta.
+      
+- **Informacion de la Sesión:**
+    - Permitir a los Estudiantes editar informacion de su perfil creado.
+    - Mostrar los resultados de la Evaluacion Vocacional.
+    - Opcion de poder comparar las opciones de carreras.
+      
+#### **Módulo de Evaluación Vocacional:**
 
-#### **Módulo de Compras**
+- **Evaluacion Vocacional funcional**
+    - Realizar una Prueba Vocacional que muestre resultados de carreras.
+    - Los de plan premium pueden tener la opcion de realizar nuevamente las pruebas.
+    - Se pueda Visualizar 3 carreras como opcion.
 
-- **Compra de Libros Electrónicos:**
-    - Integración con PayPal para pagos seguros y rápidos.
-    - Procesamiento de transacciones para la compra de libros electrónicos.
-    - Confirmación de la compra y entrega del libro en formato digital al usuario.
+#### **Módulo de Conexión con Expertos:**
 
-#### **Módulo de Gestión de Contenido**
+- **Gestión de Expertos:**
+    - Opcion de agendar sesiones con expertos con notificaciones.
+    - Mostrar la informacion de los expertos para los Alumnos.
+    - Permitir inicios de sesion de los orientadores ya seleccionados por la empresa.
+      
+- **Funciones para el perfil de Expertos:**
+    - Buscar los expertos requeridos en el campo necesario segun los resultados.
+    - Generar reseñas para los orientadores.
 
-- **Gestión de Libros:**
-    - Añadir nuevos libros al catálogo.
-    - Editar detalles de los libros existentes.
-    - Eliminar libros del catálogo.
-    - Listar todos los libros disponibles para los usuarios.
+#### **Módulo de Recursos Educativos:**
 
-- **Categorías de Libros:**
-    - Clasificar libros en diferentes categorías.
-    - Facilitar la navegación y búsqueda de libros por categoría.
-    - Mejorar la organización del catálogo de libros.
+- **Gestión de Informacion de las Carreras:**
+    - Visualizar una descripcion detallada con videos e imganes.
+    - Visualizar enlaces a articulos sobre el mercado laboral de la carrera.
+    - Detalles con opciones de las especialidades de las Carreras.
+    - Personalizar los recursos que se desea observar.
+    - Poder guardar los recursos de las carreras para su revision despues.
 
-- **Gestión de Autores:**
-    - Añadir nuevos autores a la base de datos.
-    - Editar información de autores existentes.
-    - Eliminar autores de la base de datos.
-    - Mantener actualizada la información de los autores.
+#### **Módulo de Pagos en Línea: **
 
-#### **Módulo de Biblioteca Personal**
+- **Gestion de pagos en Línea:**
+    - Escoger entre diferentes planes de suscripcion.
+    - Integracion con Paypal y otros metodos de pago.
+    - Procesamiento de transacciones para el pago de la suspcripcion.
+    - Desbloquear opciones y recursos al ser usuario Premium.
+    - Registrar los pagos en un historial.
 
-- **Biblioteca Personal de Libros:**
-    - Permitir a los usuarios organizar sus libros comprados en colecciones personalizadas o "estanterías virtuales".
-    - Facilitar la creación, edición y eliminación de colecciones de libros.
-    - Mejorar el acceso y la gestión de la biblioteca personal del usuario.
-
-#### **Módulo de Reportes**
-
-- **Reportes de Actividad y Ventas:**
-    - Generar reportes de compras realizadas por los usuarios.
-    - Mostrar estadísticas de ventas de libros.
-    - Proveer información detallada sobre la actividad de los usuarios, como libros más comprados o autores más populares.
 
