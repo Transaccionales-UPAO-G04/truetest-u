@@ -20,20 +20,17 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new RuntimeException("El correo ya fue registrado");
         }
 
+        // Aquí puedes agregar lógica adicional, como encriptar la contraseña
         return estudianteRepository.save(estudiante);
     }
 
     @Override
     public Estudiante sesionEstudiante(Estudiante estudiante) {
-        Estudiante estudianteExistente = estudianteRepository.findEstudianteByEmailandContraseña(estudiante.getEmail(), estudiante.getContraseña());
-        if(estudianteRepository.existsEstudianteByEmail(estudiante.getEmail())) {
-            if (estudianteExistente != null) {
-                return estudianteExistente;
-
-            } else {
-                throw new RuntimeException("ERROR: Correo no registrado en el sistema");
-            }
+        Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(estudiante.getEmail(), estudiante.getContraseña());
+        if(estudianteExistente != null) {
+            return estudianteExistente;
+        } else {
+            throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
         }
-        return estudianteExistente;
     }
 }
