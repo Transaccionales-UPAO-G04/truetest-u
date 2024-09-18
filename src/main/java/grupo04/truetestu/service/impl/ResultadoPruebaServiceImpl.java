@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 
@@ -28,5 +29,13 @@ public class ResultadoPruebaServiceImpl implements ResultadoPruebaService {
     @Override
     public Page<ResultadoPrueba> paginate(Pageable pageable) {
         return resultadoPruebaRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<ResultadoPrueba> findByEstudianteId(int id) {
+        // Aquí necesitas implementar la consulta para obtener el resultado basado en el ID del estudiante
+        // Puedes necesitar modificar el repositorio para incluir una consulta personalizada
+        return resultadoPruebaRepository.findByEstudianteId(id);
     }
 }
