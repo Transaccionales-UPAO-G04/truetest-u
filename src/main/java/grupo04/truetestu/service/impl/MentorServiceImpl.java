@@ -2,7 +2,7 @@ package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.repository.MentorRepository;
-import grupo04.truetestu.infra.exception.ResourceNotFoundException;
+import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
