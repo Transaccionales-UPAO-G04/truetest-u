@@ -13,10 +13,10 @@ public class ResultadoPrueba {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idResultadoPrueba;
 
-    @Column(name= "puntaje", nullable = false)
+    @Column(name = "puntaje", nullable = false)
     private int puntaje;
 
-    @Column(name= "recomendacion", nullable = false, length = 150)
+    @Column(name = "recomendacion", nullable = false, length = 150)
     private String recomendacion;
 
     @JsonIgnore
