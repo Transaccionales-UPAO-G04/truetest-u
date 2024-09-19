@@ -6,6 +6,7 @@ import java.util.List;
 public interface MentorService {
     List<Mentor> findAll();
     Mentor findById(int id);
+    List<Mentor> findByEspecialidad(String especialidad);
     Mentor createMentor(Mentor mentor);
     Mentor updateMentor(int id, Mentor mentor);
     void deleteMentor(int id);

@@ -1,5 +1,5 @@
 package grupo04.truetestu.service.impl;
-
+import java.util.List;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
@@ -7,8 +7,6 @@ import grupo04.truetestu.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class MentorServiceImpl implements MentorService {
@@ -25,6 +23,11 @@ public class MentorServiceImpl implements MentorService {
     public Mentor findById(int id) {
         return mentorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Mentor no encontrado"));
+    }
+
+    @Override
+    public List<Mentor> findByEspecialidad(String especialidad) {
+        return mentorRepository.findByEspecialidad(especialidad);
     }
 
     @Override

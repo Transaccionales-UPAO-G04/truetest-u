@@ -1,6 +1,7 @@
 package grupo04.truetestu.api;
 
 import grupo04.truetestu.model.entity.Mentor;
+import grupo04.truetestu.model.entity.ResultadoPrueba;
 import grupo04.truetestu.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,15 @@ public class MentorController {
     public ResponseEntity<Mentor> findById(@PathVariable int id) {
         Mentor mentor = mentorService.findById(id);
         return ResponseEntity.ok(mentor);
+    }
+
+    @GetMapping("/especialidad/{especialidad}")
+    public ResponseEntity<List<Mentor>> findByEspecialidad(@PathVariable("especialidad") String especialidad) {
+        List<Mentor> resultadoEspecialidad = mentorService.findByEspecialidad(especialidad);
+        if (resultadoEspecialidad.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(resultadoEspecialidad, HttpStatus.OK);
     }
 
     // Crear un nuevo mentor
