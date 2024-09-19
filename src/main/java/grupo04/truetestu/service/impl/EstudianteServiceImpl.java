@@ -15,7 +15,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Transactional
     @Override
     public Estudiante registerEstudiante(Estudiante estudiante) {
-        if(estudianteRepository.existsEstudianteByEmail(estudiante.getEmail())) {
+        if (estudianteRepository.existsEstudianteByEmail(estudiante.getEmail())) {
             throw new RuntimeException("El correo ya fue registrado");
         }
 
@@ -42,11 +42,10 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public Estudiante sesionEstudiante(Estudiante estudiante) {
         Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(estudiante.getEmail(), estudiante.getContraseña());
-        if(estudianteExistente != null) {
+        if (estudianteExistente != null) {
             return estudianteExistente;
         } else {
             throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
         }
     }
 }
-
