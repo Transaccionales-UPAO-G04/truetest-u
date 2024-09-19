@@ -3,6 +3,8 @@ package grupo04.truetestu.api;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +48,6 @@ public class MentorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMentor(@PathVariable int id) {
         mentorService.deleteMentor(id);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
