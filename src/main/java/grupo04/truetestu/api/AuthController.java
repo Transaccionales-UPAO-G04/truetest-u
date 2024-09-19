@@ -20,13 +20,15 @@ public class AuthController {
         return new ResponseEntity<>(newEstudiante, HttpStatus.CREATED);
     }
 
-
-
-
-
-
-
-
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Estudiante estudiante) {
+        try {
+            Estudiante estudianteExistente = estudianteService.sesionEstudiante(estudiante);
+            return ResponseEntity.ok("INICIO DE SESION EXITOSO");
+        } catch (RuntimeException e) {
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
 
 
     @PutMapping("/{id}")
@@ -35,4 +37,5 @@ public class AuthController {
         Estudiante updateEstudainte = estudianteService.update(id,estudiante);
         return  new ResponseEntity<Estudiante>(updateEstudainte, HttpStatus.OK);
     }
+
 }

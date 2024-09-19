@@ -1,13 +1,11 @@
 package grupo04.truetestu.service.impl;
 
-
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 @RequiredArgsConstructor
 @Service
@@ -21,16 +19,14 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new RuntimeException("El correo ya fue registrado");
         }
 
-        //falta crear un AT
-
+        // Aquí puedes agregar lógica adicional, como encriptar la contraseña
         return estudianteRepository.save(estudiante);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Estudiante findById(int id) {
-        return estudianteRepository.findById(id).
-                orElseThrow(() -> new RuntimeException("Category not found"));
+        return estudianteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
     }
 
     @Transactional
@@ -43,6 +39,14 @@ public class EstudianteServiceImpl implements EstudianteService {
         return estudianteRepository.save(estudianteFromDb);
     }
 
-
-
+    @Override
+    public Estudiante sesionEstudiante(Estudiante estudiante) {
+        Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(estudiante.getEmail(), estudiante.getContraseña());
+        if(estudianteExistente != null) {
+            return estudianteExistente;
+        } else {
+            throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
+        }
+    }
 }
+

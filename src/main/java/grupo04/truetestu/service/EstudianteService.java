@@ -9,4 +9,6 @@ public interface EstudianteService {
     Estudiante findById(int id);
 
     Estudiante update(Integer id, Estudiante updateEstudiante);
+
+    Estudiante sesionEstudiante(Estudiante estudiante);
 }
