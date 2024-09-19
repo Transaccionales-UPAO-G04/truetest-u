@@ -1,6 +1,9 @@
 package grupo04.truetestu.service.impl;
 
+import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.enums.EstadoCuenta;
+import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
 import jakarta.transaction.Transactional;
@@ -50,4 +53,20 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
         }
     }
+
+
+    @Override
+    public void inhabilitarCuenta(int id) {
+        Estudiante estudiante = findById(id);
+        estudiante.setEstadoCuenta(EstadoCuenta.INHABILITADO);
+        estudianteRepository.save(estudiante);
+    }
+
+    @Override
+    public void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan) {
+        Estudiante estudiante = findById(id);
+        estudiante.setEstadoPlan(nuevoEstadoPlan);
+        estudianteRepository.save(estudiante);
+    }
+
 }

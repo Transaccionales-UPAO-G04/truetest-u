@@ -1,6 +1,7 @@
 package grupo04.truetestu.model.entity;
 
-import grupo04.truetestu.model.enums.EstadoEstudiante;
+import grupo04.truetestu.model.enums.EstadoCuenta;
+import grupo04.truetestu.model.enums.EstadoPlan;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,8 +24,12 @@ public class Estudiante {
     private String contraseña;
 
     @Enumerated(EnumType.STRING)
-    private EstadoEstudiante estadoEstudiante;
+    @Column(name = "estado_plan", nullable = false)
+    private EstadoPlan estadoPlan = EstadoPlan.NOPREMIUM;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_cuenta", nullable = false)
+    private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
 
     @OneToOne
     @JoinColumn (name = "id_plan",referencedColumnName = "idPlan"
