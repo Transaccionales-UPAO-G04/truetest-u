@@ -8,73 +8,54 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Optional;
-=======
->>>>>>> feature/ResultadoPrueba
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/resultados")
 public class ResultadoPruebaController {
 
-    private final ResultadoPruebaService resultadoPruebaService;
+    private final ResultadoPruebaService ResultadoPruebaService;
 
-<<<<<<< HEAD
     // Crear un nuevo ResultadoPrueba
-=======
->>>>>>> feature/ResultadoPrueba
     @PostMapping
     public ResponseEntity<ResultadoPrueba> create(@RequestBody ResultadoPrueba resultadoPrueba) {
-        ResultadoPrueba createdResultado = resultadoPruebaService.create(resultadoPrueba);
+        ResultadoPrueba createdResultado = ResultadoPruebaService.create(resultadoPrueba);
         return new ResponseEntity<>(createdResultado, HttpStatus.CREATED);
     }
 
-<<<<<<< HEAD
     // Buscar un ResultadoPrueba por su ID
-=======
->>>>>>> feature/ResultadoPrueba
     @GetMapping("/{id}")
     public ResponseEntity<ResultadoPrueba> findById(@PathVariable Integer id) {
-        ResultadoPrueba resultadoPrueba = resultadoPruebaService.findByID(id);
+        ResultadoPrueba resultadoPrueba = ResultadoPruebaService.findByID(id);
         return ResponseEntity.ok(resultadoPrueba);
     }
 
-<<<<<<< HEAD
     // Obtener todos los ResultadosPrueba
-=======
->>>>>>> feature/ResultadoPrueba
     @GetMapping
     public ResponseEntity<List<ResultadoPrueba>> getAll() {
-        List<ResultadoPrueba> resultados = resultadoPruebaService.getAll();
+        List<ResultadoPrueba> resultados = ResultadoPruebaService.getAll();
         return ResponseEntity.ok(resultados);
     }
 
-<<<<<<< HEAD
     // Actualizar un ResultadoPrueba por su ID
-=======
->>>>>>> feature/ResultadoPrueba
     @PutMapping("/{id}")
     public ResponseEntity<ResultadoPrueba> update(@PathVariable Integer id, @RequestBody ResultadoPrueba resultadoPrueba) {
-        ResultadoPrueba updatedResultado = resultadoPruebaService.update(id, resultadoPrueba);
+        ResultadoPrueba updatedResultado = ResultadoPruebaService.update(id, resultadoPrueba);
         return ResponseEntity.ok(updatedResultado);
     }
 
-<<<<<<< HEAD
     // Eliminar un ResultadoPrueba por su ID
-=======
->>>>>>> feature/ResultadoPrueba
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        resultadoPruebaService.delete(id);
+        ResultadoPruebaService.delete(id);
         return ResponseEntity.noContent().build();
     }
-<<<<<<< HEAD
 
     // Obtener ResultadosPrueba por el ID del estudiante
     @GetMapping("/estudiante/{id}")
     public ResponseEntity<?> getResultadoPruebaByEstudianteId(@PathVariable("id") int id) {
-        Optional<ResultadoPrueba> resultadoPruebaOpt = resultadoPruebaService.findByEstudianteId(id);
+        Optional<ResultadoPrueba> resultadoPruebaOpt = ResultadoPruebaService.findByEstudianteId(id);
         if (resultadoPruebaOpt.isPresent()) {
             ResultadoPrueba resultadoPrueba = resultadoPruebaOpt.get();
             return new ResponseEntity<>(resultadoPrueba, HttpStatus.OK);
@@ -82,7 +63,6 @@ public class ResultadoPruebaController {
             return new ResponseEntity<>("No se encontraron resultados para el estudiante con ID: " + id, HttpStatus.NOT_FOUND);
         }
     }
-=======
->>>>>>> feature/ResultadoPrueba
 }
+
 
