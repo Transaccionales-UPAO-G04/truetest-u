@@ -22,6 +22,12 @@ public class PruebaVocacional {
     @Column(name= "fecha", nullable = false)
     private LocalDate fecha;
 
+    @Column(name = "nombre", nullable = false)
+    private String nombre; // Agregado el campo nombre
+
+    @Column(name = "email", nullable = false)
+    private String email; // Agregado el campo email
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
