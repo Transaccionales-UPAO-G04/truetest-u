@@ -11,7 +11,7 @@ public class PruebaVocacionalDTO {
     private LocalDate fecha;
     private String nombre;
     private String email;
-    private int idEstudiante;
+    private int idEstudiante; // Asegúrate de que este campo existe y se inicializa correctamente
     private List<ResultadoPruebaDTO> pruebas;
 }
 
