@@ -31,4 +31,10 @@ public class Pregunta {
         @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
                 foreignKey = @ForeignKey(name = "FK_pregunta_prueba-vocacional"))
         private PruebaVocacional pruebaVocacional;
+
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "id_carreras", referencedColumnName = "idCarrera",
+                foreignKey = @ForeignKey(name = "FK_pregunta_carreral"))
+        private Carrera carrera;
 }

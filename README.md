@@ -6,13 +6,13 @@ El proposito de **TrueTest U** es orientar de manera adecuada a los estudiantes 
 
 ### Colaboradores del Proyecto
 
-| **Nombre**                          | **Rol**                           | **Perfil**                                                   |
-|-------------------------------------|---------------------------        |------------------------------------------------------------|
+| **Nombre**                          | **Rol**                           | **Perfil**                                                 |
+|-------------------------------------|---------------------------        |----------------------------------------------------------|
 | Oncoy Patricio Angelmauricio Rogger | Desarrallador de software         |[LinkedIn](https://www.linkedin.com/in/angel-oncoy-0843822a6/)|
-| Dávila Ortiz Briyan Anthony         | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/briyan-dávila-ortiz)           |
+| Dávila Ortiz Briyan Anthony         | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/briyan-dávila-ortiz)         |
 | Vidal Rodríguez Fabrizio            | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/fabrizio-vidal-rodriguez-b8aa98328/)|
-| Salirrosas Vasquez Jhordy           | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/jhordy-salirrosas-30b52b259/)           |
-| Rodriguez Lara Franklin Renato      | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/hampcode/)           |
+| Salirrosas Vasquez Jhordy           | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/jhordy-salirrosas-30b52b259/)         |
+| Rodriguez Lara Franklin Renato      | Desarrallador de software         | [LinkedIn](https://www.linkedin.com/in/franklin-renato-rodriguez-lara-a40a47329/)           |
 
 ### Revisa el Progreso del Proyecto TrueTest U
 
