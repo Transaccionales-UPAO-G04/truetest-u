@@ -1,5 +1,5 @@
 -- Tabla Carrera
-CREATE TABLE carreras (
+CREATE TABLE IF NOT EXISTS carreras (
                           id_carrera SERIAL PRIMARY KEY,
                           nombre_carrera VARCHAR(150) NOT NULL,
                           puntaje_aproximado INT NOT NULL,
@@ -215,3 +215,23 @@ INSERT INTO sesion (fecha_hora, duracion, participantes, link, id_estudiante, id
                                                                                               (NOW(), '01:15:00', 4, 'https://meetinglink.com/ghi', 3, 3),
                                                                                               (NOW(), '00:30:00', 2, 'https://meetinglink.com/jkl', 4, 4),
                                                                                               (NOW(), '01:00:00', 6, 'https://meetinglink.com/mno', 5, 5);
+-- Tabla Recurso
+CREATE TABLE IF NOT EXISTS recurso (
+                         id_recurso SERIAL PRIMARY KEY,
+                         link_recurso VARCHAR(300) NOT NULL,
+                         es_premium BOOLEAN NOT NULL,
+                         es_favorito BOOLEAN NOT NULL,
+                         id_estudiante INT,
+                         id_mentor INT,
+                         CONSTRAINT FK_recurso_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
+                         CONSTRAINT FK_recurso_mentor FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
+);
+
+-- Insertar algunos datos de ejemplo
+INSERT INTO recurso (link_recurso, es_premium, es_favorito, id_estudiante, id_mentor)
+VALUES
+    ('http://example.com/recurso1', TRUE, FALSE, 1, 1),
+    ('http://example.com/recurso2', FALSE, TRUE, 2, 2),
+    ('http://example.com/recurso3', TRUE, TRUE, 1, 3),
+    ('http://example.com/recurso4', FALSE, FALSE, 3, 1),
+    ('http://example.com/recurso5', TRUE, FALSE, 2, 3);
