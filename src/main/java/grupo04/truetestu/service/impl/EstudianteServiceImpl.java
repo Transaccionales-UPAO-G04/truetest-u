@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class EstudianteServiceImpl implements EstudianteService {
+public class  EstudianteServiceImpl implements EstudianteService {
     private final EstudianteRepository estudianteRepository;
 
     @Transactional

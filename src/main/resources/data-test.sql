@@ -43,17 +43,36 @@ CREATE TABLE estudiante (
                             estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
                             estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO',
                             id_plan INT,
-                            CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
+                            CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
 );
 
 
+-- Tabla Estudiante
+CREATE TABLE estudiante (
+                            id_estudiante SERIAL PRIMARY KEY,
+                            nombre_estudiante VARCHAR(150) NOT NULL,
+                            email VARCHAR(150) NOT NULL UNIQUE,
+                            contraseña VARCHAR(100) NOT NULL,
+                            estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
+                            estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO',
+                            id_plan INT,
+                            estado_estudiante VARCHAR(255) NOT NULL DEFAULT 'ACTIVO',  -- Aquí se agrega la columna con valor por defecto
+                            CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
 -- Datos ficticios para Estudiante
-INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta, id_plan) VALUES
-                                                                                                       ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO', 1),
-                                                                                                       ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO', 2),
-                                                                                                       ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM', 'HABILITADO', 1),
-                                                                                                       ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM', 'HABILITADO', 3),
-                                                                                                       ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO', 1);
+INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta, id_plan, estado_estudiante) VALUES
+                                                                                                                          ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO', 1, 'ACTIVO'),
+                                                                                                                          ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO', 2, 'ACTIVO'),
+                                                                                                                          ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM', 'HABILITADO', 1, 'ACTIVO'),
+                                                                                                                          ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM', 'HABILITADO', 3, 'ACTIVO'),
+                                                                                                                          ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO', 1, 'ACTIVO');
+
+
+
+
 
 -- Tabla Mentor
 CREATE TABLE mentor (
@@ -145,11 +164,21 @@ INSERT INTO preguntas (pregunta, punto, id_prueba_vocacional) VALUES
                                                                   ('¿Te apasiona el diseño de edificios?', 5, 4),
                                                                   ('¿Te interesa el análisis estructural?', 4, 5);
 
--- Tabla Respuesta
+-- Crear la tabla Respuestas
 CREATE TABLE respuestas (
                             id_respuesta SERIAL PRIMARY KEY,
                             opciones VARCHAR(150) NOT NULL
 );
+
+-- Paso 1: Agregar la columna sin restricción NOT NULL
+ALTER TABLE respuestas ADD COLUMN respuesta VARCHAR(255);
+
+-- Paso 2: Actualizar los registros existentes
+UPDATE respuestas SET respuesta = 'default_value' WHERE respuesta IS NULL;
+
+-- Paso 3: Cambiar la columna a NOT NULL
+ALTER TABLE respuestas ALTER COLUMN respuesta SET NOT NULL;
+
 
 -- Datos ficticios para Respuesta
 INSERT INTO respuestas (opciones) VALUES

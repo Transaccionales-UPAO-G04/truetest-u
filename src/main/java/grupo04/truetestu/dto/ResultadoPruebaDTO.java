@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ResultadoPruebaDTO {
-    private int puntaje;
+    private Integer puntaje;
     private String recomendacion;
 }
+

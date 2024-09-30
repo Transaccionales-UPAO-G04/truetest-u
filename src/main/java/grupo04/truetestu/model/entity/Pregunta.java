@@ -1,40 +1,46 @@
 package grupo04.truetestu.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 
-@Data
 @Entity
-@Table(name= "preguntas")
-
+@Table(name = "pregunta")
 public class Pregunta {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int idPregunta;
+        private int id;  // Cambiado a int, para evitar posibles problemas con null
 
-        @Column(name = "pregunta",nullable = false, length = 250)
-        private String pregunta;
+        @Column(nullable = false)
+        private String texto;
 
-        @Column(name = "punto",nullable = false)
-        private int punto;
+        @Column(nullable = false)
+        private String tipo;
 
-        @JsonIgnore
-        @OneToOne
-        @JoinColumn (name = "id_respuestas",referencedColumnName = "idRespuesta"
-                , foreignKey = @ForeignKey(name = "FK_pregunta_respuesta"))
-        private Respuestas respuestas;
+        // Getters y Setters
+        public int getId() {
+                return id;
+        }
 
-        @JsonIgnore
-        @ManyToOne
-        @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
-                foreignKey = @ForeignKey(name = "FK_pregunta_prueba-vocacional"))
-        private PruebaVocacional pruebaVocacional;
+        public void setId(int id) {
+                this.id = id;
+        }
 
-        @JsonIgnore
-        @ManyToOne
-        @JoinColumn(name = "id_carreras", referencedColumnName = "idCarrera",
-                foreignKey = @ForeignKey(name = "FK_pregunta_carreral"))
-        private Carrera carrera;
+        public String getTexto() {
+                return texto;
+        }
+
+        public void setTexto(String texto) {
+                this.texto = texto;
+        }
+
+        public String getTipo() {
+                return tipo;
+        }
+
+        public void setTipo(String tipo) {
+                this.tipo = tipo;
+        }
 }
+
+
+

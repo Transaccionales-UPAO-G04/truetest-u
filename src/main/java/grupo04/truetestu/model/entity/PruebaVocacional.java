@@ -3,7 +3,6 @@ package grupo04.truetestu.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,17 +15,11 @@ public class PruebaVocacional {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPruebaVocacional;
 
-    @Column(name= "nro_prueba", nullable = false)
+    @Column(name = "nro_prueba", nullable = false)
     private int nroPrueba;
 
-    @Column(name= "fecha", nullable = false)
+    @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
-
-    @Column(name = "nombre", nullable = false)
-    private String nombre; // Agregado el campo nombre
-
-    @Column(name = "email", nullable = false)
-    private String email; // Agregado el campo email
 
     @JsonIgnore
     @ManyToOne
@@ -36,5 +29,6 @@ public class PruebaVocacional {
 
     @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
     private List<ResultadoPrueba> pruebas;
-
 }
+
+
