@@ -10,4 +10,7 @@ public interface MentorService {
     Mentor createMentor(Mentor mentor);
     Mentor updateMentor(int id, Mentor mentor);
     void deleteMentor(int id);
+
+    // Nuevos métodos para recomendaciones
+    List<Mentor> recomendarMentoresPorEspecialidad(String especialidad, int minExperiencia, int maxExperiencia);
 }

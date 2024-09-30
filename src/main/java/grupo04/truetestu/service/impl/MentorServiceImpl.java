@@ -1,18 +1,19 @@
 package grupo04.truetestu.service.impl;
-import java.util.List;
+
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.repository.MentorRepository;
-import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.service.MentorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @Service
 public class MentorServiceImpl implements MentorService {
 
-    @Autowired
-    private MentorRepository mentorRepository;
+    private final MentorRepository mentorRepository;
 
     @Override
     public List<Mentor> findAll() {
@@ -22,7 +23,7 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public Mentor findById(int id) {
         return mentorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Mentor no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Mentor no encontrado"));
     }
 
     @Override
@@ -52,5 +53,12 @@ public class MentorServiceImpl implements MentorService {
     public void deleteMentor(int id) {
         Mentor mentor = findById(id);
         mentorRepository.delete(mentor);
+    }
+
+    // Implementación para recomendar mentores por especialidad y experiencia
+    @Override
+    public List<Mentor> recomendarMentoresPorEspecialidad(String especialidad, int minExperiencia, int maxExperiencia) {
+        // Busca mentores con la misma especialidad y experiencia dentro de un rango
+        return mentorRepository.findByEspecialidadAndExperienciaBetween(especialidad, minExperiencia, maxExperiencia);
     }
 }

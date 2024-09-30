@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface MentorRepository extends JpaRepository<Mentor, Integer> {
     List<Mentor> findByEspecialidad(String especialidad);
+
+    // Método para encontrar mentores por especialidad y un rango de experiencia
+    List<Mentor> findByEspecialidadAndExperienciaBetween(String especialidad, int minExperiencia, int maxExperiencia);
 }
+
+
 
     
