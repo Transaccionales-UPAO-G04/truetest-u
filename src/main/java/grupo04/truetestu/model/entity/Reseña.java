@@ -20,10 +20,9 @@ public class Reseña {
     private int calificacion;
 
 
-    // Relación con Mentor (Many-to-One)
+    // Relación con Mentor (Muchos a uno)
     @ManyToOne
-    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
-            foreignKey = @ForeignKey(name = "FK_reseña_mentor"))
+    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor", foreignKey = @ForeignKey(name = "FK_reseña_mentor"))
     private Mentor mentor;
 
     // Relación con Estudiante (Many-to-One)
