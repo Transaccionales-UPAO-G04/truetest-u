@@ -34,7 +34,7 @@ public class Pregunta {
 
         @JsonIgnore
         @ManyToOne
-        @JoinColumn(name = "id_carreras", referencedColumnName = "idCarrera",
-                foreignKey = @ForeignKey(name = "FK_pregunta_carreral"))
+        @JoinColumn(name = "id_carrera", referencedColumnName = "idCarrera",
+                foreignKey = @ForeignKey(name = "FK_pregunta_carrera"))
         private Carrera carrera;
 }

@@ -1,5 +1,6 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,7 +28,8 @@ public class Mentor {
     private int nroAsesorias;
 
     // Relación "Un mentor puede tener muchas reseñas"
-    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
     private List<Reseña> reseñas;
 
 }

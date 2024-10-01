@@ -3,6 +3,7 @@ package grupo04.truetestu.api;
 import grupo04.truetestu.model.entity.Reseña;
 import grupo04.truetestu.service.ReseñaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reseña")
 public class AdminReseñaController {
+    @Autowired
     private final ReseñaService reseñaService;
 
     @GetMapping

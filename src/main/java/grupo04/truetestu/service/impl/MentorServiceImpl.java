@@ -1,13 +1,11 @@
 package grupo04.truetestu.service.impl;
 import java.util.List;
 import grupo04.truetestu.model.entity.Mentor;
-import grupo04.truetestu.model.entity.Reseña;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.service.MentorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MentorServiceImpl implements MentorService {
 
     private final ReseñaRepository reseñaRepository;
-    private MentorRepository mentorRepository;
+    private final MentorRepository mentorRepository;
 
     @Override
     public List<Mentor> findAll() {
@@ -27,10 +25,7 @@ public class MentorServiceImpl implements MentorService {
     public Mentor findById(int id) {
         Mentor mentor = mentorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Mentor no encontrado"));
-
-        // Forzar la carga de reseñas si fetch = FetchType.LAZY
-        mentor.getReseñas().size();
-
+        int cantidadReseñas = mentor.getReseñas().size();
         return mentor;
     }
 

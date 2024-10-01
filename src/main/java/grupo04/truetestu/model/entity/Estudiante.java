@@ -2,7 +2,6 @@ package grupo04.truetestu.model.entity;
 
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
-import grupo04.truetestu.model.enums.EstadoEstudiante; // Asegúrate de importar esta clase
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,10 +30,6 @@ public class Estudiante {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_cuenta", nullable = false)
     private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
-
-    @Enumerated(EnumType.STRING) // Anotación para manejar la enumeración
-    @Column(name = "estado_estudiante", nullable = false)
-    private EstadoEstudiante estadoEstudiante;
 
     @OneToOne
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan",

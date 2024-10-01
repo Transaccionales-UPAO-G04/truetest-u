@@ -1,14 +1,12 @@
 package grupo04.truetestu.api;
 
 import grupo04.truetestu.model.entity.Mentor;
-import grupo04.truetestu.model.entity.ResultadoPrueba;
 import grupo04.truetestu.service.MentorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -42,9 +40,9 @@ public class MentorController {
 
     // Crear un nuevo mentor
     @PostMapping
-    public ResponseEntity<Mentor> createMentor(@RequestBody Mentor mentor) {
-        Mentor nuevoMentor = mentorService.createMentor(mentor);
-        return ResponseEntity.ok(nuevoMentor);
+    public ResponseEntity<Mentor> createMentor(@RequestBody @Valid Mentor mentor) {
+        Mentor newMentor = mentorService.createMentor(mentor);
+        return new ResponseEntity<>(newMentor, HttpStatus.CREATED);
     }
 
     // Actualizar un mentor existente

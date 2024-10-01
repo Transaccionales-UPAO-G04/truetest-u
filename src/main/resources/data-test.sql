@@ -1,3 +1,40 @@
+-- Eliminar tablas existentes
+DROP TABLE IF EXISTS reseña CASCADE;
+DROP TABLE IF EXISTS resultado_prueba CASCADE;
+DROP TABLE IF EXISTS sesion CASCADE;
+DROP TABLE IF EXISTS pago CASCADE;
+DROP TABLE IF EXISTS preguntas CASCADE;
+DROP TABLE IF EXISTS prueba_vocacional CASCADE;
+DROP TABLE IF EXISTS horario CASCADE;
+DROP TABLE IF EXISTS mentor CASCADE;
+DROP TABLE IF EXISTS respuestas CASCADE;
+DROP TABLE IF EXISTS estudiante CASCADE;
+DROP TABLE IF EXISTS carreras CASCADE;
+DROP TABLE IF EXISTS plan CASCADE;
+
+-- Crear las tablas
+CREATE TABLE plan (
+                      id_plan SERIAL PRIMARY KEY,
+                      nombre_plan VARCHAR(100) NOT NULL,
+                      precio DECIMAL(10,2) NOT NULL,
+                      descripcion_plan TEXT NOT NULL,
+                      fecha_inicio DATE NOT NULL,
+                      fecha_fin DATE,
+                      tipo_plan VARCHAR(50) NOT NULL,
+                      acceso_ilimitado BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+-- (El resto de tu script sigue aquí...)
+
+
+-- Datos ficticios para Plan
+INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin, tipo_plan, acceso_ilimitado) VALUES
+                                                                                                                   ('Plan No Premium Mensual', 9.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-01-31', 'Mensual', FALSE),
+                                                                                                                   ('Plan Premium Mensual', 19.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-01-31', 'Mensual', TRUE),
+                                                                                                                   ('Plan No Premium Anual', 99.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-12-31', 'Anual', FALSE),
+                                                                                                                   ('Plan Premium Anual', 199.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-12-31', 'Anual', TRUE),
+                                                                                                                   ('Plan Básico Anual', 49.99, 'Acceso a un número limitado de pruebas.', '2024-01-01', '2024-12-31', 'Anual', FALSE);
+
 -- Tabla Carrera
 CREATE TABLE carreras (
                           id_carrera SERIAL PRIMARY KEY,
@@ -14,26 +51,6 @@ INSERT INTO carreras (nombre_carrera, puntaje_aproximado, descripcion_carrera) V
                                                                                    ('Derecho', 80, 'Estudio de la ley y la justicia.'),
                                                                                    ('Arquitectura', 75, 'Diseño y construcción de edificaciones.');
 
--- Tabla Plan
-CREATE TABLE plan (
-                      id_plan SERIAL PRIMARY KEY,
-                      nombre_plan VARCHAR(100) NOT NULL,
-                      precio DECIMAL(10,2) NOT NULL,
-                      descripcion_plan TEXT NOT NULL,
-                      fecha_inicio DATE NOT NULL,
-                      fecha_fin DATE,
-                      tipo_plan VARCHAR(50) NOT NULL, -- Mensual o Anual
-                      acceso_ilimitado BOOLEAN NOT NULL DEFAULT FALSE -- Para distinguir entre acceso limitado o ilimitado
-);
-
--- Datos ficticios para Plan
-INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin, tipo_plan, acceso_ilimitado) VALUES
-                                                                                                                   ('Plan No Premium Mensual', 9.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-01-31', 'Mensual', FALSE),
-                                                                                                                   ('Plan Premium Mensual', 19.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-01-31', 'Mensual', TRUE),
-                                                                                                                   ('Plan No Premium Anual', 99.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-12-31', 'Anual', FALSE),
-                                                                                                                   ('Plan Premium Anual', 199.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-12-31', 'Anual', TRUE),
-                                                                                                                   ('Plan Básico Anual', 49.99, 'Acceso a un número limitado de pruebas.', '2024-01-01', '2024-12-31', 'Anual', FALSE);
-
 -- Tabla Estudiante
 CREATE TABLE estudiante (
                             id_estudiante SERIAL PRIMARY KEY,
@@ -45,7 +62,6 @@ CREATE TABLE estudiante (
                             id_plan INT,
                             CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
 );
-
 
 -- Datos ficticios para Estudiante
 INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta, id_plan) VALUES
@@ -89,27 +105,6 @@ INSERT INTO horario (dia_semana, hora_inicio, hora_fin, id_mentor) VALUES
                                                                        ('Miércoles', '10:00', '12:00', 3),
                                                                        ('Jueves', '15:00', '17:00', 4),
                                                                        ('Viernes', '13:00', '15:00', 5);
-
--- Tabla Pago
-CREATE TABLE pago (
-                      id_pago SERIAL PRIMARY KEY,
-                      monto DECIMAL(10,2) NOT NULL,
-                      fecha TIMESTAMP NOT NULL,
-                      metodo_pago VARCHAR(50) NOT NULL,
-                      estado_pago VARCHAR(50) NOT NULL,
-                      id_estudiante INT,
-                      id_plan INT,
-                      FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
-                      FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
-);
-
--- Datos ficticios para Pago
-INSERT INTO pago (monto, fecha, metodo_pago, estado_pago, id_estudiante, id_plan) VALUES
-                                                                                      (19.99, NOW(), 'Tarjeta de Crédito', 'Completado', 1, 2),
-                                                                                      (9.99, NOW(), 'PayPal', 'Pendiente', 2, 1),
-                                                                                      (199.99, NOW(), 'Transferencia Bancaria', 'Completado', 3, 4),
-                                                                                      (49.99, NOW(), 'Tarjeta de Crédito', 'Completado', 4, 3),
-                                                                                      (99.99, NOW(), 'PayPal', 'Pendiente', 5, 5);
 
 -- Tabla PruebaVocacional
 CREATE TABLE prueba_vocacional (
@@ -201,17 +196,31 @@ CREATE TABLE sesion (
                         fecha_hora TIMESTAMP NOT NULL,
                         duracion TIME NOT NULL,
                         participantes INT NOT NULL,
-                        link VARCHAR(255) NOT NULL,
-                        id_estudiante INT,
-                        id_horario INT,
-                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
-                        FOREIGN KEY (id_horario) REFERENCES horario(id_horario)
+                        id_mentor INT,
+                        FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
 );
 
 -- Datos ficticios para Sesion
-INSERT INTO sesion (fecha_hora, duracion, participantes, link, id_estudiante, id_horario) VALUES
-                                                                                              (NOW(), '01:00:00', 5, 'https://meetinglink.com/abc', 1, 1),
-                                                                                              (NOW(), '00:45:00', 3, 'https://meetinglink.com/def', 2, 2),
-                                                                                              (NOW(), '01:15:00', 4, 'https://meetinglink.com/ghi', 3, 3),
-                                                                                              (NOW(), '00:30:00', 2, 'https://meetinglink.com/jkl', 4, 4),
-                                                                                              (NOW(), '01:00:00', 6, 'https://meetinglink.com/mno', 5, 5);
+INSERT INTO sesion (fecha_hora, duracion, participantes, id_mentor) VALUES
+                                                                        ('2024-09-15 10:00', '01:00:00', 5, 1),
+                                                                        ('2024-09-16 14:00', '02:00:00', 3, 2),
+                                                                        ('2024-09-17 10:00', '01:30:00', 4, 3),
+                                                                        ('2024-09-18 15:00', '01:15:00', 6, 4),
+                                                                        ('2024-09-19 13:00', '00:45:00', 2, 5);
+
+-- Tabla Pago
+CREATE TABLE pago (
+                      id_pago SERIAL PRIMARY KEY,
+                      monto DECIMAL(10,2) NOT NULL,
+                      fecha_pago DATE NOT NULL,
+                      id_estudiante INT,
+                      FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante)
+);
+
+-- Datos ficticios para Pago
+INSERT INTO pago (monto, fecha_pago, id_estudiante) VALUES
+                                                        (9.99, '2024-01-05', 1),
+                                                        (19.99, '2024-01-06', 2),
+                                                        (9.99, '2024-01-07', 3),
+                                                        (19.99, '2024-01-08', 4),
+                                                        (49.99, '2024-01-09', 5);
