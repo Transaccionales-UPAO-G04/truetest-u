@@ -1,9 +1,11 @@
 package grupo04.truetestu.service.impl;
 import java.util.List;
 import grupo04.truetestu.model.entity.Mentor;
+import grupo04.truetestu.repository.HorarioRepository;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.repository.ReseñaRepository;
+import grupo04.truetestu.repository.SesionRepository;
 import grupo04.truetestu.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class MentorServiceImpl implements MentorService {
-
+    private final HorarioRepository horarioRepository;
     private final ReseñaRepository reseñaRepository;
+    private final SesionRepository sesionRepository;
     private final MentorRepository mentorRepository;
 
     @Override
@@ -56,6 +59,8 @@ public class MentorServiceImpl implements MentorService {
     @Transactional
     public void deleteMentor(int id) {
         Mentor mentor = findById(id);
-        mentorRepository.delete(mentor);
+        horarioRepository.deleteById(id);
+        sesionRepository.deleteById(id);
+        mentorRepository.deleteById(id);
     }
 }

@@ -23,9 +23,6 @@ public class Sesion {
     @Column(name = "duracion", nullable = false)
     private LocalTime duracion; // Modificado a LocalTime para reflejar el tipo "time"
 
-    @Column(name = "participantes", nullable = false)
-    private int participantes;
-
     @Column(name = "link", nullable = false)
     private String link;
 

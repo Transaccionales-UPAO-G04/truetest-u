@@ -191,22 +191,28 @@ INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALU
                                                                                 (80, 'Recomendado para Diseño Estructural.', 5);
 
 -- Tabla Sesion
+-- Crear la tabla sesion con las columnas y relaciones correctas
 CREATE TABLE sesion (
                         id_sesion SERIAL PRIMARY KEY,
                         fecha_hora TIMESTAMP NOT NULL,
                         duracion TIME NOT NULL,
-                        participantes INT NOT NULL,
-                        id_mentor INT,
-                        FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
+                        link VARCHAR(255) NOT NULL,  -- Agregamos la columna 'link'
+                        id_mentor INT,               -- Referencia al mentor
+                        id_estudiante INT,           -- Agregamos la columna para la relación con 'Estudiante'
+                        id_horario INT,              -- Agregamos la columna para la relación con 'Horario'
+                        FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor),
+                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
+                        FOREIGN KEY (id_horario) REFERENCES horario(id_horario)
 );
 
--- Datos ficticios para Sesion
-INSERT INTO sesion (fecha_hora, duracion, participantes, id_mentor) VALUES
-                                                                        ('2024-09-15 10:00', '01:00:00', 5, 1),
-                                                                        ('2024-09-16 14:00', '02:00:00', 3, 2),
-                                                                        ('2024-09-17 10:00', '01:30:00', 4, 3),
-                                                                        ('2024-09-18 15:00', '01:15:00', 6, 4),
-                                                                        ('2024-09-19 13:00', '00:45:00', 2, 5);
+-- Insertar datos ficticios para la tabla sesion
+INSERT INTO sesion (fecha_hora, duracion, link, id_mentor, id_estudiante, id_horario) VALUES
+                                                                                                         ('2024-09-15 10:00', '01:00:00',  'https://example.com/session1', 1, 1, 1),
+                                                                                                         ('2024-09-16 14:00', '02:00:00',  'https://example.com/session2', 2, 2, 2),
+                                                                                                         ('2024-09-17 10:00', '01:30:00',  'https://example.com/session3', 3, 3, 3),
+                                                                                                         ('2024-09-18 15:00', '01:15:00',  'https://example.com/session4', 4, 4, 4),
+                                                                                                         ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
+
 
 -- Tabla Pago
 CREATE TABLE pago (
