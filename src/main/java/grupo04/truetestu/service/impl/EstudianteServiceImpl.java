@@ -1,8 +1,6 @@
 package grupo04.truetestu.service.impl;
 
-import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
@@ -10,11 +8,20 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
 public class EstudianteServiceImpl implements EstudianteService {
+
     private final EstudianteRepository estudianteRepository;
+
+    @Override
+    public List<Estudiante> findAll() {
+        return estudianteRepository.findAll();
+    }
+
 
     @Transactional
     @Override
@@ -54,19 +61,18 @@ public class EstudianteServiceImpl implements EstudianteService {
         }
     }
 
-
     @Override
-    public void inhabilitarCuenta(int id) {
-        Estudiante estudiante = findById(id);
-        estudiante.setEstadoCuenta(EstadoCuenta.INHABILITADO);
-        estudianteRepository.save(estudiante);
-    }
-
-    @Override
-    public void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan) {
+    public void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan) { //iniciar sesion
         Estudiante estudiante = findById(id);
         estudiante.setEstadoPlan(nuevoEstadoPlan);
         estudianteRepository.save(estudiante);
     }
+
+    @Override
+    @Transactional
+    public void deleteEstudiante(int id) {
+        estudianteRepository.deleteById(id);
+    }
+
 
 }

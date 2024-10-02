@@ -36,8 +36,9 @@ public class ReseñaController {
     }
 
     // Crear una nueva reseña asociada a un mentor
-    @PostMapping("/mentor/{idMentor}")
-    public ResponseEntity<Reseña> createReseña(@PathVariable int idMentor, @RequestBody Reseña reseña) {
+    @PostMapping("/{idMentor}/crear-reseña/")
+    public ResponseEntity<Reseña> createReseña(@PathVariable int idMentor,
+                                               @RequestBody Reseña reseña) {
         // Validar que el mentor existe
         Mentor mentor = mentorService.findById(idMentor);
 
