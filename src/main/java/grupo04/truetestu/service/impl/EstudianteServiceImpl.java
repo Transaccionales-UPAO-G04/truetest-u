@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @RequiredArgsConstructor
 @Service
 public class EstudianteServiceImpl implements EstudianteService {
@@ -23,8 +22,7 @@ public class EstudianteServiceImpl implements EstudianteService {
             throw new RuntimeException("El correo ya fue registrado");
         }
 
-        //falta crear un AT
-
+        // Falta crear un AT
         return estudianteRepository.save(estudiante);
     }
 
@@ -54,7 +52,6 @@ public class EstudianteServiceImpl implements EstudianteService {
         }
     }
 
-
     @Override
     public void inhabilitarCuenta(int id) {
         Estudiante estudiante = findById(id);
@@ -68,5 +65,5 @@ public class EstudianteServiceImpl implements EstudianteService {
         estudiante.setEstadoPlan(nuevoEstadoPlan);
         estudianteRepository.save(estudiante);
     }
-
 }
+
