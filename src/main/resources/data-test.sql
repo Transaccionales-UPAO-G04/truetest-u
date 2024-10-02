@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS respuestas CASCADE;
 DROP TABLE IF EXISTS estudiante CASCADE;
 DROP TABLE IF EXISTS carreras CASCADE;
 DROP TABLE IF EXISTS plan CASCADE;
+DROP TABLE IF EXISTS recurso CASCADE;
 
 -- Crear las tablas
 CREATE TABLE plan (
@@ -206,11 +207,11 @@ CREATE TABLE sesion (
 
 -- Insertar datos ficticios para la tabla sesion
 INSERT INTO sesion (fecha_hora, duracion, link, id_mentor, id_estudiante, id_horario) VALUES
-                                                                                                         ('2024-09-15 10:00', '01:00:00',  'https://example.com/session1', 1, 1, 1),
-                                                                                                         ('2024-09-16 14:00', '02:00:00',  'https://example.com/session2', 2, 2, 2),
-                                                                                                         ('2024-09-17 10:00', '01:30:00',  'https://example.com/session3', 3, 3, 3),
-                                                                                                         ('2024-09-18 15:00', '01:15:00',  'https://example.com/session4', 4, 4, 4),
-                                                                                                         ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
+                                                                                          ('2024-09-15 10:00', '01:00:00',  'https://example.com/session1', 1, 1, 1),
+                                                                                          ('2024-09-16 14:00', '02:00:00',  'https://example.com/session2', 2, 2, 2),
+                                                                                          ('2024-09-17 10:00', '01:30:00',  'https://example.com/session3', 3, 3, 3),
+                                                                                          ('2024-09-18 15:00', '01:15:00',  'https://example.com/session4', 4, 4, 4),
+                                                                                          ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
 
 
 -- Tabla Pago
@@ -229,3 +230,24 @@ INSERT INTO pago (monto, fecha_pago, id_estudiante) VALUES
                                                         (9.99, '2024-01-07', 3),
                                                         (19.99, '2024-01-08', 4),
                                                         (49.99, '2024-01-09', 5);
+
+-- Tabla Recurso
+CREATE TABLE recurso (
+                         id_recurso SERIAL PRIMARY KEY,
+                         link_recurso VARCHAR(300) NOT NULL,
+                         es_premium BOOLEAN NOT NULL,
+                         es_favorito BOOLEAN NOT NULL,
+                         id_estudiante INT,
+                         id_mentor INT,
+                         CONSTRAINT FK_recurso_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
+                         CONSTRAINT FK_recurso_mentor FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
+);
+
+-- Insertar algunos datos de ejemplo
+INSERT INTO recurso (link_recurso, es_premium, es_favorito, id_estudiante, id_mentor)
+VALUES
+    ('http://example.com/recurso1', TRUE, FALSE, 1, 1),
+    ('http://example.com/recurso2', FALSE, TRUE, 2, 2),
+    ('http://example.com/recurso3', TRUE, TRUE, 1, 3),
+    ('http://example.com/recurso4', FALSE, FALSE, 3, 1),
+    ('http://example.com/recurso5', TRUE, FALSE, 2, 3);
