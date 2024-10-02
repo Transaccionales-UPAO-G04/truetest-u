@@ -14,6 +14,7 @@ public interface RecursoService {
     List<Recurso> obtenerRecursosGratis();
     List<Recurso> obtenerRecursosPremium();
 
-    List<Recurso> obtenerRecursosGratisPorEspecialidad(String especialidad);
     List<Recurso> obtenerRecursosPremiumPorEspecialidad(String especialidad);
+    List<Recurso> obtenerRecursosGratisPorEspecialidad(String especialidad);
+
 }

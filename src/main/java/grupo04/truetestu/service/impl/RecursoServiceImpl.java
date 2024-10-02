@@ -72,17 +72,11 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Override
     public List<Recurso> obtenerRecursosGratisPorEspecialidad(String especialidad) {
-        System.out.println("Buscando recursos gratis para la especialidad: " + especialidad);
-        List<Recurso> recursos = recursoRepository.obtenerRecursosGratisPorEspecialidad(especialidad);
-        System.out.println("Recursos encontrados: " + recursos);
-        return recursos;
+        return recursoRepository.findByEsPremiumAndMentor_Especialidad(false, especialidad);
     }
 
     @Override
     public List<Recurso> obtenerRecursosPremiumPorEspecialidad(String especialidad) {
-        System.out.println("Buscando recursos premium para la especialidad: " + especialidad);
-        List<Recurso> recursos = recursoRepository.obtenerRecursosPremiumPorEspecialidad(especialidad);
-        System.out.println("Recursos encontrados: " + recursos);
-        return recursos;
+        return recursoRepository.findByEsPremiumAndMentor_Especialidad(true, especialidad);
     }
 }
