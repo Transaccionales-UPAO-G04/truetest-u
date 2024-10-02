@@ -1,5 +1,6 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Estudiante {
     private EstadoPlan estadoPlan = EstadoPlan.NOPREMIUM;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan",
             foreignKey = @ForeignKey(name = "FK_estudiante_plan"))
     private Plan plan;
