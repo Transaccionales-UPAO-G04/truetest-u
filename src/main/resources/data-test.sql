@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS respuestas CASCADE;
 DROP TABLE IF EXISTS estudiante CASCADE;
 DROP TABLE IF EXISTS carreras CASCADE;
 DROP TABLE IF EXISTS plan CASCADE;
+DROP TABLE IF EXISTS recurso CASCADE;
 
 -- Crear las tablas
 CREATE TABLE plan (
@@ -23,6 +24,9 @@ CREATE TABLE plan (
                       tipo_plan VARCHAR(50) NOT NULL,
                       acceso_ilimitado BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+-- (El resto de tu script sigue aquí...)
+
 
 -- Datos ficticios para Plan
 INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin, tipo_plan, acceso_ilimitado) VALUES
@@ -59,7 +63,6 @@ CREATE TABLE estudiante (
                             id_plan INT,
                             CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
 );
-
 
 -- Datos ficticios para Estudiante
 INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta, id_plan) VALUES
@@ -103,27 +106,6 @@ INSERT INTO horario (dia_semana, hora_inicio, hora_fin, id_mentor) VALUES
                                                                        ('Miércoles', '10:00', '12:00', 3),
                                                                        ('Jueves', '15:00', '17:00', 4),
                                                                        ('Viernes', '13:00', '15:00', 5);
-
--- Tabla Pago
-CREATE TABLE pago (
-                      id_pago SERIAL PRIMARY KEY,
-                      monto DECIMAL(10,2) NOT NULL,
-                      fecha TIMESTAMP NOT NULL,
-                      metodo_pago VARCHAR(50) NOT NULL,
-                      estado_pago VARCHAR(50) NOT NULL,
-                      id_estudiante INT,
-                      id_plan INT,
-                      FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
-                      FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
-);
-
--- Datos ficticios para Pago
-INSERT INTO pago (monto, fecha, metodo_pago, estado_pago, id_estudiante, id_plan) VALUES
-                                                                                      (19.99, NOW(), 'Tarjeta de Crédito', 'Completado', 1, 2),
-                                                                                      (9.99, NOW(), 'PayPal', 'Pendiente', 2, 1),
-                                                                                      (199.99, NOW(), 'Transferencia Bancaria', 'Completado', 3, 4),
-                                                                                      (49.99, NOW(), 'Tarjeta de Crédito', 'Completado', 4, 3),
-                                                                                      (99.99, NOW(), 'PayPal', 'Pendiente', 5, 5);
 
 -- Tabla PruebaVocacional
 CREATE TABLE prueba_vocacional (
@@ -226,11 +208,11 @@ CREATE TABLE sesion (
 
 -- Insertar datos ficticios para la tabla sesion
 INSERT INTO sesion (fecha_hora, duracion, link, id_mentor, id_estudiante, id_horario) VALUES
-                                                                                                         ('2024-09-15 10:00', '01:00:00',  'https://example.com/session1', 1, 1, 1),
-                                                                                                         ('2024-09-16 14:00', '02:00:00',  'https://example.com/session2', 2, 2, 2),
-                                                                                                         ('2024-09-17 10:00', '01:30:00',  'https://example.com/session3', 3, 3, 3),
-                                                                                                         ('2024-09-18 15:00', '01:15:00',  'https://example.com/session4', 4, 4, 4),
-                                                                                                         ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
+                                                                                          ('2024-09-15 10:00', '01:00:00',  'https://example.com/session1', 1, 1, 1),
+                                                                                          ('2024-09-16 14:00', '02:00:00',  'https://example.com/session2', 2, 2, 2),
+                                                                                          ('2024-09-17 10:00', '01:30:00',  'https://example.com/session3', 3, 3, 3),
+                                                                                          ('2024-09-18 15:00', '01:15:00',  'https://example.com/session4', 4, 4, 4),
+                                                                                          ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
 
 
 -- Tabla Pago
@@ -249,15 +231,9 @@ INSERT INTO pago (monto, fecha_pago, id_estudiante) VALUES
                                                         (9.99, '2024-01-07', 3),
                                                         (19.99, '2024-01-08', 4),
                                                         (49.99, '2024-01-09', 5);
--- Datos ficticios para Sesion
-INSERT INTO sesion (fecha_hora, duracion, participantes, link, id_estudiante, id_horario) VALUES
-                                                                                              (NOW(), '01:00:00', 5, 'https://meetinglink.com/abc', 1, 1),
-                                                                                              (NOW(), '00:45:00', 3, 'https://meetinglink.com/def', 2, 2),
-                                                                                              (NOW(), '01:15:00', 4, 'https://meetinglink.com/ghi', 3, 3),
-                                                                                              (NOW(), '00:30:00', 2, 'https://meetinglink.com/jkl', 4, 4),
-                                                                                              (NOW(), '01:00:00', 6, 'https://meetinglink.com/mno', 5, 5);
+
 -- Tabla Recurso
-CREATE TABLE IF NOT EXISTS recurso (
+CREATE TABLE recurso (
                          id_recurso SERIAL PRIMARY KEY,
                          link_recurso VARCHAR(300) NOT NULL,
                          es_premium BOOLEAN NOT NULL,

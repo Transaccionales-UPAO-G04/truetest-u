@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "resultado_prueba")
+@Table(name = "recurso")
 public class Recurso {
 
     @Id
@@ -23,11 +23,12 @@ public class Recurso {
     @Column(name = "es_favorito", nullable = false)
     private boolean esFavorito;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
             foreignKey = @ForeignKey(name = "FK_recurso_estudiante"))
     private Estudiante estudiante;
+
 
     @ManyToOne
     @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
