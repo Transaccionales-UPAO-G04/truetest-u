@@ -51,23 +51,7 @@ public class ReseñaServiceImpl implements ReseñaService {
         return reseñaRepository.save(reseña);
     }
 
-    // Método para actualizar una reseña existente
-    @Override
-    @Transactional
-    public Reseña update(int id, Reseña reseñaDetails) {
-        // Buscar la reseña existente por ID
-        Reseña reseña = reseñaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reseña no encontrada con id: " + id));
 
-        // Actualizar los campos de la reseña
-        reseña.setTexto(reseñaDetails.getTexto());
-        reseña.setCalificacion(reseñaDetails.getCalificacion());
-
-        // No permitimos cambiar el mentor o el estudiante después de la creación de la reseña
-
-        // Guardar los cambios
-        return reseñaRepository.save(reseña);
-    }
 
     // Método para eliminar una reseña por ID
     @Override
