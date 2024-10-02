@@ -1,5 +1,7 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,10 +22,10 @@ public class Reseña {
     private int calificacion;
 
 
-    // Relación con Mentor (Many-to-One)
+    // Relación con Mentor (Muchos a uno)
     @ManyToOne
-    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
-            foreignKey = @ForeignKey(name = "FK_reseña_mentor"))
+    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor", foreignKey = @ForeignKey(name = "FK_reseña_mentor"))
+    @JsonBackReference
     private Mentor mentor;
 
     // Relación con Estudiante (Many-to-One)

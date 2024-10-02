@@ -1,5 +1,6 @@
 package grupo04.truetestu.service.impl;
 
+import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.model.entity.PruebaVocacional;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.entity.ResultadoPrueba;
@@ -8,7 +9,6 @@ import grupo04.truetestu.dto.ResultadoPruebaDTO;
 import grupo04.truetestu.repository.PruebaVocacionalRepository;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.PruebaVocacionalService;
-import grupo04.truetestu.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
