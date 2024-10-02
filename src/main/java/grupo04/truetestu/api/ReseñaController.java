@@ -1,7 +1,9 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.entity.Reseña;
 import grupo04.truetestu.model.entity.Mentor;
+import grupo04.truetestu.service.EstudianteService;
 import grupo04.truetestu.service.ReseñaService;
 import grupo04.truetestu.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,8 @@ public class ReseñaController {
 
     @Autowired
     private ReseñaService reseñaService;
-
+    @Autowired
+    private EstudianteService estudianteService;
     @Autowired
     private MentorService mentorService;
 
@@ -36,13 +39,16 @@ public class ReseñaController {
     }
 
     // Crear una nueva reseña asociada a un mentor
-    @PostMapping("/mentor/{idMentor}")
-    public ResponseEntity<Reseña> createReseña(@PathVariable int idMentor, @RequestBody Reseña reseña) {
+    @PostMapping("/{idMentor}/crear-reseña")
+    public ResponseEntity<Reseña> createReseña(@PathVariable int idMentor, @RequestParam int idEstudiante,
+                                               @RequestBody Reseña reseña) {
         // Validar que el mentor existe
         Mentor mentor = mentorService.findById(idMentor);
 
+        Estudiante estudiante = estudianteService.findById(idEstudiante);
         // Asignar el mentor a la reseña
         reseña.setMentor(mentor);
+        reseña.setEstudiante(estudiante);
 
         // Guardar la reseña en la base de datos
         Reseña nuevaReseña = reseñaService.createReseña(reseña);

@@ -59,18 +59,17 @@ CREATE TABLE estudiante (
                             email VARCHAR(150) NOT NULL UNIQUE,
                             contraseña VARCHAR(100) NOT NULL,
                             estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
-                            estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO',
                             id_plan INT,
                             CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
 );
 
 -- Datos ficticios para Estudiante
-INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta, id_plan) VALUES
-                                                                                                       ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO', 1),
-                                                                                                       ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO', 2),
-                                                                                                       ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM', 'HABILITADO', 1),
-                                                                                                       ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM', 'HABILITADO', 3),
-                                                                                                       ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO', 1);
+INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, id_plan) VALUES
+                                                                                                       ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM',  1),
+                                                                                                       ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM',  2),
+                                                                                                       ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM',  1),
+                                                                                                       ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM',  3),
+                                                                                                       ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM',  1);
 
 -- Tabla Mentor
 CREATE TABLE mentor (
