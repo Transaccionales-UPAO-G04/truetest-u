@@ -22,6 +22,8 @@ public class RecursoController {
         return new ResponseEntity<>(recursos, HttpStatus.OK);
     }
 
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Recurso> obtenerPorId(@PathVariable int id) {
         return recursoService.obtenerPorId(id)
@@ -53,15 +55,21 @@ public class RecursoController {
         return new ResponseEntity<>(recursos, HttpStatus.OK);
     }
 
-    @GetMapping("/mentor/{idMentor}/gratis")
-    public ResponseEntity<List<Recurso>> obtenerRecursosGratisPorMentor(@PathVariable int idMentor) {
-        List<Recurso> recursos = recursoService.obtenerRecursosGratisPorMentor(idMentor);
-        return new ResponseEntity<>(recursos, HttpStatus.OK);
+    @GetMapping("/mentor/especialidad/{especialidad}/gratis")
+    public ResponseEntity<List<Recurso>> obtenerRecursosGratisPorEspecialidad(@PathVariable String especialidad) {
+        System.out.println("Especialidad recibida: [" + especialidad + "]");
+        List<Recurso> recursos = recursoService.obtenerRecursosGratisPorEspecialidad(especialidad);
+        System.out.println("Recursos obtenidos para especialidad [" + especialidad + "]: " + recursos);
+        return ResponseEntity.ok(recursos);
     }
 
-    @GetMapping("/mentor/{idMentor}/premium")
-    public ResponseEntity<List<Recurso>> obtenerRecursosPremiumPorMentor(@PathVariable int idMentor) {
-        List<Recurso> recursos = recursoService.obtenerRecursosPremiumPorMentor(idMentor);
-        return new ResponseEntity<>(recursos, HttpStatus.OK);
+
+    @GetMapping("/mentor/especialidad/{especialidad}/premium")
+    public ResponseEntity<List<Recurso>> obtenerRecursosPremiumPorEspecialidad(@PathVariable String especialidad) {
+        System.out.println("Obteniendo recursos premium para la especialidad: " + especialidad);
+        List<Recurso> recursos = recursoService.obtenerRecursosPremiumPorEspecialidad(especialidad);
+        System.out.println("Recursos obtenidos: " + recursos);
+        return ResponseEntity.ok(recursos);
     }
+
 }

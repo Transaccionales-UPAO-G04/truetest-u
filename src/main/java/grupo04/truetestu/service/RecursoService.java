@@ -13,6 +13,7 @@ public interface RecursoService {
 
     List<Recurso> obtenerRecursosGratis();
     List<Recurso> obtenerRecursosPremium();
-    List<Recurso> obtenerRecursosGratisPorMentor(int idMentor);
-    List<Recurso> obtenerRecursosPremiumPorMentor(int idMentor);
+
+    List<Recurso> obtenerRecursosGratisPorEspecialidad(String especialidad);
+    List<Recurso> obtenerRecursosPremiumPorEspecialidad(String especialidad);
 }
