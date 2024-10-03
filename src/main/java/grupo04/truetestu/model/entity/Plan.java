@@ -22,9 +22,6 @@ public class Plan {
     @Column(name = "descripcion_plan", nullable = false, columnDefinition = "TEXT")
     private String descripcionPlan;
 
-    @Column(name = "beneficios", nullable = false, columnDefinition = "TEXT")
-    private String beneficios;
-
     @Column(name = "fecha_inicio", nullable = false)
     private Date fechaInicio;
 

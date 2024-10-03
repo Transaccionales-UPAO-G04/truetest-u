@@ -30,10 +30,5 @@ public class AuthController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Estudiante> updateEstudiante(@PathVariable int id,
-                                                       @RequestBody Estudiante estudiante) {
-        Estudiante updateEstudiante = estudianteService.update(id, estudiante);
-        return new ResponseEntity<>(updateEstudiante, HttpStatus.OK);
-    }
+
 }
