@@ -79,4 +79,14 @@ public class RecursoServiceImpl implements RecursoService {
     public List<Recurso> obtenerRecursosPremiumPorEspecialidad(String especialidad) {
         return recursoRepository.findByEsPremiumAndMentor_Especialidad(true, especialidad);
     }
+
+
+    @Override
+    public Recurso cambiarEstadoFavorito(int recursoId) {
+        Recurso recurso = recursoRepository.findById(recursoId)
+                .orElseThrow(() -> new EntityNotFoundException("Recurso no encontrado"));
+
+        recurso.setEsFavorito(!recurso.isEsFavorito());
+        return recursoRepository.save(recurso);
+    }
 }

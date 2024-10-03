@@ -21,7 +21,7 @@ public class Recurso {
     private boolean esPremium;
 
     @Column(name = "es_favorito", nullable = false)
-    private boolean esFavorito;
+    private boolean esFavorito = false;
 
     @JsonIgnore
     @ManyToOne
