@@ -44,5 +44,24 @@ public class EstudianteController {
         Estudiante updateEstudiante = estudianteService.update(id, estudiante);
         return new ResponseEntity<>(updateEstudiante, HttpStatus.OK);
     }
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        try {
+            estudianteService.sendResetPasswordEmail(email);
+            return ResponseEntity.ok("Se ha enviado un enlace para restablecer tu contraseña a tu correo electrónico.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String newPassword) {
+        try {
+            estudianteService.updatePassword(email, newPassword);
+            return ResponseEntity.ok("Tu contraseña ha sido actualizada con éxito.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
 }
