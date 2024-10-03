@@ -17,4 +17,5 @@ public interface RecursoService {
     List<Recurso> obtenerRecursosPremiumPorEspecialidad(String especialidad);
     List<Recurso> obtenerRecursosGratisPorEspecialidad(String especialidad);
 
+    Recurso cambiarEstadoFavorito(int recursoId);
 }

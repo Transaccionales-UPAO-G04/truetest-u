@@ -67,4 +67,10 @@ public class RecursoController {
         return new ResponseEntity<>(recursos, HttpStatus.OK);
     }
 
+
+    @PostMapping("/{id}/favorito")
+    public ResponseEntity<Recurso> cambiarEstadoFavorito(@PathVariable int id) {
+        Recurso recursoActualizado = recursoService.cambiarEstadoFavorito(id);
+        return ResponseEntity.ok(recursoActualizado);
+    }
 }
