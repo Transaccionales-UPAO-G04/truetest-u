@@ -1,4 +1,4 @@
-package grupo04.truetestu.controller;
+package grupo04.truetestu.api;
 
 import grupo04.truetestu.dto.PruebaVocacionalDTO;
 import grupo04.truetestu.service.PruebaVocacionalService;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/prueba/vocacional")
+@RequestMapping("/prueba/vocacional")
 public class PruebaVocacionalController {
 
     private final PruebaVocacionalService pruebaVocacionalService;

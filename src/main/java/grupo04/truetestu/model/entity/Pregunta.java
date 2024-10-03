@@ -1,46 +1,34 @@
 package grupo04.truetestu.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.List;
+
+@Data
 @Entity
 @Table(name = "pregunta")
 public class Pregunta {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;  // Cambiado a int, para evitar posibles problemas con null
+        private int id;  // ID de la pregunta
 
         @Column(nullable = false)
-        private String texto;
+        private String texto; // Texto de la pregunta
 
         @Column(nullable = false)
-        private String tipo;
+        private String tipo; // Tipo de la pregunta
 
-        // Getters y Setters
-        public int getId() {
-                return id;
-        }
+        @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Respuesta> respuestas; // Respuestas relacionadas con la pregunta
 
-        public void setId(int id) {
-                this.id = id;
-        }
-
-        public String getTexto() {
-                return texto;
-        }
-
-        public void setTexto(String texto) {
-                this.texto = texto;
-        }
-
-        public String getTipo() {
-                return tipo;
-        }
-
-        public void setTipo(String tipo) {
-                this.tipo = tipo;
-        }
+        @ManyToOne
+        @JoinColumn(name = "id_prueba_vocacional", nullable = false)
+        private PruebaVocacional pruebaVocacional; // Asociación con PruebaVocacional
 }
+
+
 
 
 

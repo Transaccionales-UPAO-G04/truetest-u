@@ -43,22 +43,7 @@ CREATE TABLE estudiante (
                             estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
                             estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO',
                             id_plan INT,
-                            CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan) ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
-);
-
-
--- Tabla Estudiante
-CREATE TABLE estudiante (
-                            id_estudiante SERIAL PRIMARY KEY,
-                            nombre_estudiante VARCHAR(150) NOT NULL,
-                            email VARCHAR(150) NOT NULL UNIQUE,
-                            contraseña VARCHAR(100) NOT NULL,
-                            estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
-                            estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO',
-                            id_plan INT,
-                            estado_estudiante VARCHAR(255) NOT NULL DEFAULT 'ACTIVO',  -- Aquí se agrega la columna con valor por defecto
+                            estado_estudiante VARCHAR(255) NOT NULL DEFAULT 'ACTIVO',
                             CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan) ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
@@ -70,9 +55,20 @@ INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, esta
                                                                                                                           ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM', 'HABILITADO', 3, 'ACTIVO'),
                                                                                                                           ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO', 1, 'ACTIVO');
 
+-- Tabla Especialidad
+CREATE TABLE especialidades (
+                                id SERIAL PRIMARY KEY,
+                                nombre VARCHAR(150) NOT NULL,
+                                descripcion TEXT
+);
 
-
-
+-- Datos ficticios para Especialidad
+INSERT INTO especialidades (nombre, descripcion) VALUES
+                                                     ('Desarrollo de Software', 'Enfocado en la creación de aplicaciones y sistemas.'),
+                                                     ('Psicología Clínica', 'Orientada a la evaluación y tratamiento de problemas psicológicos.'),
+                                                     ('Medicina General', 'Formación en atención y prevención de enfermedades.'),
+                                                     ('Derecho Penal', 'Especialidad en normas y leyes del ámbito penal.'),
+                                                     ('Arquitectura Sostenible', 'Diseño de edificios respetuosos con el medio ambiente.');
 
 -- Tabla Mentor
 CREATE TABLE mentor (
@@ -164,29 +160,22 @@ INSERT INTO preguntas (pregunta, punto, id_prueba_vocacional) VALUES
                                                                   ('¿Te apasiona el diseño de edificios?', 5, 4),
                                                                   ('¿Te interesa el análisis estructural?', 4, 5);
 
--- Crear la tabla Respuestas
+-- Tabla Respuestas
 CREATE TABLE respuestas (
                             id_respuesta SERIAL PRIMARY KEY,
-                            opciones VARCHAR(150) NOT NULL
+                            texto VARCHAR(150) NOT NULL,
+                            es_correcta BOOLEAN NOT NULL,
+                            id_pregunta INT,
+                            FOREIGN KEY (id_pregunta) REFERENCES preguntas(id_pregunta)
 );
 
--- Paso 1: Agregar la columna sin restricción NOT NULL
-ALTER TABLE respuestas ADD COLUMN respuesta VARCHAR(255);
-
--- Paso 2: Actualizar los registros existentes
-UPDATE respuestas SET respuesta = 'default_value' WHERE respuesta IS NULL;
-
--- Paso 3: Cambiar la columna a NOT NULL
-ALTER TABLE respuestas ALTER COLUMN respuesta SET NOT NULL;
-
-
 -- Datos ficticios para Respuesta
-INSERT INTO respuestas (opciones) VALUES
-                                      ('Sí'),
-                                      ('No'),
-                                      ('Tal vez'),
-                                      ('No lo sé'),
-                                      ('Prefiero no decirlo');
+INSERT INTO respuestas (texto, es_correcta, id_pregunta) VALUES
+                                                             ('Sí', TRUE, 1),
+                                                             ('No', FALSE, 1),
+                                                             ('Tal vez', FALSE, 1),
+                                                             ('Sí', TRUE, 2),
+                                                             ('No', FALSE, 2);
 
 -- Tabla Reseña
 CREATE TABLE reseña (

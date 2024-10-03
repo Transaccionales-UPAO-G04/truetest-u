@@ -1,4 +1,4 @@
-package grupo04.truetestu.controller;
+package grupo04.truetestu.api;
 
 import grupo04.truetestu.dto.PreguntaDTO;
 import grupo04.truetestu.service.PreguntaService;

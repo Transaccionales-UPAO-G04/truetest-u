@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VisualizarEspecialidadRepository extends JpaRepository<Especialidad, Integer> {
     // Métodos personalizados de consulta, si es necesario.
+
 }
+

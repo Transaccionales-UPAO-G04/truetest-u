@@ -6,4 +6,3 @@ public enum EstadoEstudiante {
     SUSPENDIDO,
     GRADUADO
 }
-

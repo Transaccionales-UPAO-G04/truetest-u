@@ -2,10 +2,15 @@ package grupo04.truetestu.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class PreguntaDTO {
-    private Integer id;
+    private int id;
     private String texto;
-    private String tipo;  // Por ejemplo, si es una pregunta de opción múltiple, verdadera/falsa, etc.
+    private String tipo;
+    private List<RespuestaDTO> respuestas; // Lista de respuestas asociadas
 }
+
+
 

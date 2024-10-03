@@ -29,6 +29,10 @@ public class PruebaVocacional {
 
     @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
     private List<ResultadoPrueba> pruebas;
+
+    // Nueva relación con Pregunta
+    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
+    private List<Pregunta> preguntas; // Agregando relación con Pregunta
 }
 
 

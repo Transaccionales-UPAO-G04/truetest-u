@@ -1,8 +1,8 @@
 package grupo04.truetestu.model.entity;
 
 import grupo04.truetestu.model.enums.EstadoCuenta;
+import grupo04.truetestu.model.enums.EstadoEstudiante;
 import grupo04.truetestu.model.enums.EstadoPlan;
-import grupo04.truetestu.model.enums.EstadoEstudiante; // Asegúrate de importar esta clase
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,20 +24,24 @@ public class Estudiante {
     @Column(name = "contraseña", nullable = false, length = 100)
     private String contraseña;
 
+    // Permitir valor nulo para estadoPlan
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_plan", nullable = false)
-    private EstadoPlan estadoPlan = EstadoPlan.NOPREMIUM;
+    @Column(name = "estado_plan", nullable = true)  // Ahora permite valores nulos
+    private EstadoPlan estadoPlan;
 
+    // Permitir valor nulo para estadoCuenta
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_cuenta", nullable = false)
-    private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
+    @Column(name = "estado_cuenta", nullable = true)  // Ahora permite valores nulos
+    private EstadoCuenta estadoCuenta;
 
-    @Enumerated(EnumType.STRING) // Anotación para manejar la enumeración
-    @Column(name = "estado_estudiante", nullable = false)
+    // Permitir valor nulo para estadoEstudiante
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_estudiante", nullable = true)  // Ahora permite valores nulos
     private EstadoEstudiante estadoEstudiante;
 
+    // Permitir valor nulo para la relación con Plan
     @OneToOne
-    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan",
+    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", nullable = true,
             foreignKey = @ForeignKey(name = "FK_estudiante_plan"))
     private Plan plan;
 }

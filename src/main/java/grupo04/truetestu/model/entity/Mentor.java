@@ -15,16 +15,13 @@ public class Mentor {
     @Column(name = "nombre_mentor", nullable = false, length = 50)
     private String nombreMentor;
 
-    @Column(name = "experiencia", nullable = false)
-    private int experiencia;  // O usa Integer si quieres permitir valores nulos
+    @Column(name = "experiencia", nullable = true)  // Ahora permite valores nulos
+    private Integer experiencia;  // Cambiado a Integer para permitir valores nulos
 
     @Column(name = "especialidad", nullable = false, length = 50)
     private String especialidad;
 
-    @Column(name = "nro_asesorias", nullable = false)
-    private int nroAsesorias;
-
-    @Column(nullable = false)
-    private String disponibilidad;
-
+    @Column(name = "nro_asesorias", nullable = true)  // Ahora permite valores nulos
+    private Integer nroAsesorias;  // Cambiado a Integer para permitir valores nulos
 }
+

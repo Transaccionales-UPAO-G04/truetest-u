@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/especialidades")
+@RequestMapping("/Visualizar/especialidades")
 public class VisualizarEspecialidadController {
 
     private final VisualizarEspecialidadService especialidadService;

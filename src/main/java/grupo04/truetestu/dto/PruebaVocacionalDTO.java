@@ -13,6 +13,10 @@ public class PruebaVocacionalDTO {
     private String email;
     private int idEstudiante; // Asegúrate de que este campo existe y se inicializa correctamente
     private List<ResultadoPruebaDTO> pruebas;
+
+    // Agregamos una lista de preguntas
+    private List<PreguntaDTO> preguntas; // Nueva lista para las preguntas
 }
+
 
 

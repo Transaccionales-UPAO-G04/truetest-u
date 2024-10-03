@@ -17,5 +17,12 @@ public class Respuesta {
 
     @Column(nullable = false)
     private boolean esCorrecta;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pregunta", nullable = false)
+    private Pregunta pregunta; // Asociación con Pregunta
 }
+
+
+
 
