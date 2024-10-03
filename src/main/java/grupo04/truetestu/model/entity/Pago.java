@@ -1,5 +1,6 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
@@ -13,14 +14,6 @@ public class Pago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPago;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_pago_estudiante"))
-    private Estudiante estudiante;
-
-    @ManyToOne
-    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan"))
-    private Plan plan;
-
     @Column(name = "monto", nullable = false)
     private double monto;
 
@@ -29,5 +22,14 @@ public class Pago {
 
     @Column(name = "fecha_pago", nullable = false)
     private Date fechaPago;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_pago_estudiante"))
+    private Estudiante estudiante;
+
+    @OneToOne
+    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan"))
+    private Plan plan;
 }
 

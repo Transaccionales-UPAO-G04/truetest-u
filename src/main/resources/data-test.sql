@@ -12,8 +12,9 @@ DROP TABLE IF EXISTS estudiante CASCADE;
 DROP TABLE IF EXISTS carreras CASCADE;
 DROP TABLE IF EXISTS plan CASCADE;
 DROP TABLE IF EXISTS recurso CASCADE;
+DROP TABLE IF EXISTS especialidad CASCADE;
 
--- Crear las tablas
+-- Crear la tabla Plan
 CREATE TABLE plan (
                       id_plan SERIAL PRIMARY KEY,
                       nombre_plan VARCHAR(100) NOT NULL,
@@ -25,10 +26,7 @@ CREATE TABLE plan (
                       acceso_ilimitado BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- (El resto de tu script sigue aquí...)
-
-
--- Datos ficticios para Plan
+-- Insertar datos ficticios en la tabla Plan
 INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin, tipo_plan, acceso_ilimitado) VALUES
                                                                                                                    ('Plan No Premium Mensual', 9.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-01-31', 'Mensual', FALSE),
                                                                                                                    ('Plan Premium Mensual', 19.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-01-31', 'Mensual', TRUE),
@@ -36,7 +34,7 @@ INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin
                                                                                                                    ('Plan Premium Anual', 199.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-12-31', 'Anual', TRUE),
                                                                                                                    ('Plan Básico Anual', 49.99, 'Acceso a un número limitado de pruebas.', '2024-01-01', '2024-12-31', 'Anual', FALSE);
 
--- Tabla Carrera
+-- Crear la tabla Carrera
 CREATE TABLE carreras (
                           id_carrera SERIAL PRIMARY KEY,
                           nombre_carrera VARCHAR(150) NOT NULL,
@@ -44,7 +42,7 @@ CREATE TABLE carreras (
                           descripcion_carrera TEXT NOT NULL
 );
 
--- Datos ficticios para Carrera
+-- Insertar datos ficticios en la tabla Carrera
 INSERT INTO carreras (nombre_carrera, puntaje_aproximado, descripcion_carrera) VALUES
                                                                                    ('Ingeniería de Sistemas', 85, 'Carrera orientada a la tecnología y desarrollo de software.'),
                                                                                    ('Psicología', 70, 'Estudio del comportamiento humano.'),
@@ -52,43 +50,76 @@ INSERT INTO carreras (nombre_carrera, puntaje_aproximado, descripcion_carrera) V
                                                                                    ('Derecho', 80, 'Estudio de la ley y la justicia.'),
                                                                                    ('Arquitectura', 75, 'Diseño y construcción de edificaciones.');
 
--- Tabla Estudiante
+-- Crear la tabla Estudiante
 CREATE TABLE estudiante (
                             id_estudiante SERIAL PRIMARY KEY,
                             nombre_estudiante VARCHAR(150) NOT NULL,
                             email VARCHAR(150) NOT NULL UNIQUE,
                             contraseña VARCHAR(100) NOT NULL,
                             estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
-                            id_plan INT,
-                            CONSTRAINT FK_estudiante_plan FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
+                            estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO'
 );
 
--- Datos ficticios para Estudiante
-INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, id_plan) VALUES
-                                                                                                       ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM',  1),
-                                                                                                       ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM',  2),
-                                                                                                       ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM',  1),
-                                                                                                       ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM',  3),
-                                                                                                       ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM',  1);
+-- Insertar datos ficticios en la tabla Estudiante
+INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta) VALUES
+                                                                                              ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO'),
+                                                                                              ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO'),
+                                                                                              ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM', 'INHABILITADO'),
+                                                                                              ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM', 'HABILITADO'),
+                                                                                              ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO');
+-- Crear la tabla Pago
+CREATE TABLE pago (
+                      id_pago SERIAL PRIMARY KEY,
+                      monto DECIMAL(10,2) NOT NULL,
+                      metodo_pago VARCHAR(50) NOT NULL,
+                      fecha_pago DATE NOT NULL,
+                      id_estudiante INT NOT NULL,
+                      id_plan INT NOT NULL,
+                      FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE,
+                      FOREIGN KEY (id_plan) REFERENCES plan(id_plan) ON DELETE CASCADE
+);
 
--- Tabla Mentor
+-- Insertar datos ficticios en la tabla Pago
+INSERT INTO pago (monto, metodo_pago, fecha_pago, id_estudiante, id_plan) VALUES
+                                                                              (9.99, 'Tarjeta de Crédito', '2024-01-05', 1, 1),
+                                                                              (19.99, 'Paypal', '2024-01-06', 2, 2),
+                                                                              (9.99, 'Tarjeta de Débito', '2024-01-07', 3, 1),
+                                                                              (19.99, 'Paypal', '2024-01-08', 4, 3),
+                                                                              (49.99, 'Tarjeta de Crédito', '2024-01-09', 5, 4);
+
+-- Crear la tabla Especialidad
+CREATE TABLE especialidad (
+                              id_especialidad SERIAL PRIMARY KEY,
+                              nombre_especialidad VARCHAR(150) NOT NULL
+);
+
+-- Insertar datos ficticios en la tabla Especialidad
+INSERT INTO especialidad (nombre_especialidad) VALUES
+                                                   ('Ingeniería de Sistemas'),
+                                                   ('Psicología'),
+                                                   ('Derecho'),
+                                                   ('Arquitectura'),
+                                                   ('Medicina');
+
+-- Crear la tabla Mentor
 CREATE TABLE mentor (
                         id_mentor SERIAL PRIMARY KEY,
                         nombre_mentor VARCHAR(50) NOT NULL,
                         experiencia TEXT NOT NULL,
-                        especialidad VARCHAR(50) NOT NULL,
-                        nro_asesorias INT NOT NULL
+                        nro_asesorias INT NOT NULL,
+                        id_especialidad INT,
+                        FOREIGN KEY (id_especialidad) REFERENCES especialidad(id_especialidad)
 );
 
--- Datos ficticios para Mentor
-INSERT INTO mentor (nombre_mentor, experiencia, especialidad, nro_asesorias) VALUES
-                                                                                 ('Carlos Martínez', '10 años en desarrollo de software.', 'Ingeniería de Sistemas', 50),
-                                                                                 ('Ana López', 'Experta en orientación psicológica.', 'Psicología', 30),
-                                                                                 ('Luis Gómez', 'Especialista en derecho corporativo.', 'Derecho', 40),
-                                                                                 ('Elena Pérez', 'Arquitecta con 15 años de experiencia.', 'Arquitectura', 25),
-                                                                                 ('Javier Morales', 'Experto en diseño estructural.', 'Arquitectura', 20);
+-- Insertar datos ficticios en la tabla Mentor
+INSERT INTO mentor (nombre_mentor, experiencia, nro_asesorias, id_especialidad) VALUES
+                                                                                    ('Carlos Martínez', '10 años en desarrollo de software.', 50, 1),
+                                                                                    ('Ana López', 'Experta en orientación psicológica.', 30, 2),
+                                                                                    ('Luis Gómez', 'Especialista en derecho corporativo.', 40, 3),
+                                                                                    ('Elena Pérez', 'Arquitecta con 15 años de experiencia.', 25, 4),
+                                                                                    ('Javier Morales', 'Experto en diseño estructural.', 20, 4);
 
--- Tabla Horario
+-- Crear la tabla Horario
 CREATE TABLE horario (
                          id_horario SERIAL PRIMARY KEY,
                          dia_semana VARCHAR(20) NOT NULL,
@@ -98,7 +129,7 @@ CREATE TABLE horario (
                          FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
 );
 
--- Datos ficticios para Horario
+-- Insertar datos ficticios en la tabla Horario
 INSERT INTO horario (dia_semana, hora_inicio, hora_fin, id_mentor) VALUES
                                                                        ('Lunes', '09:00', '11:00', 1),
                                                                        ('Martes', '14:00', '16:00', 2),
@@ -106,16 +137,16 @@ INSERT INTO horario (dia_semana, hora_inicio, hora_fin, id_mentor) VALUES
                                                                        ('Jueves', '15:00', '17:00', 4),
                                                                        ('Viernes', '13:00', '15:00', 5);
 
--- Tabla PruebaVocacional
+-- Crear la tabla PruebaVocacional
 CREATE TABLE prueba_vocacional (
                                    id_prueba_vocacional SERIAL PRIMARY KEY,
                                    nro_prueba INT NOT NULL,
                                    fecha DATE NOT NULL,
                                    id_estudiante INT,
-                                   FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante)
+                                   FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE
 );
 
--- Datos ficticios para PruebaVocacional
+-- Insertar datos ficticios en la tabla PruebaVocacional
 INSERT INTO prueba_vocacional (nro_prueba, fecha, id_estudiante) VALUES
                                                                      (1, '2024-09-15', 1),
                                                                      (2, '2024-09-16', 2),
@@ -123,16 +154,16 @@ INSERT INTO prueba_vocacional (nro_prueba, fecha, id_estudiante) VALUES
                                                                      (4, '2024-09-18', 4),
                                                                      (5, '2024-09-19', 5);
 
--- Tabla Pregunta
+-- Crear la tabla Pregunta
 CREATE TABLE preguntas (
                            id_pregunta SERIAL PRIMARY KEY,
                            pregunta VARCHAR(250) NOT NULL,
                            punto INT NOT NULL,
                            id_prueba_vocacional INT,
-                           FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional)
+                           FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional) ON DELETE CASCADE
 );
 
--- Datos ficticios para Pregunta
+-- Insertar datos ficticios en la tabla Pregunta
 INSERT INTO preguntas (pregunta, punto, id_prueba_vocacional) VALUES
                                                                   ('¿Te interesa el desarrollo de software?', 5, 1),
                                                                   ('¿Te atrae el trabajo en equipo?', 3, 2),
@@ -140,13 +171,13 @@ INSERT INTO preguntas (pregunta, punto, id_prueba_vocacional) VALUES
                                                                   ('¿Te apasiona el diseño de edificios?', 5, 4),
                                                                   ('¿Te interesa el análisis estructural?', 4, 5);
 
--- Tabla Respuesta
+-- Crear la tabla Respuesta
 CREATE TABLE respuestas (
                             id_respuesta SERIAL PRIMARY KEY,
                             opciones VARCHAR(150) NOT NULL
 );
 
--- Datos ficticios para Respuesta
+-- Insertar datos ficticios en la tabla Respuesta
 INSERT INTO respuestas (opciones) VALUES
                                       ('Sí'),
                                       ('No'),
@@ -154,7 +185,7 @@ INSERT INTO respuestas (opciones) VALUES
                                       ('No lo sé'),
                                       ('Prefiero no decirlo');
 
--- Tabla Reseña
+-- Crear la tabla Reseña
 CREATE TABLE reseña (
                         id_reseña SERIAL PRIMARY KEY,
                         texto TEXT NOT NULL,
@@ -162,10 +193,10 @@ CREATE TABLE reseña (
                         id_mentor INT,
                         id_estudiante INT,
                         FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor),
-                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante)
+                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE
 );
 
--- Datos ficticios para Reseña
+-- Insertar datos ficticios en la tabla Reseña
 INSERT INTO reseña (texto, calificacion, id_mentor, id_estudiante) VALUES
                                                                        ('Gran mentor, muy recomendado.', 5, 1, 1),
                                                                        ('Muy profesional y atento.', 4, 2, 2),
@@ -173,16 +204,16 @@ INSERT INTO reseña (texto, calificacion, id_mentor, id_estudiante) VALUES
                                                                        ('Muy conocedor del tema.', 4, 4, 4),
                                                                        ('Ayuda invaluable en mi carrera.', 5, 5, 5);
 
--- Tabla ResultadoPrueba
+-- Crear la tabla ResultadoPrueba
 CREATE TABLE resultado_prueba (
                                   id_resultado_prueba SERIAL PRIMARY KEY,
                                   puntaje INT NOT NULL,
                                   recomendacion VARCHAR(150) NOT NULL,
                                   id_prueba_vocacional INT,
-                                  FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional)
+                                  FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional) ON DELETE CASCADE
 );
 
--- Datos ficticios para ResultadoPrueba
+-- Insertar datos ficticios en la tabla ResultadoPrueba
 INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALUES
                                                                                 (85, 'Recomendado para Ingeniería.', 1),
                                                                                 (70, 'Recomendado para Psicología.', 2),
@@ -190,48 +221,29 @@ INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALU
                                                                                 (75, 'Recomendado para Arquitectura.', 4),
                                                                                 (80, 'Recomendado para Diseño Estructural.', 5);
 
--- Tabla Sesion
--- Crear la tabla sesion con las columnas y relaciones correctas
+-- Crear la tabla Sesion
 CREATE TABLE sesion (
                         id_sesion SERIAL PRIMARY KEY,
                         fecha_hora TIMESTAMP NOT NULL,
                         duracion TIME NOT NULL,
-                        link VARCHAR(255) NOT NULL,  -- Agregamos la columna 'link'
-                        id_mentor INT,               -- Referencia al mentor
-                        id_estudiante INT,           -- Agregamos la columna para la relación con 'Estudiante'
-                        id_horario INT,              -- Agregamos la columna para la relación con 'Horario'
+                        link VARCHAR(255) NOT NULL,
+                        id_mentor INT,
+                        id_estudiante INT,
+                        id_horario INT,
                         FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor),
-                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
+                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE,
                         FOREIGN KEY (id_horario) REFERENCES horario(id_horario)
 );
 
--- Insertar datos ficticios para la tabla sesion
+-- Insertar datos ficticios en la tabla Sesion
 INSERT INTO sesion (fecha_hora, duracion, link, id_mentor, id_estudiante, id_horario) VALUES
-                                                                                          ('2024-09-15 10:00', '01:00:00',  'https://example.com/session1', 1, 1, 1),
-                                                                                          ('2024-09-16 14:00', '02:00:00',  'https://example.com/session2', 2, 2, 2),
-                                                                                          ('2024-09-17 10:00', '01:30:00',  'https://example.com/session3', 3, 3, 3),
-                                                                                          ('2024-09-18 15:00', '01:15:00',  'https://example.com/session4', 4, 4, 4),
-                                                                                          ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
+                                                                                          ('2024-09-15 10:00', '01:00:00', 'https://example.com/session1', 1, 1, 1),
+                                                                                          ('2024-09-16 14:00', '02:00:00', 'https://example.com/session2', 2, 2, 2),
+                                                                                          ('2024-09-17 10:00', '01:30:00', 'https://example.com/session3', 3, 3, 3),
+                                                                                          ('2024-09-18 15:00', '01:15:00', 'https://example.com/session4', 4, 4, 4),
+                                                                                          ('2024-09-19 13:00', '00:45:00', 'https://example.com/session5', 5, 5, 5);
 
-
--- Tabla Pago
-CREATE TABLE pago (
-                      id_pago SERIAL PRIMARY KEY,
-                      monto DECIMAL(10,2) NOT NULL,
-                      fecha_pago DATE NOT NULL,
-                      id_estudiante INT,
-                      FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante)
-);
-
--- Datos ficticios para Pago
-INSERT INTO pago (monto, fecha_pago, id_estudiante) VALUES
-                                                        (9.99, '2024-01-05', 1),
-                                                        (19.99, '2024-01-06', 2),
-                                                        (9.99, '2024-01-07', 3),
-                                                        (19.99, '2024-01-08', 4),
-                                                        (49.99, '2024-01-09', 5);
-
--- Tabla Recurso
+-- Crear la tabla Recurso
 CREATE TABLE recurso (
                          id_recurso SERIAL PRIMARY KEY,
                          link_recurso VARCHAR(300) NOT NULL,
@@ -239,15 +251,14 @@ CREATE TABLE recurso (
                          es_favorito BOOLEAN NOT NULL,
                          id_estudiante INT,
                          id_mentor INT,
-                         CONSTRAINT FK_recurso_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
-                         CONSTRAINT FK_recurso_mentor FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
+                         FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
+                         FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
 );
 
--- Insertar algunos datos de ejemplo
-INSERT INTO recurso (link_recurso, es_premium, es_favorito, id_estudiante, id_mentor)
-VALUES
-    ('http://example.com/recurso1', TRUE, FALSE, 1, 1),
-    ('http://example.com/recurso2', FALSE, TRUE, 2, 2),
-    ('http://example.com/recurso3', TRUE, TRUE, 1, 3),
-    ('http://example.com/recurso4', FALSE, FALSE, 3, 1),
-    ('http://example.com/recurso5', TRUE, FALSE, 2, 3);
+-- Insertar datos ficticios en la tabla Recurso
+INSERT INTO recurso (link_recurso, es_premium, es_favorito, id_estudiante, id_mentor) VALUES
+                                                                                          ('http://example.com/recurso1', TRUE, FALSE, 1, 1),
+                                                                                          ('http://example.com/recurso2', FALSE, TRUE, 2, 2),
+                                                                                          ('http://example.com/recurso3', TRUE, TRUE, 1, 3),
+                                                                                          ('http://example.com/recurso4', FALSE, FALSE, 3, 1),
+                                                                                          ('http://example.com/recurso5', TRUE, FALSE, 2, 3);

@@ -35,8 +35,6 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         // Mapear los datos del DTO a la entidad.
         pruebaVocacional.setNroPrueba(pruebaVocacionalDto.getNroPrueba());
         pruebaVocacional.setFecha(pruebaVocacionalDto.getFecha());
-        pruebaVocacional.setNombre(pruebaVocacionalDto.getNombre());
-        pruebaVocacional.setEmail(pruebaVocacionalDto.getEmail());
 
         // Buscar y asignar el estudiante.
         Estudiante estudiante = estudianteRepository.findById(pruebaVocacionalDto.getIdEstudiante())
@@ -87,8 +85,6 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         return pruebaVocacionalRepository.findById(id).map(existing -> {
             existing.setNroPrueba(pruebaVocacionalDto.getNroPrueba());
             existing.setFecha(pruebaVocacionalDto.getFecha());
-            existing.setNombre(pruebaVocacionalDto.getNombre());
-            existing.setEmail(pruebaVocacionalDto.getEmail());
 
             Estudiante estudiante = estudianteRepository.findById(pruebaVocacionalDto.getIdEstudiante())
                     .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: "
@@ -121,8 +117,6 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         dto.setIdPruebaVocacional(pruebaVocacional.getIdPruebaVocacional());
         dto.setNroPrueba(pruebaVocacional.getNroPrueba());
         dto.setFecha(pruebaVocacional.getFecha());
-        dto.setNombre(pruebaVocacional.getNombre());
-        dto.setEmail(pruebaVocacional.getEmail());
         dto.setIdEstudiante(pruebaVocacional.getEstudiante().getIdEstudiante());
         dto.setPruebas(pruebaVocacional.getPruebas().stream()
                 .map(resultado -> {

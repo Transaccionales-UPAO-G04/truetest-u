@@ -25,6 +25,5 @@ public class Plan {
     @Column(name = "fecha_inicio", nullable = false)
     private Date fechaInicio;
 
-    @Column(name = "fecha_fin")
-    private Date fechaFin;
+
 }
