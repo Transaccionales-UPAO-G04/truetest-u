@@ -1,6 +1,7 @@
 package grupo04.truetestu.service;
 
 import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface EstudianteService {
 
     Estudiante sesionEstudiante(Estudiante estudiante);//iniciar sesion
     void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan);
-    void deleteEstudiante(int id);
+    void cambiarCuenta(int id, EstadoCuenta nuevoEstadoCuenta);
 }

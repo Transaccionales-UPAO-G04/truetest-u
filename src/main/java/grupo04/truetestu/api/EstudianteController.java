@@ -1,6 +1,7 @@
 package grupo04.truetestu.api;
 
 import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.service.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,12 @@ public class EstudianteController {
         return ResponseEntity.ok().build();
     }
 
-    // Eliminar un mentor
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEstudiante(@PathVariable int id) {
-        estudianteService.deleteEstudiante(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+  //inhabilitar mentor
+  @PatchMapping("/{id}/cambiar-estadoCuenta")
+  public ResponseEntity<?> cambiarCuenta(@PathVariable int id, @RequestParam EstadoCuenta cambioEstadoCuenta) {
+      estudianteService.cambiarCuenta(id, cambioEstadoCuenta);
+      return ResponseEntity.ok().build();
+  }
 
     @PutMapping("/{id}")
     public ResponseEntity<Estudiante> updateEstudiante(@PathVariable int id,

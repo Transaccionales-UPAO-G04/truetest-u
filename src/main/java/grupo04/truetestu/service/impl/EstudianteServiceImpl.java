@@ -1,6 +1,7 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
@@ -68,12 +69,11 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
     @Override
-    @Transactional
-    public void deleteEstudiante(int id) {
-        estudianteRepository.deleteById(id);
+    public void cambiarCuenta(int id, EstadoCuenta nuevoEstadoCuenta) { //iniciar sesion
+        Estudiante estudiante = findById(id);
+        estudiante.setEstadoCuenta(nuevoEstadoCuenta);
+        estudianteRepository.save(estudiante);
     }
-    
-    
 
 
 }
