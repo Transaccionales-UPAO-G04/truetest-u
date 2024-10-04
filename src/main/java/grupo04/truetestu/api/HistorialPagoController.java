@@ -1,7 +1,7 @@
 package grupo04.truetestu.api;
 
 import grupo04.truetestu.model.entity.HistorialPago;
-import grupo04.truetestu.service.impl.HistorialPagoService;
+import grupo04.truetestu.service.HistorialPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

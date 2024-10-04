@@ -33,5 +33,3 @@ public class Estudiante {
             foreignKey = @ForeignKey(name = "FK_estudiante_plan"))
     private Plan plan;
 }
-
-

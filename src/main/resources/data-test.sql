@@ -214,22 +214,23 @@ INSERT INTO sesion (fecha_hora, duracion, link, id_mentor, id_estudiante, id_hor
                                                                                           ('2024-09-19 13:00', '00:45:00',  'https://example.com/session5', 5, 5, 5);
 
 
--- Tabla Pago
 CREATE TABLE pago (
                       id_pago SERIAL PRIMARY KEY,
                       monto DECIMAL(10,2) NOT NULL,
                       fecha_pago DATE NOT NULL,
                       id_estudiante INT,
+                      estado_pago VARCHAR(50) NOT NULL, -- Nuevo campo
+                      metodo_pago VARCHAR(50) NOT NULL, -- Nuevo campo
                       FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante)
 );
 
 -- Datos ficticios para Pago
-INSERT INTO pago (monto, fecha_pago, id_estudiante) VALUES
-                                                        (9.99, '2024-01-05', 1),
-                                                        (19.99, '2024-01-06', 2),
-                                                        (9.99, '2024-01-07', 3),
-                                                        (19.99, '2024-01-08', 4),
-                                                        (49.99, '2024-01-09', 5);
+INSERT INTO pago (monto, fecha_pago, id_estudiante, estado_pago, metodo_pago) VALUES
+                                                                                  (9.99, '2024-01-05', 1, 'Completado', 'Tarjeta de Crédito'),
+                                                                                  (19.99, '2024-01-06', 2, 'Completado', 'Tarjeta de Débito'),
+                                                                                  (9.99, '2024-01-07', 3, 'Pendiente', 'Transferencia Bancaria'),
+                                                                                  (19.99, '2024-01-08', 4, 'Completado', 'Tarjeta de Crédito'),
+                                                                                  (49.99, '2024-01-09', 5, 'Fallido', 'Efectivo');
 
 -- Tabla Recurso
 CREATE TABLE recurso (
@@ -268,8 +269,31 @@ CREATE TABLE historial_pago (
 
 -- Datos ficticios para Historial de Pago
 INSERT INTO historial_pago (id_pago, id_estudiante, fecha, monto, metodo_pago, estado_pago) VALUES
-                                                                                                (1, 1, NOW(), 19.99, 'Tarjeta de Crédito', 'Completado'),
+                                                                                                (1, 247, NOW(), 19.99, 'Tarjeta de Crédito', 'Completado'),
                                                                                                 (2, 2, NOW(), 9.99, 'PayPal', 'Pendiente'),
                                                                                                 (3, 3, NOW(), 199.99, 'Transferencia Bancaria', 'Completado'),
                                                                                                 (4, 4, NOW(), 49.99, 'Tarjeta de Crédito', 'Completado'),
                                                                                                 (5, 5, NOW(), 99.99, 'PayPal', 'Pendiente');
+
+
+CREATE TABLE compras (
+                        id_compra SERIAL PRIMARY KEY,
+                        id_estudiante INT NOT NULL,
+                        id_plan INT NOT NULL,
+                        fecha_compra DATE NOT NULL,
+                        estado_compra VARCHAR(50) NOT NULL,
+                        metodo_pago VARCHAR(50) NOT NULL,
+                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
+                        FOREIGN KEY (id_plan) REFERENCES plan(id_plan)
+);
+
+
+-- Datos ficticios para la tabla Compra
+INSERT INTO compra (id_estudiante, id_plan, fecha_compra, estado_compra, metodo_pago) VALUES
+                                                                                          (1, 2, '2024-01-05', 'Completado', 'Tarjeta de Crédito'),
+                                                                                          (2, 1, '2024-01-06', 'Completado', 'Tarjeta de Débito'),
+                                                                                          (3, 3, '2024-01-07', 'Pendiente', 'Transferencia Bancaria'),
+                                                                                          (4, 2, '2024-01-08', 'Fallido', 'Efectivo'),
+                                                                                          (5, 1, '2024-01-09', 'Completado', 'Tarjeta de Crédito');
+
+
