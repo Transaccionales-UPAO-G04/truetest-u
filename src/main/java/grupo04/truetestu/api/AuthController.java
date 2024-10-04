@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final EstudianteService estudianteService;
-
-    @PostMapping("/register")
+@PostMapping("/register")
     public ResponseEntity<Estudiante> register(@RequestBody @Valid Estudiante estudiante) {
         Estudiante newEstudiante = estudianteService.registerEstudiante(estudiante);
         return new ResponseEntity<>(newEstudiante, HttpStatus.CREATED);
@@ -31,15 +30,5 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam String email,
-                                                 @RequestParam String currentPassword,
-                                                 @RequestParam String newPassword) {
-        try {
-            estudianteService.changePassword(email, currentPassword, newPassword);
-            return ResponseEntity.ok("La contraseña ha sido actualizada con éxito.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
+
 }
