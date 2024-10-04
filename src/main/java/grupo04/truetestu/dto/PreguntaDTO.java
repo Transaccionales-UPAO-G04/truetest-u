@@ -6,10 +6,12 @@ import java.util.List;
 
 @Data
 public class PreguntaDTO {
-    private int id;
-    private String texto;
+    private Integer id;
+    private String texto; // Este puede corresponder al contenido de la Pregunta
     private String tipo;
-    private List<RespuestaDTO> respuestas; // Lista de respuestas asociadas
+    private List<RespuestaDTO> respuestas;// Lista de respuestas asociadas
+    private List<PreguntaDTO> preguntas;
+
 }
 
 

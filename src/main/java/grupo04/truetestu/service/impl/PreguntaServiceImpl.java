@@ -1,6 +1,7 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.dto.PreguntaDTO;
+import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.model.entity.Pregunta;
 import grupo04.truetestu.repository.PreguntaRepository;
 import grupo04.truetestu.service.PreguntaService;
@@ -21,9 +22,13 @@ public class PreguntaServiceImpl implements PreguntaService {
     @Transactional
     @Override
     public PreguntaDTO create(PreguntaDTO preguntaDTO) {
-        Pregunta pregunta = convertToEntity(preguntaDTO);
-        Pregunta nuevaPregunta = preguntaRepository.save(pregunta);
-        return convertToDTO(nuevaPregunta);
+        Pregunta pregunta = new Pregunta();
+        pregunta.setTexto(preguntaDTO.getTexto());
+        pregunta.setTipo(preguntaDTO.getTipo());
+        // Otros campos si es necesario
+
+        Pregunta savedPregunta = preguntaRepository.save(pregunta);
+        return convertToDTO(savedPregunta);
     }
 
     @Transactional(readOnly = true)
@@ -43,11 +48,12 @@ public class PreguntaServiceImpl implements PreguntaService {
 
     @Transactional
     @Override
-    public Optional<PreguntaDTO> update(Integer id, PreguntaDTO preguntaDTO) {
+    public Optional<PreguntaDTO> update(Integer id, PreguntaDTO nuevaPreguntaDTO) {
         return preguntaRepository.findById(id)
                 .map(existing -> {
-                    existing.setTexto(preguntaDTO.getTexto());  // Asegúrate de que existan los getters y setters
-                    existing.setTipo(preguntaDTO.getTipo());  // Asegúrate de que existan los getters y setters
+                    existing.setTexto(nuevaPreguntaDTO.getTexto());
+                    existing.setTipo(nuevaPreguntaDTO.getTipo());
+                    // Otras actualizaciones según sea necesario
                     Pregunta updatedPregunta = preguntaRepository.save(existing);
                     return convertToDTO(updatedPregunta);
                 });
@@ -56,23 +62,23 @@ public class PreguntaServiceImpl implements PreguntaService {
     @Transactional
     @Override
     public void delete(Integer id) {
+        if (!preguntaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Pregunta no encontrada con id: " + id);
+        }
         preguntaRepository.deleteById(id);
     }
 
+    // Método que convierte Pregunta a PreguntaDTO
     private PreguntaDTO convertToDTO(Pregunta pregunta) {
         PreguntaDTO dto = new PreguntaDTO();
         dto.setId(pregunta.getId());
         dto.setTexto(pregunta.getTexto());
         dto.setTipo(pregunta.getTipo());
+        // Otros campos si es necesario
         return dto;
     }
-
-    private Pregunta convertToEntity(PreguntaDTO dto) {
-        Pregunta pregunta = new Pregunta();
-        pregunta.setTexto(dto.getTexto());
-        pregunta.setTipo(dto.getTipo());
-        return pregunta;
-    }
 }
+
+
 
 

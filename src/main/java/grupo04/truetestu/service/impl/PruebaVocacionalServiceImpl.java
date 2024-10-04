@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +32,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     @Transactional
     @Override
     public PruebaVocacionalDTO create(PruebaVocacionalDTO pruebaVocacionalDTO) {
+        // Crear nueva instancia de PruebaVocacional
         PruebaVocacional pruebaVocacional = new PruebaVocacional();
         pruebaVocacional.setNroPrueba(pruebaVocacionalDTO.getNroPrueba());
         pruebaVocacional.setFecha(pruebaVocacionalDTO.getFecha());
@@ -57,14 +59,16 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
                                 return respuesta;
                             }).collect(Collectors.toList());
 
-                    pregunta.setRespuestas(respuestas); // Asignar las respuestas a la pregunta
+                    pregunta.setRespuestas(respuestas); // Asignar respuestas a la pregunta
                     pregunta.setPruebaVocacional(pruebaVocacional); // Asignar la prueba a la pregunta
                     return pregunta;
                 }).collect(Collectors.toList());
 
         pruebaVocacional.setPreguntas(preguntas); // Asignar preguntas a la prueba vocacional
 
+        // Guardar la prueba vocacional
         PruebaVocacional savedPruebaVocacional = pruebaVocacionalRepository.save(pruebaVocacional);
+
         return convertToDTO(savedPruebaVocacional);
     }
 
@@ -102,7 +106,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         pruebaVocacionalRepository.deleteById(id);
     }
 
-    // Métodos auxiliares para conversión
+    // Método que convierte PruebaVocacional a PruebaVocacionalDTO
     private PruebaVocacionalDTO convertToDTO(PruebaVocacional pruebaVocacional) {
         PruebaVocacionalDTO dto = new PruebaVocacionalDTO();
         dto.setIdPruebaVocacional(pruebaVocacional.getIdPruebaVocacional());
@@ -110,14 +114,24 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         dto.setFecha(pruebaVocacional.getFecha());
         dto.setIdEstudiante(pruebaVocacional.getEstudiante().getIdEstudiante());
 
+        // Asegúrate de incluir el nombre del estudiante si está disponible
+        if (pruebaVocacional.getEstudiante() != null &&
+                pruebaVocacional.getEstudiante().getNombreEstudiante() != null) {
+            dto.setNombreEstudiante(pruebaVocacional.getEstudiante().getNombreEstudiante());
+        }
+
         // Convertir los resultados de la prueba
-        dto.setPruebas(pruebaVocacional.getPruebas().stream()
-                .map(result -> {
-                    ResultadoPruebaDTO resultDto = new ResultadoPruebaDTO();
-                    resultDto.setPuntaje(result.getPuntaje());
-                    resultDto.setRecomendacion(result.getRecomendacion());
-                    return resultDto;
-                }).collect(Collectors.toList()));
+        if (pruebaVocacional.getResultados() != null) { // Verificar que la lista no sea nula
+            dto.setPruebas(pruebaVocacional.getResultados().stream()
+                    .map(result -> {
+                        ResultadoPruebaDTO resultDto = new ResultadoPruebaDTO();
+                        resultDto.setPuntaje(result.getPuntaje());
+                        resultDto.setRecomendacion(result.getRecomendacion());
+                        return resultDto;
+                    }).collect(Collectors.toList()));
+        } else {
+            dto.setPruebas(Collections.emptyList()); // O establece como lista vacía si es nula
+        }
 
         // Convertir las preguntas
         dto.setPreguntas(pruebaVocacional.getPreguntas().stream()
@@ -141,43 +155,9 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
         return dto;
     }
-
-    private PruebaVocacional convertToEntity(PruebaVocacionalDTO dto) {
-        PruebaVocacional pruebaVocacional = new PruebaVocacional();
-        pruebaVocacional.setNroPrueba(dto.getNroPrueba());
-        pruebaVocacional.setFecha(dto.getFecha());
-
-        // Buscar y asignar el estudiante
-        Estudiante estudiante = estudianteRepository.findById(dto.getIdEstudiante())
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + dto.getIdEstudiante()));
-        pruebaVocacional.setEstudiante(estudiante);
-
-        // Mapear las preguntas y respuestas
-        List<Pregunta> preguntas = dto.getPreguntas().stream()
-                .map(preguntaDTO -> {
-                    Pregunta pregunta = new Pregunta();
-                    pregunta.setTexto(preguntaDTO.getTexto());
-                    pregunta.setTipo(preguntaDTO.getTipo());
-
-                    List<Respuesta> respuestas = preguntaDTO.getRespuestas().stream()
-                            .map(respuestaDTO -> {
-                                Respuesta respuesta = new Respuesta();
-                                respuesta.setTexto(respuestaDTO.getTexto());
-                                respuesta.setEsCorrecta(respuestaDTO.isEsCorrecta());
-                                respuesta.setPregunta(pregunta); // Asignar la pregunta a la respuesta
-                                return respuesta;
-                            }).collect(Collectors.toList());
-
-                    pregunta.setRespuestas(respuestas); // Asignar las respuestas a la pregunta
-                    pregunta.setPruebaVocacional(pruebaVocacional); // Asignar la prueba a la pregunta
-                    return pregunta;
-                }).collect(Collectors.toList());
-
-        pruebaVocacional.setPreguntas(preguntas); // Asignar preguntas a la prueba vocacional
-
-        return pruebaVocacional;
-    }
 }
+
+
 
 
 

@@ -135,13 +135,13 @@ CREATE TABLE prueba_vocacional (
                                    FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante)
 );
 
--- Datos ficticios para PruebaVocacional
-INSERT INTO prueba_vocacional (nro_prueba, fecha, id_estudiante) VALUES
-                                                                     (1, '2024-09-15', 1),
-                                                                     (2, '2024-09-16', 2),
-                                                                     (3, '2024-09-17', 3),
-                                                                     (4, '2024-09-18', 4),
-                                                                     (5, '2024-09-19', 5);
+INSERT INTO prueba_vocacional (id_prueba_vocacional, nro_prueba, fecha, id_estudiante) VALUES
+                                                                                           (1, 1, '2024-09-15', 1),
+                                                                                           (2, 2, '2024-09-16', 2),
+                                                                                           (3, 3, '2024-09-17', 3),
+                                                                                           (4, 4, '2024-09-18', 4),
+                                                                                           (5, 5, '2024-09-19', 5);
+
 
 -- Tabla Pregunta
 CREATE TABLE preguntas (
@@ -152,13 +152,14 @@ CREATE TABLE preguntas (
                            FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional)
 );
 
--- Datos ficticios para Pregunta
-INSERT INTO preguntas (pregunta, punto, id_prueba_vocacional) VALUES
-                                                                  ('¿Te interesa el desarrollo de software?', 5, 1),
-                                                                  ('¿Te atrae el trabajo en equipo?', 3, 2),
-                                                                  ('¿Te gustaría trabajar en la administración pública?', 4, 3),
-                                                                  ('¿Te apasiona el diseño de edificios?', 5, 4),
-                                                                  ('¿Te interesa el análisis estructural?', 4, 5);
+INSERT INTO resultado_prueba (id_resultado_prueba, puntaje, recomendacion, id_prueba_vocacional) VALUES
+                                                                                                     (1, 85, 'Recomendado para Ingeniería.', 1),
+                                                                                                     (2, 70, 'Recomendado para Psicología.', 2),
+                                                                                                     (3, 90, 'Recomendado para Derecho.', 3),
+                                                                                                     (4, 75, 'Recomendado para Arquitectura.', 4),
+                                                                                                     (5, 80, 'Recomendado para Diseño Estructural.', 5);
+
+
 
 -- Tabla Respuestas
 CREATE TABLE respuestas (

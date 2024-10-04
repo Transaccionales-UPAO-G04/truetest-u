@@ -1,27 +1,26 @@
 package grupo04.truetestu.model.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import jakarta.persistence.*;
 
 @Data
 @Entity
-@Table(name = "respuestas")
+@Table(name = "respuesta")
 public class Respuesta {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id; // Asegúrate de que este campo exista y tenga un tipo Integer
 
-    @Column(nullable = false)  // Esto dice que no puede ser NULL en la base de datos
-    private String texto;
-
-    @Column(nullable = false)
-    private boolean esCorrecta;
+    private String texto; // Asegúrate de que este campo exista y tenga un tipo String
+    private boolean esCorrecta; // Asegúrate de que este campo exista y tenga un tipo boolean
 
     @ManyToOne
-    @JoinColumn(name = "id_pregunta", nullable = false)
-    private Pregunta pregunta; // Asociación con Pregunta
+    @JoinColumn(name = "id_pregunta")
+    private Pregunta pregunta;
+
+    // Métodos getters y setters generados por Lombok (con @Data)
 }
+
 
 
 

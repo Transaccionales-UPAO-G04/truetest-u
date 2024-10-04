@@ -1,22 +1,25 @@
 package grupo04.truetestu.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class PruebaVocacionalDTO {
-    private int idPruebaVocacional;
-    private int nroPrueba;
+    private Integer idPruebaVocacional;
+    private Integer nroPrueba;
     private LocalDate fecha;
-    private String nombre;
-    private String email;
-    private int idEstudiante; // Asegúrate de que este campo existe y se inicializa correctamente
-    private List<ResultadoPruebaDTO> pruebas;
+    private Integer idEstudiante;
+    private String nombreEstudiante; // Este campo debe existir
 
-    // Agregamos una lista de preguntas
-    private List<PreguntaDTO> preguntas; // Nueva lista para las preguntas
+    private List<PreguntaDTO> preguntas;
+    private List<ResultadoPruebaDTO> pruebas;
 }
+
+
 
 
 

@@ -13,6 +13,7 @@ public class PruebaVocacional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_prueba_vocacional")
     private int idPruebaVocacional;
 
     @Column(name = "nro_prueba", nullable = false)
@@ -28,11 +29,9 @@ public class PruebaVocacional {
     private Estudiante estudiante;
 
     @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
-    private List<ResultadoPrueba> pruebas;
+    private List<ResultadoPrueba> resultados;
 
-    // Nueva relación con Pregunta
     @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
-    private List<Pregunta> preguntas; // Agregando relación con Pregunta
+    private List<Pregunta> preguntas; // Relación con Pregunta
 }
-
 
