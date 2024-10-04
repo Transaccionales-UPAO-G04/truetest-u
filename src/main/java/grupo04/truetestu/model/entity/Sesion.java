@@ -36,5 +36,4 @@ public class Sesion {
     @JoinColumn(name = "id_horario", referencedColumnName = "idHorario",
             foreignKey = @ForeignKey(name = "FK_sesion_horario"))
     private Horario horario;
-
 }

@@ -227,21 +227,19 @@ CREATE TABLE sesion (
                         fecha_hora TIMESTAMP NOT NULL,
                         duracion TIME NOT NULL,
                         link VARCHAR(255) NOT NULL,
-                        id_mentor INT,
                         id_estudiante INT,
                         id_horario INT,
-                        FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor),
                         FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE,
-                        FOREIGN KEY (id_horario) REFERENCES horario(id_horario)
+                        FOREIGN KEY (id_horario) REFERENCES horario(id_horario) ON DELETE CASCADE
 );
 
 -- Insertar datos ficticios en la tabla Sesion
-INSERT INTO sesion (fecha_hora, duracion, link, id_mentor, id_estudiante, id_horario) VALUES
-                                                                                          ('2024-09-15 10:00', '01:00:00', 'https://example.com/session1', 1, 1, 1),
-                                                                                          ('2024-09-16 14:00', '02:00:00', 'https://example.com/session2', 2, 2, 2),
-                                                                                          ('2024-09-17 10:00', '01:30:00', 'https://example.com/session3', 3, 3, 3),
-                                                                                          ('2024-09-18 15:00', '01:15:00', 'https://example.com/session4', 4, 4, 4),
-                                                                                          ('2024-09-19 13:00', '00:45:00', 'https://example.com/session5', 5, 5, 5);
+INSERT INTO sesion (fecha_hora, duracion, link, id_estudiante, id_horario) VALUES
+                                                                               ('2024-09-15 10:00:00', '01:00:00', 'https://example.com/session1', 1, 1),
+                                                                               ('2024-09-16 14:00:00', '02:00:00', 'https://example.com/session2', 2, 2),
+                                                                               ('2024-09-17 10:00:00', '01:30:00', 'https://example.com/session3', 3, 3),
+                                                                               ('2024-09-18 15:00:00', '01:15:00', 'https://example.com/session4', 4, 4),
+                                                                               ('2024-09-19 13:00:00', '00:45:00', 'https://example.com/session5', 5, 5);
 
 -- Crear la tabla Recurso
 CREATE TABLE recurso (

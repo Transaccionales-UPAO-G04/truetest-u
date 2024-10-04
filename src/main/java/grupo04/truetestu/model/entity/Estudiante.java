@@ -42,6 +42,7 @@ public class Estudiante {
 
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recurso> recursos;
+
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sesion> sesiones;
 }
-
-
