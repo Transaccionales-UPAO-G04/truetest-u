@@ -5,13 +5,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "reseña")
-public class Reseña {
+@Table(name = "resena")
+public class Resena {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reseña")
-    private int idReseña;
+    @Column(name = "id_resena")
+    private int idResena;
 
     @Column(name = "texto", nullable = false, columnDefinition = "TEXT")
     private String texto;
@@ -19,19 +19,17 @@ public class Reseña {
     @Column(name = "calificacion", nullable = false)
     private int calificacion;
 
-
     // Relación con Mentor (Many-to-One)
     @ManyToOne
-    @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
-            foreignKey = @ForeignKey(name = "FK_reseña_mentor"))
+    @JoinColumn(name = "id_mentor", referencedColumnName = "idmentor", // Cambiado a "id_mentor"
+            foreignKey = @ForeignKey(name = "FK_resena_mentor"))
     private Mentor mentor;
 
     // Relación con Estudiante (Many-to-One)
     @ManyToOne
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
-            foreignKey = @ForeignKey(name = "FK_reseña_estudiante"))
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idestudiante",
+            foreignKey = @ForeignKey(name = "FK_resena_estudiante"))
     private Estudiante estudiante;
-
 }
 
 

@@ -1,5 +1,6 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // Asegúrate de incluir esta línea si no está presente
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,9 +25,18 @@ public class Pregunta {
         private List<Respuesta> respuestas; // Respuestas relacionadas con la pregunta
 
         @ManyToOne
-        @JoinColumn(name = "id_prueba_vocacional", nullable = false)
-        private PruebaVocacional pruebaVocacional; // Asociación con PruebaVocacional
+        @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
+                foreignKey = @ForeignKey(name = "FK_pregunta_prueba-vocacional"),
+                nullable = false) // Asociación con PruebaVocacional
+        private PruebaVocacional pruebaVocacional;
+
+        @JsonIgnore // Ignorar en la serialización JSON
+        @ManyToOne
+        @JoinColumn(name = "id_carrera", referencedColumnName = "idCarrera",
+                foreignKey = @ForeignKey(name = "FK_pregunta_carrera"))
+        private Carrera carrera; // Asociación con Carrera
 }
+
 
 
 

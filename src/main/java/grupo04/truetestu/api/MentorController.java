@@ -3,6 +3,7 @@ package grupo04.truetestu.api;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.service.MentorService;
 import lombok.RequiredArgsConstructor;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class MentorController {
 
     // Crear un nuevo mentor
     @PostMapping
-    public ResponseEntity<Mentor> createMentor(@RequestBody Mentor mentor) {
+    public ResponseEntity<Mentor> createMentor(@RequestBody @Valid Mentor mentor) {
         Mentor nuevoMentor = mentorService.createMentor(mentor);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoMentor);  // Devuelve 201 Created
     }
@@ -79,5 +80,7 @@ public class MentorController {
                 mentor.getEspecialidad(), mentor.getExperiencia() - 2, mentor.getExperiencia() + 2);
         return ResponseEntity.ok(mentoresSimilares);  // Devuelve mentores similares
     }
+
 }
+
 

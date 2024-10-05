@@ -4,6 +4,7 @@ import grupo04.truetestu.dto.ResultadoPruebaDTO;
 import grupo04.truetestu.dto.PruebaVocacionalDTO;
 import grupo04.truetestu.dto.PreguntaDTO;
 import grupo04.truetestu.dto.RespuestaDTO;
+import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.model.entity.PruebaVocacional;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.entity.ResultadoPrueba;
@@ -12,7 +13,6 @@ import grupo04.truetestu.model.entity.Respuesta;
 import grupo04.truetestu.repository.PruebaVocacionalRepository;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.PruebaVocacionalService;
-import grupo04.truetestu.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         pruebaVocacional.setNroPrueba(pruebaVocacionalDTO.getNroPrueba());
         pruebaVocacional.setFecha(pruebaVocacionalDTO.getFecha());
 
-        // Asignar el estudiante
+        // Buscar y asignar el estudiante
         Estudiante estudiante = estudianteRepository.findById(pruebaVocacionalDTO.getIdEstudiante())
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + pruebaVocacionalDTO.getIdEstudiante()));
         pruebaVocacional.setEstudiante(estudiante);
@@ -90,14 +90,29 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     @Transactional
     @Override
     public Optional<PruebaVocacionalDTO> update(Integer id, PruebaVocacionalDTO pruebaVocacionalDTO) {
-        return pruebaVocacionalRepository.findById(id)
-                .map(existing -> {
-                    existing.setNroPrueba(pruebaVocacionalDTO.getNroPrueba());
-                    existing.setFecha(pruebaVocacionalDTO.getFecha());
-                    // Otros campos de actualización según DTO
-                    PruebaVocacional updatedPruebaVocacional = pruebaVocacionalRepository.save(existing);
-                    return convertToDTO(updatedPruebaVocacional);
-                });
+        return pruebaVocacionalRepository.findById(id).map(existing -> {
+            existing.setNroPrueba(pruebaVocacionalDTO.getNroPrueba());
+            existing.setFecha(pruebaVocacionalDTO.getFecha());
+
+            // Buscar y asignar el estudiante
+            Estudiante estudiante = estudianteRepository.findById(pruebaVocacionalDTO.getIdEstudiante())
+                    .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado con id: " + pruebaVocacionalDTO.getIdEstudiante()));
+            existing.setEstudiante(estudiante);
+
+            // Manejar las preguntas y resultados de la prueba
+            List<ResultadoPrueba> resultados = pruebaVocacionalDTO.getPruebas().stream()
+                    .map(dto -> {
+                        ResultadoPrueba resultadoPrueba = new ResultadoPrueba();
+                        resultadoPrueba.setPuntaje(dto.getPuntaje());
+                        resultadoPrueba.setRecomendacion(dto.getRecomendacion());
+                        resultadoPrueba.setPruebaVocacional(existing);
+                        return resultadoPrueba;
+                    }).collect(Collectors.toList());
+            existing.setResultados(resultados);
+
+            PruebaVocacional updatedPruebaVocacional = pruebaVocacionalRepository.save(existing);
+            return convertToDTO(updatedPruebaVocacional);
+        });
     }
 
     @Transactional

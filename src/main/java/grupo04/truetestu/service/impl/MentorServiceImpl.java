@@ -1,7 +1,11 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.model.entity.Mentor;
+import grupo04.truetestu.repository.HorarioRepository;
 import grupo04.truetestu.repository.MentorRepository;
+import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
+import grupo04.truetestu.repository.ResenaRepository;
+import grupo04.truetestu.repository.SesionRepository;
 import grupo04.truetestu.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class MentorServiceImpl implements MentorService {
-
+    private final HorarioRepository horarioRepository;
+    private final ResenaRepository resenaRepository;
+    private final SesionRepository sesionRepository;
     private final MentorRepository mentorRepository;
 
     @Override
@@ -22,8 +28,9 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public Mentor findById(int id) {
-        return mentorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mentor no encontrado"));
+        Mentor mentor = mentorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Mentor no encontrado"));
+        return mentor;
     }
 
     @Override
@@ -51,9 +58,14 @@ public class MentorServiceImpl implements MentorService {
     @Override
     @Transactional
     public void deleteMentor(int id) {
+        // Encontrar el mentor existente
         Mentor mentor = findById(id);
-        mentorRepository.delete(mentor);
+        // Eliminar horarios y sesiones asociadas antes de eliminar el mentor
+        horarioRepository.deleteByMentor(mentor); // Eliminar los horarios del mentor
+        sesionRepository.deleteByMentor(mentor);   // Eliminar las sesiones del mentor
+        mentorRepository.delete(mentor);           // Finalmente, eliminar el mentor
     }
+
 
     // Implementación para recomendar mentores por especialidad y experiencia
     @Override
@@ -62,3 +74,6 @@ public class MentorServiceImpl implements MentorService {
         return mentorRepository.findByEspecialidadAndExperienciaBetween(especialidad, minExperiencia, maxExperiencia);
     }
 }
+
+
+

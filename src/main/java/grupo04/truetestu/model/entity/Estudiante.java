@@ -1,8 +1,13 @@
 package grupo04.truetestu.model.entity;
-
+import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoEstudiante;
-import grupo04.truetestu.model.enums.EstadoPlan;
+import grupo04.truetestu.model.entity.Plan;
+import grupo04.truetestu.model.entity.Pago;
+import grupo04.truetestu.model.entity.PruebaVocacional;
+import grupo04.truetestu.model.entity.Recurso;
+
+import java.util.List;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,15 +18,16 @@ public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_estudiante")
     private int idEstudiante;
 
-    @Column(name = "nombre_estudiante", nullable = false, length = 150)
+    @Column(name = "nombre_estudiante", nullable = false)
     private String nombreEstudiante;
 
-    @Column(name = "email", nullable = false, length = 150, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "contraseña", nullable = false, length = 100)
+    @Column(name = "contraseña", nullable = false)
     private String contraseña;
 
     // Permitir valor nulo para estadoPlan
@@ -32,7 +38,7 @@ public class Estudiante {
     // Permitir valor nulo para estadoCuenta
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_cuenta", nullable = true)  // Ahora permite valores nulos
-    private EstadoCuenta estadoCuenta;
+    private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
 
     // Permitir valor nulo para estadoEstudiante
     @Enumerated(EnumType.STRING)
@@ -44,6 +50,16 @@ public class Estudiante {
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", nullable = true,
             foreignKey = @ForeignKey(name = "FK_estudiante_plan"))
     private Plan plan;
+
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pago> pagos;
+
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PruebaVocacional> pruebasVocacionales;  // Agregado para cascada
+
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recurso> recursos;
 }
+
 
 

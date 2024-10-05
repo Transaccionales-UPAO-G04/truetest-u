@@ -10,7 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface ResultadoPruebaRepository extends JpaRepository<ResultadoPrueba, Integer> {
+
     @Query("SELECT r FROM ResultadoPrueba r WHERE r.pruebaVocacional.estudiante.idEstudiante = :id")
     Optional<ResultadoPrueba> findByEstudianteId(@Param("id") int id);
 }
+
 

@@ -15,7 +15,7 @@
     <description>truetest-u</description>
 
     <properties>
-        <java.version>17</java.version> <!-- Cambiado temporalmente a Java 17 -->
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
@@ -35,6 +35,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Dependencia de Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!-- Lombok -->
@@ -76,6 +82,9 @@
         </plugins>
     </build>
 </project>
+
+
+
 
 
 

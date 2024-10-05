@@ -1,5 +1,6 @@
 -- Tabla Carrera
-CREATE TABLE carreras (
+DROP TABLE IF EXISTS carreras;  -- Elimina la tabla si ya existe
+CREATE TABLE carrera (
                           id_carrera SERIAL PRIMARY KEY,
                           nombre_carrera VARCHAR(150) NOT NULL,
                           puntaje_aproximado INT NOT NULL,
@@ -7,12 +8,13 @@ CREATE TABLE carreras (
 );
 
 -- Datos ficticios para Carrera
-INSERT INTO carreras (nombre_carrera, puntaje_aproximado, descripcion_carrera) VALUES
+INSERT INTO carrera (nombre_carrera, puntaje_aproximado, descripcion_carrera) VALUES
                                                                                    ('Ingeniería de Sistemas', 85, 'Carrera orientada a la tecnología y desarrollo de software.'),
                                                                                    ('Psicología', 70, 'Estudio del comportamiento humano.'),
                                                                                    ('Medicina', 95, 'Carrera dedicada a la salud y bienestar de las personas.'),
                                                                                    ('Derecho', 80, 'Estudio de la ley y la justicia.'),
                                                                                    ('Arquitectura', 75, 'Diseño y construcción de edificaciones.');
+
 
 -- Tabla Plan
 CREATE TABLE plan (
@@ -56,14 +58,14 @@ INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, esta
                                                                                                                           ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO', 1, 'ACTIVO');
 
 -- Tabla Especialidad
-CREATE TABLE especialidades (
+CREATE TABLE especialidad (
                                 id SERIAL PRIMARY KEY,
                                 nombre VARCHAR(150) NOT NULL,
                                 descripcion TEXT
 );
 
 -- Datos ficticios para Especialidad
-INSERT INTO especialidades (nombre, descripcion) VALUES
+INSERT INTO especialidad(nombre, descripcion) VALUES
                                                      ('Desarrollo de Software', 'Enfocado en la creación de aplicaciones y sistemas.'),
                                                      ('Psicología Clínica', 'Orientada a la evaluación y tratamiento de problemas psicológicos.'),
                                                      ('Medicina General', 'Formación en atención y prevención de enfermedades.'),
@@ -144,12 +146,16 @@ INSERT INTO prueba_vocacional (id_prueba_vocacional, nro_prueba, fecha, id_estud
 
 
 -- Tabla Pregunta
-CREATE TABLE preguntas (
+CREATE TABLE pregunta (
                            id_pregunta SERIAL PRIMARY KEY,
                            pregunta VARCHAR(250) NOT NULL,
                            punto INT NOT NULL,
                            id_prueba_vocacional INT,
                            FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional)
+
+
+
+
 );
 
 INSERT INTO resultado_prueba (id_resultado_prueba, puntaje, recomendacion, id_prueba_vocacional) VALUES
@@ -162,7 +168,7 @@ INSERT INTO resultado_prueba (id_resultado_prueba, puntaje, recomendacion, id_pr
 
 
 -- Tabla Respuestas
-CREATE TABLE respuestas (
+CREATE TABLE respuesta (
                             id_respuesta SERIAL PRIMARY KEY,
                             texto VARCHAR(150) NOT NULL,
                             es_correcta BOOLEAN NOT NULL,
@@ -171,7 +177,7 @@ CREATE TABLE respuestas (
 );
 
 -- Datos ficticios para Respuesta
-INSERT INTO respuestas (texto, es_correcta, id_pregunta) VALUES
+INSERT INTO respuesta (texto, es_correcta, id_pregunta) VALUES
                                                              ('Sí', TRUE, 1),
                                                              ('No', FALSE, 1),
                                                              ('Tal vez', FALSE, 1),
@@ -179,7 +185,7 @@ INSERT INTO respuestas (texto, es_correcta, id_pregunta) VALUES
                                                              ('No', FALSE, 2);
 
 -- Tabla Reseña
-CREATE TABLE reseña (
+CREATE TABLE resena (
                         id_reseña SERIAL PRIMARY KEY,
                         texto TEXT NOT NULL,
                         calificacion INT NOT NULL,
@@ -190,7 +196,7 @@ CREATE TABLE reseña (
 );
 
 -- Datos ficticios para Reseña
-INSERT INTO reseña (texto, calificacion, id_mentor, id_estudiante) VALUES
+INSERT INTO resena (texto, calificacion, id_mentor, id_estudiante) VALUES
                                                                        ('Gran mentor, muy recomendado.', 5, 1, 1),
                                                                        ('Muy profesional y atento.', 4, 2, 2),
                                                                        ('Excelente orientación, muy útil.', 5, 3, 3),
