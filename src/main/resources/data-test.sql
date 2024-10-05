@@ -106,19 +106,17 @@ CREATE TABLE mentor (
                         id_mentor SERIAL PRIMARY KEY,
                         nombre_mentor VARCHAR(50) NOT NULL,
                         experiencia TEXT NOT NULL,
-                        nro_asesorias INT NOT NULL,
-                        id_especialidad INT,
-                        FOREIGN KEY (id_especialidad) REFERENCES especialidad(id_especialidad)
+                        especialidad VARCHAR(50) NOT NULL,  -- Cambiado de id_especialidad a especialidad como String
+                        nro_asesorias INT NOT NULL
 );
 
 -- Insertar datos ficticios en la tabla Mentor
-INSERT INTO mentor (nombre_mentor, experiencia, nro_asesorias, id_especialidad) VALUES
-                                                                                    ('Carlos Martínez', '10 años en desarrollo de software.', 50, 1),
-                                                                                    ('Ana López', 'Experta en orientación psicológica.', 30, 2),
-                                                                                    ('Luis Gómez', 'Especialista en derecho corporativo.', 40, 3),
-                                                                                    ('Elena Pérez', 'Arquitecta con 15 años de experiencia.', 25, 4),
-                                                                                    ('Javier Morales', 'Experto en diseño estructural.', 20, 4);
-
+INSERT INTO mentor (nombre_mentor, experiencia, especialidad, nro_asesorias) VALUES
+                                                                                 ('Carlos Martínez', '10 años en desarrollo de software.', 'Ingeniería de Sistemas', 50),
+                                                                                 ('Ana López', 'Experta en orientación psicológica.', 'Psicología', 30),
+                                                                                 ('Luis Gómez', 'Especialista en derecho corporativo.', 'Derecho', 40),
+                                                                                 ('Elena Pérez', 'Arquitecta con 15 años de experiencia.', 'Arquitectura', 25),
+                                                                                 ('Javier Morales', 'Experto en diseño estructural.', 'Arquitectura', 20);
 -- Crear la tabla Horario
 CREATE TABLE horario (
                          id_horario SERIAL PRIMARY KEY,
