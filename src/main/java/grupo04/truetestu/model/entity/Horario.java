@@ -19,10 +19,10 @@ public class Horario {
     @Column(name = "fecha_hora", nullable = false)
     private LocalDateTime fechaHora;
 
-    @Column(name = "hora", nullable = false)
+    @Column(name = "hora_sesion", nullable = false)
     private LocalTime horaSesion;
 
-    @Column(name = "link", nullable = false)
+    @Column(name = "link_sesion", nullable = false)
     private String linkSesion;
 
     @JsonIgnore

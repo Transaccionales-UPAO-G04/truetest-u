@@ -3,6 +3,7 @@ package grupo04.truetestu.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
+import grupo04.truetestu.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +17,6 @@ public class Estudiante extends Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEstudiante;
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_plan", nullable = false)

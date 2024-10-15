@@ -22,7 +22,7 @@ public class Carrera {
     @Column(name= "descripcion_carrera", nullable = false, columnDefinition = "TEXT")
     private String descripcionCarrera;
 
-/*@OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Especialidad> especialidades;*/
+    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Especialidad> especialidades;
 
 }

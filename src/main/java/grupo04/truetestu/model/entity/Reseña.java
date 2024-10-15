@@ -12,7 +12,6 @@ public class Reseña {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reseña")
     private int idReseña;
 
     @Column(name = "texto", nullable = false, columnDefinition = "TEXT")
