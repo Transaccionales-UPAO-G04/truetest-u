@@ -1,6 +1,7 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.entity.Usuario;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
@@ -26,10 +27,10 @@ public class EstudianteServiceImpl implements EstudianteService {
 
     @Transactional
     @Override
-    public Estudiante registerEstudiante(Estudiante estudiante) {
-        if (estudianteRepository.existsEstudianteByEmail(estudiante.getEmail())) {
+    public Estudiante registerEstudiante(Estudiante estudiante) {/*
+        if (estudianteRepository.existsEstudianteByEmail(Usuario.getEmail())) {
             throw new RuntimeException("El correo ya fue registrado");
-        }
+        }*/
 
         // Falta crear un AT
         return estudianteRepository.save(estudiante);
@@ -45,21 +46,24 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public Estudiante update(Integer id, Estudiante updateEstudiante) {
         Estudiante estudianteFromDb = findById(id);
-        estudianteFromDb.setNombreEstudiante(updateEstudiante.getNombreEstudiante());
-        estudianteFromDb.setEmail(updateEstudiante.getEmail());
-        estudianteFromDb.setContraseña(updateEstudiante.getContraseña());
         return estudianteRepository.save(estudianteFromDb);
     }
 
+    //PUESTO DE MOMENTO
     @Override
     public Estudiante sesionEstudiante(Estudiante estudiante) {
-        Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(estudiante.getEmail(), estudiante.getContraseña());
+        return null;
+    }
+/*
+    @Override
+    public Estudiante sesionEstudiante(Estudiante estudiante, Usuario usuario) {
+        Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(Usuario.getEmail(), Usuario.getContraseña());
         if (estudianteExistente != null) {
             return estudianteExistente;
         } else {
             throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
         }
-    }
+    }*/
 
     @Override
     public void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan) { //iniciar sesion

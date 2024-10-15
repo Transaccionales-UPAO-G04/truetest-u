@@ -1,260 +1,184 @@
--- Eliminar tablas existentes
-DROP TABLE IF EXISTS reseña CASCADE;
-DROP TABLE IF EXISTS resultado_prueba CASCADE;
-DROP TABLE IF EXISTS sesion CASCADE;
-DROP TABLE IF EXISTS pago CASCADE;
-DROP TABLE IF EXISTS preguntas CASCADE;
-DROP TABLE IF EXISTS prueba_vocacional CASCADE;
-DROP TABLE IF EXISTS horario CASCADE;
-DROP TABLE IF EXISTS mentor CASCADE;
-DROP TABLE IF EXISTS respuestas CASCADE;
-DROP TABLE IF EXISTS estudiante CASCADE;
-DROP TABLE IF EXISTS carreras CASCADE;
-DROP TABLE IF EXISTS plan CASCADE;
-DROP TABLE IF EXISTS recurso CASCADE;
-DROP TABLE IF EXISTS especialidad CASCADE;
+-- INSERT para la tabla carreras (15 ejemplos)
+INSERT INTO carreras (nombre_carrera, descripcion_carrera) VALUES
+                                                               ('Ingeniería de Sistemas', 'Carrera orientada al desarrollo de software y sistemas informáticos.'),
+                                                               ('Psicología', 'Carrera dedicada al estudio del comportamiento humano y sus procesos mentales.'),
+                                                               ('Medicina', 'Carrera orientada al cuidado y la salud humana.'),
+                                                               ('Derecho', 'Carrera dedicada al estudio y aplicación de la ley.'),
+                                                               ('Arquitectura', 'Carrera enfocada en el diseño y construcción de edificaciones.'),
+                                                               ('Ingeniería Civil', 'Carrera orientada a la construcción de infraestructura.'),
+                                                               ('Contabilidad', 'Carrera dedicada a la administración financiera y contable.'),
+                                                               ('Ingeniería Industrial', 'Carrera orientada a la optimización de procesos industriales.'),
+                                                               ('Administración de Empresas', 'Carrera enfocada en la gestión empresarial.'),
+                                                               ('Diseño Gráfico', 'Carrera orientada al diseño visual y la comunicación.'),
+                                                               ('Marketing', 'Carrera enfocada en la promoción y ventas de productos y servicios.'),
+                                                               ('Biología', 'Carrera orientada al estudio de los seres vivos.'),
+                                                               ('Química', 'Carrera dedicada al estudio de las propiedades de la materia.'),
+                                                               ('Física', 'Carrera orientada al estudio de las leyes fundamentales del universo.'),
+                                                               ('Ingeniería Mecánica', 'Carrera orientada al diseño y construcción de maquinaria.');
 
--- Crear la tabla Plan
-CREATE TABLE plan (
-                      id_plan SERIAL PRIMARY KEY,
-                      nombre_plan VARCHAR(100) NOT NULL,
-                      precio DECIMAL(10,2) NOT NULL,
-                      descripcion_plan TEXT NOT NULL,
-                      fecha_inicio DATE NOT NULL,
-                      fecha_fin DATE,
-                      tipo_plan VARCHAR(50) NOT NULL,
-                      acceso_ilimitado BOOLEAN NOT NULL DEFAULT FALSE
-);
+-- INSERT para la tabla especialidades (15 ejemplos)
+INSERT INTO especialidades (nombre, descripcion, puntaje_aproximado, carrera_id) VALUES
+                                                                                     ('Sistemas Computacionales', 'Especialidad en desarrollo de software y sistemas.', 85, 1),
+                                                                                     ('Neurociencia', 'Especialidad dedicada al estudio de los procesos neuronales.', 75, 2),
+                                                                                     ('Medicina General', 'Especialidad médica general.', 90, 3),
+                                                                                     ('Derecho Civil', 'Especialidad en derecho civil.', 85, 4),
+                                                                                     ('Arquitectura Sostenible', 'Especialidad enfocada en arquitectura sostenible.', 80, 5),
+                                                                                     ('Ingeniería Estructural', 'Especialidad en diseño estructural para construcciones.', 82, 6),
+                                                                                     ('Auditoría Financiera', 'Especialidad en revisión de cuentas financieras.', 78, 7),
+                                                                                     ('Logística Industrial', 'Especialidad en procesos logísticos.', 77, 8),
+                                                                                     ('Gestión de Empresas', 'Especialidad en la gestión empresarial.', 81, 9),
+                                                                                     ('Diseño Web', 'Especialidad en el diseño de interfaces web.', 79, 10),
+                                                                                     ('Marketing Digital', 'Especialidad en estrategias de marketing en línea.', 76, 11),
+                                                                                     ('Genética', 'Especialidad en el estudio del ADN y los genes.', 88, 12),
+                                                                                     ('Química Orgánica', 'Especialidad en compuestos de carbono.', 86, 13),
+                                                                                     ('Física Teórica', 'Especialidad en el estudio de teorías físicas.', 87, 14),
+                                                                                     ('Ingeniería Automotriz', 'Especialidad en diseño y fabricación de vehículos.', 84, 15);
 
--- Insertar datos ficticios en la tabla Plan
-INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin, tipo_plan, acceso_ilimitado) VALUES
-                                                                                                                   ('Plan No Premium Mensual', 9.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-01-31', 'Mensual', FALSE),
-                                                                                                                   ('Plan Premium Mensual', 19.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-01-31', 'Mensual', TRUE),
-                                                                                                                   ('Plan No Premium Anual', 99.99, 'Acceso limitado al test una vez al mes.', '2024-01-01', '2024-12-31', 'Anual', FALSE),
-                                                                                                                   ('Plan Premium Anual', 199.99, 'Acceso ilimitado al test.', '2024-01-01', '2024-12-31', 'Anual', TRUE),
-                                                                                                                   ('Plan Básico Anual', 49.99, 'Acceso a un número limitado de pruebas.', '2024-01-01', '2024-12-31', 'Anual', FALSE);
+-- INSERT para la tabla estudiante (15 ejemplos)
+INSERT INTO estudiante (nombre, email, contraseña, estado_plan, estado_cuenta) VALUES
+                                                                                   ('Juan Pérez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO'),
+                                                                                   ('Ana López', 'ana.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO'),
+                                                                                   ('Carlos Ramírez', 'carlos.ramirez@example.com', 'password789', 'NOPREMIUM', 'INHABILITADO'),
+                                                                                   ('Lucía Fernández', 'lucia.fernandez@example.com', 'password101', 'PREMIUM', 'HABILITADO'),
+                                                                                   ('María García', 'maria.garcia@example.com', 'password202', 'NOPREMIUM', 'HABILITADO'),
+                                                                                   ('Luis Torres', 'luis.torres@example.com', 'password303', 'PREMIUM', 'HABILITADO'),
+                                                                                   ('Elena Ruiz', 'elena.ruiz@example.com', 'password404', 'NOPREMIUM', 'INHABILITADO'),
+                                                                                   ('Javier Ortega', 'javier.ortega@example.com', 'password505', 'PREMIUM', 'HABILITADO'),
+                                                                                   ('Rosa Sánchez', 'rosa.sanchez@example.com', 'password606', 'NOPREMIUM', 'HABILITADO'),
+                                                                                   ('Miguel Castro', 'miguel.castro@example.com', 'password707', 'PREMIUM', 'INHABILITADO'),
+                                                                                   ('Isabel Hernández', 'isabel.hernandez@example.com', 'password808', 'PREMIUM', 'HABILITADO'),
+                                                                                   ('Pedro Moreno', 'pedro.moreno@example.com', 'password909', 'NOPREMIUM', 'HABILITADO'),
+                                                                                   ('Daniela Vega', 'daniela.vega@example.com', 'password010', 'PREMIUM', 'HABILITADO'),
+                                                                                   ('Raúl Flores', 'raul.flores@example.com', 'password111', 'NOPREMIUM', 'INHABILITADO'),
+                                                                                   ('Carmen Rojas', 'carmen.rojas@example.com', 'password212', 'PREMIUM', 'HABILITADO');
+-- INSERT para la tabla mentor (15 ejemplos)
+INSERT INTO mentor (nombre, email, contraseña, especialidad, experiencia) VALUES
+                                                                              ('Carlos Martínez', 'carlos.martinez@example.com', 'password789', 'Sistemas Computacionales', '10 años de experiencia en desarrollo de software'),
+                                                                              ('Elena Ramírez', 'elena.ramirez@example.com', 'password123', 'Neurociencia', '5 años de experiencia en investigación neurocientífica'),
+                                                                              ('José Ruiz', 'jose.ruiz@example.com', 'password303', 'Medicina General', '15 años de experiencia en medicina general'),
+                                                                              ('María Sánchez', 'maria.sanchez@example.com', 'password404', 'Derecho Civil', '10 años de experiencia en derecho civil'),
+                                                                              ('Laura López', 'laura.lopez@example.com', 'password505', 'Arquitectura Sostenible', '8 años de experiencia en arquitectura sostenible'),
+                                                                              ('Pedro Torres', 'pedro.torres@example.com', 'password606', 'Ingeniería Estructural', '12 años de experiencia en ingeniería civil'),
+                                                                              ('Marta Fernández', 'marta.fernandez@example.com', 'password707', 'Auditoría Financiera', '7 años de experiencia en auditorías financieras'),
+                                                                              ('Luis Gómez', 'luis.gomez@example.com', 'password808', 'Logística Industrial', '9 años de experiencia en logística'),
+                                                                              ('Isabel Romero', 'isabel.romero@example.com', 'password909', 'Gestión de Empresas', '11 años de experiencia en gestión empresarial'),
+                                                                              ('Raúl Pérez', 'raul.perez@example.com', 'password010', 'Diseño Web', '6 años de experiencia en diseño de interfaces'),
+                                                                              ('Rosa García', 'rosa.garcia@example.com', 'password111', 'Marketing Digital', '8 años de experiencia en marketing digital'),
+                                                                              ('Jorge Vega', 'jorge.vega@example.com', 'password212', 'Genética', '12 años de experiencia en investigación genética'),
+                                                                              ('Lucía Castro', 'lucia.castro@example.com', 'password313', 'Química Orgánica', '10 años de experiencia en investigación química'),
+                                                                              ('Miguel Herrera', 'miguel.herrera@example.com', 'password414', 'Física Teórica', '14 años de experiencia en física teórica'),
+                                                                              ('Daniel Sánchez', 'daniel.sanchez@example.com', 'password515', 'Ingeniería Automotriz', '13 años de experiencia en el sector automotriz.');
+-- INSERT para la tabla plan (15 ejemplos)
+INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio, fecha_fin, acceso_ilimitado) VALUES
+                                                                                                        ('Plan Básico', 9.99, 'Acceso limitado a los recursos', '2024-01-01', '2024-12-31', FALSE),
+                                                                                                        ('Plan Premium', 19.99, 'Acceso ilimitado a todos los recursos', '2024-01-01', '2024-12-31', TRUE),
+                                                                                                        ('Plan Estándar', 14.99, 'Acceso limitado a recursos seleccionados', '2024-01-01', '2024-12-31', FALSE);
+-- INSERT para la tabla pregunta (15 ejemplos)
+INSERT INTO pregunta (pregunta, punto) VALUES
+                                           ('¿Te interesa el desarrollo de software?', 5),
+                                           ('¿Te gusta resolver conflictos legales?', 4),
+                                           ('¿Te interesa la investigación médica?', 5),
+                                           ('¿Te gustaría trabajar en el campo de la arquitectura?', 4),
+                                           ('¿Te interesa la administración financiera?', 5),
+                                           ('¿Te gustaría trabajar en el diseño gráfico?', 4),
+                                           ('¿Te apasiona la ingeniería industrial?', 5),
+                                           ('¿Te gustaría trabajar en marketing digital?', 4),
+                                           ('¿Te interesa el campo de la biología?', 5),
+                                           ('¿Te gustaría investigar sobre genética?', 4),
+                                           ('¿Te gustaría trabajar en el desarrollo de software?', 5),
+                                           ('¿Te interesa la contabilidad?', 4),
+                                           ('¿Te apasiona la química?', 5),
+                                           ('¿Te gustaría trabajar en la física teórica?', 4),
+                                           ('¿Te interesa la ingeniería automotriz?', 5);
+-- INSERT para la tabla prueba_vocacional (15 ejemplos)
+INSERT INTO prueba_vocacional (nro_prueba, fecha, id_estudiante) VALUES
+                                                                     (1, '2024-09-01', 1),
+                                                                     (2, '2024-09-02', 2),
+                                                                     (3, '2024-09-03', 3),
+                                                                     (4, '2024-09-04', 4),
+                                                                     (5, '2024-09-05', 5),
+                                                                     (6, '2024-09-06', 6),
+                                                                     (7, '2024-09-07', 7),
+                                                                     (8, '2024-09-08', 8),
+                                                                     (9, '2024-09-09', 9),
+                                                                     (10, '2024-09-10', 10),
+                                                                     (11, '2024-09-11', 11),
+                                                                     (12, '2024-09-12', 12),
+                                                                     (13, '2024-09-13', 13),
+                                                                     (14, '2024-09-14', 14),
+                                                                     (15, '2024-09-15', 15);
+-- INSERT para la tabla respuestas (15 ejemplos)
+INSERT INTO respuestas (opciones) VALUES
+                                      ('Sí'),
+                                      ('No'),
+                                      ('Tal vez'),
+                                      ('No lo sé');
 
--- Crear la tabla Carrera
-CREATE TABLE carreras (
-                          id_carrera SERIAL PRIMARY KEY,
-                          nombre_carrera VARCHAR(150) NOT NULL,
-                          puntaje_aproximado INT NOT NULL,
-                          descripcion_carrera TEXT NOT NULL
-);
-
--- Insertar datos ficticios en la tabla Carrera
-INSERT INTO carreras (nombre_carrera, puntaje_aproximado, descripcion_carrera) VALUES
-                                                                                   ('Ingeniería de Sistemas', 85, 'Carrera orientada a la tecnología y desarrollo de software.'),
-                                                                                   ('Psicología', 70, 'Estudio del comportamiento humano.'),
-                                                                                   ('Medicina', 95, 'Carrera dedicada a la salud y bienestar de las personas.'),
-                                                                                   ('Derecho', 80, 'Estudio de la ley y la justicia.'),
-                                                                                   ('Arquitectura', 75, 'Diseño y construcción de edificaciones.');
-
--- Crear la tabla Estudiante
-CREATE TABLE estudiante (
-                            id_estudiante SERIAL PRIMARY KEY,
-                            nombre_estudiante VARCHAR(150) NOT NULL,
-                            email VARCHAR(150) NOT NULL UNIQUE,
-                            contraseña VARCHAR(100) NOT NULL,
-                            estado_plan VARCHAR(50) NOT NULL DEFAULT 'NOPREMIUM',
-                            estado_cuenta VARCHAR(50) NOT NULL DEFAULT 'HABILITADO'
-);
-
--- Insertar datos ficticios en la tabla Estudiante
-INSERT INTO estudiante (nombre_estudiante, email, contraseña, estado_plan, estado_cuenta) VALUES
-                                                                                              ('Juan Perez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO'),
-                                                                                              ('Maria Lopez', 'maria.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO'),
-                                                                                              ('Carlos Sanchez', 'carlos.sanchez@example.com', 'password789', 'NOPREMIUM', 'INHABILITADO'),
-                                                                                              ('Ana Torres', 'ana.torres@example.com', 'password101', 'PREMIUM', 'HABILITADO'),
-                                                                                              ('Luis Ramirez', 'luis.ramirez@example.com', 'password202', 'NOPREMIUM', 'HABILITADO');
--- Crear la tabla Pago
-CREATE TABLE pago (
-                      id_pago SERIAL PRIMARY KEY,
-                      monto DECIMAL(10,2) NOT NULL,
-                      metodo_pago VARCHAR(50) NOT NULL,
-                      fecha_pago DATE NOT NULL,
-                      id_estudiante INT NOT NULL,
-                      id_plan INT NOT NULL,
-                      FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE,
-                      FOREIGN KEY (id_plan) REFERENCES plan(id_plan) ON DELETE CASCADE
-);
-
--- Insertar datos ficticios en la tabla Pago
+-- INSERT para la tabla resultado_prueba (15 ejemplos)
+INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALUES
+                                                                                (85, 'Recomendado para Ingeniería de Sistemas', 1),
+                                                                                (75, 'Recomendado para Psicología', 2),
+                                                                                (90, 'Recomendado para Derecho', 3),
+                                                                                (80, 'Recomendado para Medicina', 4),
+                                                                                (70, 'Recomendado para Arquitectura', 5),
+                                                                                (95, 'Recomendado para Ingeniería Civil', 6),
+                                                                                (65, 'Recomendado para Contabilidad', 7),
+                                                                                (85, 'Recomendado para Ingeniería Industrial', 8),
+                                                                                (88, 'Recomendado para Administración de Empresas', 9),
+                                                                                (75, 'Recomendado para Diseño Gráfico', 10),
+                                                                                (78, 'Recomendado para Marketing', 11),
+                                                                                (92, 'Recomendado para Biología', 12),
+                                                                                (85, 'Recomendado para Química', 13),
+                                                                                (80, 'Recomendado para Física', 14),
+                                                                                (89, 'Recomendado para Ingeniería Mecánica', 15);
+-- INSERT para la tabla reseña (15 ejemplos)
+INSERT INTO reseña (texto, calificacion, id_mentor, id_estudiante) VALUES
+                                                                       ('Excelente mentor, muy recomendado.', 5, 1, 1),
+                                                                       ('Muy profesional y atento.', 4, 2, 2),
+                                                                       ('Excelente orientación, muy útil.', 5, 3, 3),
+                                                                       ('Conocedor del tema, muy profesional.', 4, 4, 4),
+                                                                       ('Una gran ayuda en mi desarrollo profesional.', 5, 5),
+                                                                       ('Agradable y bien informado.', 3, 6, 6),
+                                                                       ('Puntual y comprometido.', 5, 7, 7),
+                                                                       ('Excelente experiencia, muy agradecido.', 5, 8, 8),
+                                                                       ('Muy bien organizado.', 4, 9, 9),
+                                                                       ('Ayuda invaluable en mi carrera.', 5, 10, 10),
+                                                                       ('Me proporcionó muchas herramientas útiles.', 5, 11, 11),
+                                                                       ('Conocimientos prácticos y aplicables.', 4, 12, 12),
+                                                                       ('Buena mentoría, pero podría mejorar en ciertos aspectos.', 3, 13, 13),
+                                                                       ('Me ayudó a ver diferentes perspectivas.', 4, 14, 14),
+                                                                       ('Muy recomendable para cualquier estudiante.', 5, 15, 15);
+-- INSERT para la tabla pago (15 ejemplos)
 INSERT INTO pago (monto, metodo_pago, fecha_pago, id_estudiante, id_plan) VALUES
                                                                               (9.99, 'Tarjeta de Crédito', '2024-01-05', 1, 1),
                                                                               (19.99, 'Paypal', '2024-01-06', 2, 2),
                                                                               (9.99, 'Tarjeta de Débito', '2024-01-07', 3, 1),
-                                                                              (19.99, 'Paypal', '2024-01-08', 4, 3),
-                                                                              (49.99, 'Tarjeta de Crédito', '2024-01-09', 5, 4);
-
--- Crear la tabla Especialidad
-CREATE TABLE especialidad (
-                              id_especialidad SERIAL PRIMARY KEY,
-                              nombre_especialidad VARCHAR(150) NOT NULL
-);
-
--- Insertar datos ficticios en la tabla Especialidad
-INSERT INTO especialidad (nombre_especialidad) VALUES
-                                                   ('Ingeniería de Sistemas'),
-                                                   ('Psicología'),
-                                                   ('Derecho'),
-                                                   ('Arquitectura'),
-                                                   ('Medicina');
-
--- Crear la tabla Mentor
-CREATE TABLE mentor (
-                        id_mentor SERIAL PRIMARY KEY,
-                        nombre_mentor VARCHAR(50) NOT NULL,
-                        experiencia TEXT NOT NULL,
-                        especialidad VARCHAR(50) NOT NULL,  -- Cambiado de id_especialidad a especialidad como String
-                        nro_asesorias INT NOT NULL
-);
-
--- Insertar datos ficticios en la tabla Mentor
-INSERT INTO mentor (nombre_mentor, experiencia, especialidad, nro_asesorias) VALUES
-                                                                                 ('Carlos Martínez', '10 años en desarrollo de software.', 'Ingeniería de Sistemas', 50),
-                                                                                 ('Ana López', 'Experta en orientación psicológica.', 'Psicología', 30),
-                                                                                 ('Luis Gómez', 'Especialista en derecho corporativo.', 'Derecho', 40),
-                                                                                 ('Elena Pérez', 'Arquitecta con 15 años de experiencia.', 'Arquitectura', 25),
-                                                                                 ('Javier Morales', 'Experto en diseño estructural.', 'Arquitectura', 20);
--- Crear la tabla Horario
-CREATE TABLE horario (
-                         id_horario SERIAL PRIMARY KEY,
-                         dia_semana VARCHAR(20) NOT NULL,
-                         hora_inicio TIME NOT NULL,
-                         hora_fin TIME NOT NULL,
-                         id_mentor INT,
-                         FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
-);
-
--- Insertar datos ficticios en la tabla Horario
+                                                                              (19.99, 'Paypal', '2024-01-08', 4, 2),
+                                                                              (49.99, 'Tarjeta de Crédito', '2024-01-09', 5, 5),
+                                                                              (14.99, 'Tarjeta de Crédito', '2024-01-10', 6, 3),
+                                                                              (29.99, 'Paypal', '2024-01-11', 7, 4),
+                                                                              (5.99, 'Tarjeta de Débito', '2024-01-12', 8, 5),
+                                                                              (24.99, 'Paypal', '2024-01-13', 9, 6),
+                                                                              (49.99, 'Tarjeta de Crédito', '2024-01-14', 10, 7),
+                                                                              (89.99, 'Paypal', '2024-01-15', 11, 8),
+                                                                              (199.99, 'Tarjeta de Crédito', '2024-01-16', 12, 9),
+                                                                              (99.99, 'Paypal', '2024-01-17', 13, 10),
+                                                                              (29.99, 'Tarjeta de Débito', '2024-01-18', 14, 11),
+                                                                              (59.99, 'Paypal', '2024-01-19', 15, 12);
+-- INSERT para la tabla horario (15 ejemplos)
 INSERT INTO horario (dia_semana, hora_inicio, hora_fin, id_mentor) VALUES
                                                                        ('Lunes', '09:00', '11:00', 1),
                                                                        ('Martes', '14:00', '16:00', 2),
                                                                        ('Miércoles', '10:00', '12:00', 3),
                                                                        ('Jueves', '15:00', '17:00', 4),
-                                                                       ('Viernes', '13:00', '15:00', 5);
-
--- Crear la tabla PruebaVocacional
-CREATE TABLE prueba_vocacional (
-                                   id_prueba_vocacional SERIAL PRIMARY KEY,
-                                   nro_prueba INT NOT NULL,
-                                   fecha DATE NOT NULL,
-                                   id_estudiante INT,
-                                   FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE
-);
-
--- Insertar datos ficticios en la tabla PruebaVocacional
-INSERT INTO prueba_vocacional (nro_prueba, fecha, id_estudiante) VALUES
-                                                                     (1, '2024-09-15', 1),
-                                                                     (2, '2024-09-16', 2),
-                                                                     (3, '2024-09-17', 3),
-                                                                     (4, '2024-09-18', 4),
-                                                                     (5, '2024-09-19', 5);
-
--- Crear la tabla Pregunta
-CREATE TABLE preguntas (
-                           id_pregunta SERIAL PRIMARY KEY,
-                           pregunta VARCHAR(250) NOT NULL,
-                           punto INT NOT NULL,
-                           id_prueba_vocacional INT,
-                           FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional) ON DELETE CASCADE
-);
-
--- Insertar datos ficticios en la tabla Pregunta
-INSERT INTO preguntas (pregunta, punto, id_prueba_vocacional) VALUES
-                                                                  ('¿Te interesa el desarrollo de software?', 5, 1),
-                                                                  ('¿Te atrae el trabajo en equipo?', 3, 2),
-                                                                  ('¿Te gustaría trabajar en la administración pública?', 4, 3),
-                                                                  ('¿Te apasiona el diseño de edificios?', 5, 4),
-                                                                  ('¿Te interesa el análisis estructural?', 4, 5);
-
--- Crear la tabla Respuesta
-CREATE TABLE respuestas (
-                            id_respuesta SERIAL PRIMARY KEY,
-                            opciones VARCHAR(150) NOT NULL
-);
-
--- Insertar datos ficticios en la tabla Respuesta
-INSERT INTO respuestas (opciones) VALUES
-                                      ('Sí'),
-                                      ('No'),
-                                      ('Tal vez'),
-                                      ('No lo sé'),
-                                      ('Prefiero no decirlo');
-
--- Crear la tabla Reseña
-CREATE TABLE reseña (
-                        id_reseña SERIAL PRIMARY KEY,
-                        texto TEXT NOT NULL,
-                        calificacion INT NOT NULL,
-                        id_mentor INT,
-                        id_estudiante INT,
-                        FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor),
-                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE
-);
-
--- Insertar datos ficticios en la tabla Reseña
-INSERT INTO reseña (texto, calificacion, id_mentor, id_estudiante) VALUES
-                                                                       ('Gran mentor, muy recomendado.', 5, 1, 1),
-                                                                       ('Muy profesional y atento.', 4, 2, 2),
-                                                                       ('Excelente orientación, muy útil.', 5, 3, 3),
-                                                                       ('Muy conocedor del tema.', 4, 4, 4),
-                                                                       ('Ayuda invaluable en mi carrera.', 5, 5, 5);
-
--- Crear la tabla ResultadoPrueba
-CREATE TABLE resultado_prueba (
-                                  id_resultado_prueba SERIAL PRIMARY KEY,
-                                  puntaje INT NOT NULL,
-                                  recomendacion VARCHAR(150) NOT NULL,
-                                  id_prueba_vocacional INT,
-                                  FOREIGN KEY (id_prueba_vocacional) REFERENCES prueba_vocacional(id_prueba_vocacional) ON DELETE CASCADE
-);
-
--- Insertar datos ficticios en la tabla ResultadoPrueba
-INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALUES
-                                                                                (85, 'Recomendado para Ingeniería.', 1),
-                                                                                (70, 'Recomendado para Psicología.', 2),
-                                                                                (90, 'Recomendado para Derecho.', 3),
-                                                                                (75, 'Recomendado para Arquitectura.', 4),
-                                                                                (80, 'Recomendado para Diseño Estructural.', 5);
-
--- Crear la tabla Sesion
-CREATE TABLE sesion (
-                        id_sesion SERIAL PRIMARY KEY,
-                        fecha_hora TIMESTAMP NOT NULL,
-                        duracion TIME NOT NULL,
-                        link VARCHAR(255) NOT NULL,
-                        id_estudiante INT,
-                        id_horario INT,
-                        FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE,
-                        FOREIGN KEY (id_horario) REFERENCES horario(id_horario) ON DELETE CASCADE
-);
-
--- Insertar datos ficticios en la tabla Sesion
-INSERT INTO sesion (fecha_hora, duracion, link, id_estudiante, id_horario) VALUES
-                                                                               ('2024-09-15 10:00:00', '01:00:00', 'https://example.com/session1', 1, 1),
-                                                                               ('2024-09-16 14:00:00', '02:00:00', 'https://example.com/session2', 2, 2),
-                                                                               ('2024-09-17 10:00:00', '01:30:00', 'https://example.com/session3', 3, 3),
-                                                                               ('2024-09-18 15:00:00', '01:15:00', 'https://example.com/session4', 4, 4),
-                                                                               ('2024-09-19 13:00:00', '00:45:00', 'https://example.com/session5', 5, 5);
-
--- Crear la tabla Recurso
-CREATE TABLE recurso (
-                         id_recurso SERIAL PRIMARY KEY,
-                         link_recurso VARCHAR(300) NOT NULL,
-                         es_premium BOOLEAN NOT NULL,
-                         es_favorito BOOLEAN NOT NULL,
-                         id_estudiante INT,
-                         id_mentor INT,
-                         FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante),
-                         FOREIGN KEY (id_mentor) REFERENCES mentor(id_mentor)
-);
-
--- Insertar datos ficticios en la tabla Recurso
-INSERT INTO recurso (link_recurso, es_premium, es_favorito, id_estudiante, id_mentor) VALUES
-                                                                                          ('http://example.com/recurso1', TRUE, FALSE, 1, 1),
-                                                                                          ('http://example.com/recurso2', FALSE, TRUE, 2, 2),
-                                                                                          ('http://example.com/recurso3', TRUE, TRUE, 1, 3),
-                                                                                          ('http://example.com/recurso4', FALSE, FALSE, 3, 1),
-                                                                                          ('http://example.com/recurso5', TRUE, FALSE, 2, 3);
+                                                                       ('Viernes', '13:00', '15:00', 5),
+                                                                       ('Sábado', '09:00', '11:00', 6),
+                                                                       ('Domingo', '10:00', '12:00', 7),
+                                                                       ('Lunes', '08:00', '10:00', 8),
+                                                                       ('Martes', '13:00', '15:00', 9),
+                                                                       ('Miércoles', '11:00', '13:00', 10),
+                                                                       ('Jueves', '16:00', '18:00', 11),
+                                                                       ('Viernes', '12:00', '14:00', 12),
+                                                                       ('Sábado', '10:00', '12:00', 13),
+                                                                       ('Domingo', '09:00', '11:00', 14),
+                                                                       ('Lunes', '14:00', '16:00', 15);

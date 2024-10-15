@@ -21,7 +21,6 @@ public class ResultadoPrueba {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
-            foreignKey = @ForeignKey(name = "FK_resultado_prueba"))
+    @JoinColumn(name = "id_prueba_vocacional", nullable = false)
     private PruebaVocacional pruebaVocacional;
 }

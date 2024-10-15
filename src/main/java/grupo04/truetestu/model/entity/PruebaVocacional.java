@@ -28,7 +28,10 @@ public class PruebaVocacional {
             foreignKey = @ForeignKey(name = "FK_prueba_estudiante"))
     private Estudiante estudiante;
 
-    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ResultadoPrueba> pruebas;
+
+    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pregunta> preguntas;
 
 }
