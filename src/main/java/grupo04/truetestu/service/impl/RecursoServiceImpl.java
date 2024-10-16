@@ -32,7 +32,7 @@ public class RecursoServiceImpl implements RecursoService {
 
     @Override
     public Recurso guardar(Recurso recurso) {
-        // Asegúrate de que el mentor esté presente
+
         if (recurso.getMentor() == null || recurso.getMentor().getIdMentor() == 0) {
             throw new EntityNotFoundException("El mentor no puede ser nulo y debe tener un ID válido.");
         }
@@ -43,7 +43,7 @@ public class RecursoServiceImpl implements RecursoService {
 
         recurso.setMentor(mentor);
 
-        // Opcional: Si el estudiante también debe estar presente, puedes verificarlo
+
         if (recurso.getEstudiante() != null && recurso.getEstudiante().getIdEstudiante() != 0) {
             Estudiante estudiante = estudianteRepository.findById(recurso.getEstudiante().getIdEstudiante())
                     .orElseThrow(() -> new EntityNotFoundException("Estudiante no encontrado"));
@@ -52,8 +52,6 @@ public class RecursoServiceImpl implements RecursoService {
 
         return recursoRepository.save(recurso);
     }
-
-
 
     @Override
     public void eliminar(int id) {

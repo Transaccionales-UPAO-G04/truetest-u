@@ -29,7 +29,7 @@ public class Recurso {
             foreignKey = @ForeignKey(name = "FK_recurso_estudiante"))
     private Estudiante estudiante;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
             foreignKey = @ForeignKey(name = "FK_recurso_mentor"))
