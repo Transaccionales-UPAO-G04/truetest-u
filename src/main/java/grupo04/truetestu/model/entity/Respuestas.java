@@ -13,7 +13,7 @@ public class Respuestas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRespuesta;
 
-    @Column (name = "opciones", nullable = false, length = 150)
+    @Column(name = "opciones", nullable = false, length = 150)
     private String opciones;
 
     @ManyToOne

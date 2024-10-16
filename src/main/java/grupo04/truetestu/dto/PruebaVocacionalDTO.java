@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class PruebaVocacionalDTO {
+    //funcionnó, mieo al tocarlo
     private int idPruebaVocacional;
     private int nroPrueba;
     private LocalDate fecha;
