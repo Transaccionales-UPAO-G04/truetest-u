@@ -6,35 +6,34 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name= "preguntas")
-
+@Table(name = "preguntas")
 public class Pregunta {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int idPregunta;
+        private Long idPregunta; // Cambiado de int a Long para un rango más amplio
 
-        @Column(name = "pregunta",nullable = false, length = 250)
-        private String pregunta;
+        @Column(name = "texto_pregunta", nullable = false, length = 250)
+        private String textoPregunta; // Cambiado el nombre del campo para evitar confusión
 
-        @Column(name = "punto",nullable = false)
-        private int punto;
-
-        @JsonIgnore
-        @OneToOne
-        @JoinColumn (name = "id_respuestas",referencedColumnName = "idRespuesta"
-                , foreignKey = @ForeignKey(name = "FK_pregunta_respuesta"))
-        private Respuestas respuestas;
+        @Column(name = "puntos", nullable = false)
+        private int puntos; // Cambiado el nombre a plural para ser más descriptivo
 
         @JsonIgnore
-        @ManyToOne
+        @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+        @JoinColumn(name = "id_respuesta", referencedColumnName = "idRespuesta",
+                foreignKey = @ForeignKey(name = "FK_pregunta_respuesta"))
+        private Respuesta respuesta;
+
+        @JsonIgnore
+        @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
         @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
-                foreignKey = @ForeignKey(name = "FK_pregunta_prueba-vocacional"))
+                foreignKey = @ForeignKey(name = "FK_pregunta_prueba_vocacional"))
         private PruebaVocacional pruebaVocacional;
 
         @JsonIgnore
-        @ManyToOne
-        @JoinColumn(name = "id_carreras", referencedColumnName = "idCarrera",
-                foreignKey = @ForeignKey(name = "FK_pregunta_carreral"))
+        @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+        @JoinColumn(name = "id_carrera", referencedColumnName = "idCarrera",
+                foreignKey = @ForeignKey(name = "FK_pregunta_carrera"))
         private Carrera carrera;
 }

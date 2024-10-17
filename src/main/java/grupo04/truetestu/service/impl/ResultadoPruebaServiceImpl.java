@@ -1,41 +1,36 @@
 package grupo04.truetestu.service.impl;
 
+import grupo04.truetestu.dto.ResultadoPruebaDTO;
+import grupo04.truetestu.mapper.ResultadoPruebaMapper;
 import grupo04.truetestu.model.entity.ResultadoPrueba;
 import grupo04.truetestu.repository.ResultadoPruebaRepository;
 import grupo04.truetestu.service.ResultadoPruebaService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-
-@RequiredArgsConstructor
+import java.util.stream.Collectors;
 
 @Service
 public class ResultadoPruebaServiceImpl implements ResultadoPruebaService {
 
-    private final ResultadoPruebaRepository resultadoPruebaRepository;
+    @Autowired
+    private ResultadoPruebaRepository resultadoPruebaRepository;
 
-    @Transactional(readOnly = true)
+    private final ResultadoPruebaMapper mapper = ResultadoPruebaMapper.INSTANCE;
+
     @Override
-    public List<ResultadoPrueba> getAll() {
-        return resultadoPruebaRepository.findAll();
+    public List<ResultadoPruebaDTO> obtenerResultados() {
+        return resultadoPruebaRepository.findAll().stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public Page<ResultadoPrueba> paginate(Pageable pageable) {
-        return resultadoPruebaRepository.findAll(pageable);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Optional<ResultadoPrueba> findByEstudianteId(int id) {
-        // Aquí necesitas implementar la consulta para obtener el resultado basado en el ID del estudiante
-        // Puedes necesitar modificar el repositorio para incluir una consulta personalizada
-        return resultadoPruebaRepository.findByEstudianteId(id);
+    public ResultadoPruebaDTO crearResultadoPrueba(ResultadoPruebaDTO resultadoPruebaDTO) {
+        ResultadoPrueba resultadoPrueba = mapper.toEntity(resultadoPruebaDTO);
+        resultadoPrueba = resultadoPruebaRepository.save(resultadoPrueba);
+        return mapper.toDto(resultadoPrueba);
     }
 }
+

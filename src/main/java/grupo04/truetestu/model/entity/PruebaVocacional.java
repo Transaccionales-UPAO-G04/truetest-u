@@ -1,40 +1,25 @@
 package grupo04.truetestu.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "prueba_vocacional")
+@Table(name = "pruebas_vocacionales")
 public class PruebaVocacional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPruebaVocacional;
+    private Long idPruebaVocacional;
 
-    @Column(name= "nro_prueba", nullable = false)
-    private int nroPrueba;
+    @Column(name = "nombre", nullable = false, length = 100)
+    private String nombre;
 
-    @Column(name= "fecha", nullable = false)
-    private LocalDate fecha;
+    @Column(name = "descripcion", length = 250)
+    private String descripcion;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre; // Agregado el campo nombre
-
-    @Column(name = "email", nullable = false)
-    private String email; // Agregado el campo email
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
-            foreignKey = @ForeignKey(name = "FK_prueba_estudiante"))
-    private Estudiante estudiante;
-
-    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
-    private List<ResultadoPrueba> pruebas;
-
+    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private List<Pregunta> preguntas; // Relación con Pregunta
 }
