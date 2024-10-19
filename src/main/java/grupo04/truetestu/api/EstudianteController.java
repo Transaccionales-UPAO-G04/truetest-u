@@ -1,5 +1,6 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.dto.EstudianteDTO;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
@@ -71,10 +72,10 @@ public class EstudianteController {
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Estudiante> updateEstudiante(@PathVariable int id,
-                                                       @RequestBody Estudiante estudiante) {
-        Estudiante updateEstudiante = estudianteService.update(id, estudiante);
-        return new ResponseEntity<>(updateEstudiante, HttpStatus.OK);
+    public ResponseEntity<EstudianteDTO> updateEstudiante(@PathVariable int id,
+                                                       @RequestBody EstudianteDTO estudianteDTO) {
+        EstudianteDTO updateEstudianteDTO = estudianteService.update(id, estudianteDTO);
+        return new ResponseEntity<>(updateEstudianteDTO, HttpStatus.OK);
     }
 
 }

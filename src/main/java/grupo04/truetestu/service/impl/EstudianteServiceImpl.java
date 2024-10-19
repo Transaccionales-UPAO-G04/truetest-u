@@ -1,5 +1,7 @@
 package grupo04.truetestu.service.impl;
 
+import grupo04.truetestu.dto.EstudianteDTO;
+import grupo04.truetestu.mapper.EstudianteMapper;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.entity.Usuario;
 import grupo04.truetestu.model.enums.EstadoCuenta;
@@ -18,6 +20,7 @@ import java.util.List;
 public class EstudianteServiceImpl implements EstudianteService {
 
     private final EstudianteRepository estudianteRepository;
+    private final EstudianteMapper estudianteMapper;
 
     @Override
     public List<Estudiante> findAll() {
@@ -44,9 +47,22 @@ public class EstudianteServiceImpl implements EstudianteService {
 
     @Transactional
     @Override
-    public Estudiante update(Integer id, Estudiante updateEstudiante) {
+    public EstudianteDTO update(Integer id, EstudianteDTO updateEstudianteDTO) {
+        // Encuentra el estudiante en la base de datos
         Estudiante estudianteFromDb = findById(id);
-        return estudianteRepository.save(estudianteFromDb);
+
+        // Aquí puedes actualizar los campos del estudiante con los valores del DTO
+        estudianteFromDb.setNombre(updateEstudianteDTO.getNombre());
+        estudianteFromDb.setEmail(updateEstudianteDTO.getEmail());
+        estudianteFromDb.setContraseña(updateEstudianteDTO.getContraseña());
+        estudianteFromDb.setEstadoCuenta(updateEstudianteDTO.getEstadoCuenta());
+        estudianteFromDb.setEstadoPlan(updateEstudianteDTO.getEstadoPlan());
+
+        // Guarda los cambios en la base de datos
+        Estudiante updatedEstudiante = estudianteRepository.save(estudianteFromDb);
+
+        // Retorna el estudiante actualizado convertido a DTO
+        return estudianteMapper.toDTO(updatedEstudiante);
     }
 
     //PUESTO DE MOMENTO
