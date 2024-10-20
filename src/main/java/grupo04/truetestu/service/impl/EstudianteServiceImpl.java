@@ -1,9 +1,9 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.dto.EstudianteDTO;
+import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.mapper.EstudianteMapper;
 import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.entity.Usuario;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
@@ -12,8 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
-
 
 @RequiredArgsConstructor
 @Service
@@ -49,7 +47,8 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public EstudianteDTO update(Integer id, EstudianteDTO updateEstudianteDTO) {
         // Encuentra el estudiante en la base de datos
-        Estudiante estudianteFromDb = findById(id);
+        Estudiante estudianteFromDb = estudianteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
 
         // Aquí puedes actualizar los campos del estudiante con los valores del DTO
         estudianteFromDb.setNombre(updateEstudianteDTO.getNombre());

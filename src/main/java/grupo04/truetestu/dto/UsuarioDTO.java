@@ -20,5 +20,5 @@ public abstract class UsuarioDTO {
     private String contraseña;
 
     @NotNull(message = "El tipo de usuario no puede ser nulo")
-    private TipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuario = TipoUsuario.ESTUDIANTE;
 }

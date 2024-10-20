@@ -5,6 +5,7 @@ import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.service.EstudianteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +74,7 @@ public class EstudianteController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<EstudianteDTO> updateEstudiante(@PathVariable int id,
-                                                       @RequestBody EstudianteDTO estudianteDTO) {
+                                                       @Valid @RequestBody EstudianteDTO estudianteDTO) {
         EstudianteDTO updateEstudianteDTO = estudianteService.update(id, estudianteDTO);
         return new ResponseEntity<>(updateEstudianteDTO, HttpStatus.OK);
     }
