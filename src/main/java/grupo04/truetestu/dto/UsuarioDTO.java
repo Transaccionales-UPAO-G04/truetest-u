@@ -4,7 +4,9 @@ import grupo04.truetestu.model.enums.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 public abstract class UsuarioDTO {
 
     @NotBlank(message = "El nombre no puede estar en blanco")
@@ -18,5 +20,5 @@ public abstract class UsuarioDTO {
     private String contraseña;
 
     @NotNull(message = "El tipo de usuario no puede ser nulo")
-    private TipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuario = TipoUsuario.ESTUDIANTE;
 }

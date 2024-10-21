@@ -2,9 +2,7 @@ package grupo04.truetestu.dto;
 
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 
 @Data
 public class EstudianteDTO extends UsuarioDTO {
