@@ -8,7 +8,7 @@ public class PruebaVocacionalDTO {
     private Long idPruebaVocacional;
     private String nombre;
     private String descripcion;
-    private List<PreguntaDTO> preguntas; // Lista de preguntas asociadas
+    private List<PreguntaDTO> preguntas;
 }
 
 

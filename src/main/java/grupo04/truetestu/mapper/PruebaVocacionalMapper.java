@@ -9,6 +9,6 @@ import org.mapstruct.factory.Mappers;
 public interface PruebaVocacionalMapper {
     PruebaVocacionalMapper INSTANCE = Mappers.getMapper(PruebaVocacionalMapper.class);
 
-    PruebaVocacionalDTO pruebaVocacionalToPruebaVocacionalDTO(PruebaVocacional pruebaVocacional);
-    PruebaVocacional pruebaVocacionalDTOToPruebaVocacional(PruebaVocacionalDTO pruebaVocacionalDTO);
+    PruebaVocacionalDTO toDTO(PruebaVocacional pruebaVocacional);
+    PruebaVocacional toEntity(PruebaVocacionalDTO pruebaVocacionalDTO);
 }

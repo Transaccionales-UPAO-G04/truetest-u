@@ -15,6 +15,8 @@ public class Respuesta {
     @Column(name = "texto_respuesta", nullable = false, length = 250)
     private String textoRespuesta;
 
-    @Column(name = "correcta", nullable = false)
-    private boolean correcta; // Indica si la respuesta es correcta o no
+    @ManyToOne // Define la relación con Pregunta
+    @JoinColumn(name = "id_pregunta", nullable = false) // Cambia esto al nombre de la columna real en la base de datos
+    private Pregunta pregunta; // Añade esta propiedad para la relación
+
 }
