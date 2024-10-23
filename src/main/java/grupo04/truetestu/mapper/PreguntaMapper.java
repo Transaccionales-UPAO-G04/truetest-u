@@ -12,3 +12,4 @@ public interface PreguntaMapper {
     PreguntaDTO toDTO(Pregunta pregunta);
     Pregunta toEntity(PreguntaDTO preguntaDTO);
 }
+

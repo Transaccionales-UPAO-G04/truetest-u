@@ -19,12 +19,14 @@ public class PruebaVocacionalController {
     @GetMapping
     public List<PruebaVocacionalDTO> obtenerPruebasVocacionales() {
         return pruebaVocacionalService.obtenerPruebasVocacionales();
+
     }
 
     @PostMapping
     public PruebaVocacionalDTO crearPruebaVocacional(@RequestBody PruebaVocacionalDTO pruebaVocacionalDTO) {
         return pruebaVocacionalService.crearPruebaVocacional(pruebaVocacionalDTO);
     }
+
 
     @GetMapping("/preguntas")
     public List<PreguntaDTO> obtenerPreguntas() {
