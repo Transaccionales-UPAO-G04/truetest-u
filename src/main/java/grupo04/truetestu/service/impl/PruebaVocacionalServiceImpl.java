@@ -14,6 +14,8 @@ import grupo04.truetestu.repository.PreguntaRepository;
 import grupo04.truetestu.repository.RespuestaRepository;
 import grupo04.truetestu.service.PruebaVocacionalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -143,6 +145,10 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         PruebaVocacional pruebaActualizada = pruebaVocacionalRepository.save(pruebaExistente);
         return PruebaVocacionalMapper.INSTANCE.toDTO(pruebaActualizada);
     }
+    @Override
+    public Page<PruebaVocacionalDTO> paginate(Pageable pageable) {
+        return pruebaVocacionalRepository.findAll(pageable)
+                .map(PruebaVocacionalMapper.INSTANCE::toDTO);
+    }
 }
-
 

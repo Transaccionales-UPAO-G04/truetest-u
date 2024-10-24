@@ -33,4 +33,3 @@ public class ResultadoPruebaServiceImpl implements ResultadoPruebaService {
         return mapper.toDto(resultadoPrueba);
     }
 }
-

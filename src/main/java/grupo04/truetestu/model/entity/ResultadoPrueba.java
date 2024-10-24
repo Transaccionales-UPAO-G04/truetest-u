@@ -18,4 +18,3 @@ public class ResultadoPrueba {
     @JoinColumn(name = "id_prueba_vocacional", nullable = false)
     private PruebaVocacional pruebaVocacional; // Relación con PruebaVocacional
 }
-

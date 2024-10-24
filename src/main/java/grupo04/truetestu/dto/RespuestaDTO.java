@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Positive;
 @Data
 public class RespuestaDTO {
 
-    @Positive(message = "El ID de la respuesta debe ser un número positivo")
     private Long idRespuesta;
 
     @NotBlank(message = "El texto de la respuesta es obligatorio")

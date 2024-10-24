@@ -25,7 +25,3 @@ public class PruebaVocacionalDTO {
     private List<PreguntaDTO> preguntas;
 }
 
-
-
-
-

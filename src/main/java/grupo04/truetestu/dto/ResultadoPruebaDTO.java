@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Positive;
 @Data
 public class ResultadoPruebaDTO {
 
-    @Positive(message = "El ID del resultado de la prueba debe ser un número positivo")
     private Long idResultadoPrueba;
 
     @Positive(message = "El puntaje debe ser un número positivo")
@@ -21,5 +20,3 @@ public class ResultadoPruebaDTO {
     @Positive(message = "El ID de la prueba vocacional debe ser un número positivo")
     private Long idPruebaVocacional;
 }
-
-

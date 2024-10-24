@@ -8,4 +8,3 @@ public interface ResultadoPruebaService {
     List<ResultadoPruebaDTO> obtenerResultados();  // Asegúrate de que este método exista
     ResultadoPruebaDTO crearResultadoPrueba(ResultadoPruebaDTO resultadoPruebaDTO);
 }
-

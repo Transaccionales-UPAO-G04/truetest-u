@@ -18,4 +18,3 @@ public class Carrera {
     @Column(name = "descripcion", length = 250)
     private String descripcion;
 }
-
