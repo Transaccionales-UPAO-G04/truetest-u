@@ -1,0 +1,40 @@
+package grupo04.truetestu.model.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name= "preguntas")
+
+public class Preguntas {
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int idPreguntas;
+
+        @Column(name = "pregunta",nullable = false, length = 250)
+        private String preguntas;
+
+        @Column(name = "punto",nullable = false)
+        private int punto;
+
+        @JsonIgnore
+        @OneToOne
+        @JoinColumn (name = "id_respuestas",referencedColumnName = "idRespuestas"
+                , foreignKey = @ForeignKey(name = "FK_preguntas_respuestas"))
+        private Respuestas respuestas;
+
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
+                foreignKey = @ForeignKey(name = "FK_pregunta_prueba-vocacional"))
+        private PruebaVocacional pruebaVocacional;
+
+        @JsonIgnore
+        @ManyToOne
+        @JoinColumn(name = "id_carrera", referencedColumnName = "idCarrera",
+                foreignKey = @ForeignKey(name = "FK_pregunta_carrera"))
+        private Carrera carrera;
+}

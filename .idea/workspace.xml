@@ -46,7 +46,7 @@
     "Spring Boot.TruetestUApplication.executor": "Run",
     "git-widget-placeholder": "feature/Pago__de__suscripcion",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/jhord/Documents/Cursos Upao/8 ciclo/TRANSACCIONES/TRABAJOS DE MIS HISTORIAS DE USUARIO/PAGO DE SUSCRIPCION/truetest-u",
+    "last_opened_file_path": "C:/Users/jhord/Documents/Cursos Upao/8 ciclo/TRANSACCIONES/TRABAJOS DE MIS HISTORIAS DE USUARIO/PAGO DE SUSCRIPCION/truetest-u-develop",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -98,7 +98,9 @@
       <workItem from="1729777643057" duration="3701000" />
       <workItem from="1729784712605" duration="3470000" />
       <workItem from="1729789504075" duration="128000" />
-      <workItem from="1729789673146" duration="2549000" />
+      <workItem from="1729789673146" duration="2064000" />
+      <workItem from="1729792278534" duration="1164000" />
+      <workItem from="1729793468627" duration="20000" />
     </task>
     <servers />
   </component>

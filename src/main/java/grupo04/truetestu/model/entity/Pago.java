@@ -1,0 +1,33 @@
+package grupo04.truetestu.model.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.util.Date;
+
+@Data
+@Entity
+@Table(name = "pago")
+public class Pago {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPago;
+
+    @ManyToOne
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_pago_estudiante"))
+    private Estudiante estudiante;
+
+    @ManyToOne
+    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan"))
+    private Plan plan;
+
+    @Column(name = "monto", nullable = false)
+    private double monto;
+
+    @Column(name = "metodo_pago", nullable = false)
+    private String metodoPago;
+
+    @Column(name = "fecha_pago", nullable = false)
+    private Date fechaPago;
+}
+
