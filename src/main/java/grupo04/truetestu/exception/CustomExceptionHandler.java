@@ -1,4 +1,4 @@
-package grupo04.truetestu.Infra.exception;
+package grupo04.truetestu.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
