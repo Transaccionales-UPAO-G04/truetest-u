@@ -1,5 +1,9 @@
 package grupo04.truetestu.service.impl;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import grupo04.truetestu.dto.MentorDTO;
+import grupo04.truetestu.mapper.MentorMapper;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.repository.HorarioRepository;
 import grupo04.truetestu.repository.MentorRepository;
@@ -14,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MentorServiceImpl implements MentorService {
     private final HorarioRepository horarioRepository;
-    private final ReseñaRepository reseñaRepository;
     private final MentorRepository mentorRepository;
+    private final MentorMapper mentorMapper;
 
     @Override
     public List<Mentor> findAll() {
@@ -57,5 +61,33 @@ public class MentorServiceImpl implements MentorService {
         Mentor mentor = findById(id);
         horarioRepository.deleteById(id);
         mentorRepository.deleteById(id);
+    }
+
+    //Recursos
+    @Transactional(readOnly = true)
+    @Override
+    public String getLinkRecursoByNombre(String nombre) {
+        Mentor mentor = mentorRepository.findByNombre(nombre)
+                .orElseThrow(() -> new ResourceNotFoundException("Mentor con nombre " + nombre + " no encontrado"));
+
+        return mentor.getLinkRecurso();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public String getLinkRecursoPremiumByNombre(String nombre) {
+        Mentor mentor = mentorRepository.findByNombre(nombre)
+                .orElseThrow(() -> new ResourceNotFoundException("Mentor con nombre " + nombre + " no encontrado"));
+
+        return mentor.getLinkRecursoPremium();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public MentorDTO getBothLinksByNombre(String nombre) {
+        Mentor mentor = mentorRepository.findByNombre(nombre)
+                .orElseThrow(() -> new ResourceNotFoundException("Mentor con nombre " + nombre + " no encontrado"));
+
+        return mentorMapper.toDTO(mentor);
     }
 }

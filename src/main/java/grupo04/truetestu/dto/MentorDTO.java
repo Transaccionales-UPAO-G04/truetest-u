@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class MentorDTO {
+public class MentorDTO extends UsuarioDTO{
     private int idMentor;
 
     @NotBlank(message = "Tiene que ingresar experiencia")

@@ -1,4 +1,5 @@
 package grupo04.truetestu.service;
+import grupo04.truetestu.dto.MentorDTO;
 import grupo04.truetestu.model.entity.Mentor;
 import java.util.List;
 
@@ -9,4 +10,11 @@ public interface MentorService {
     Mentor createMentor(Mentor mentor);
     Mentor updateMentor(int id, Mentor mentor);
     void deleteMentor(int id);
+
+    //Recursos
+    String getLinkRecursoByNombre(String nombre);
+
+    String getLinkRecursoPremiumByNombre(String nombre);
+
+    MentorDTO getBothLinksByNombre(String nombre);
 }

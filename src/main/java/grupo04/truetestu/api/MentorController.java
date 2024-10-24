@@ -1,5 +1,6 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.dto.MentorDTO;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.service.MentorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mentores")
@@ -75,5 +79,33 @@ public class MentorController {
     public ResponseEntity<?> deleteMentor(@PathVariable int id) {
         mentorService.deleteMentor(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //Recurso
+    // Obtener linkRecurso por nombre de mentor
+    @GetMapping("/link-recurso/{nombre}")
+    public ResponseEntity<String> getLinkRecurso(@PathVariable String nombre) {
+        String linkRecurso = mentorService.getLinkRecursoByNombre(nombre);
+        return new ResponseEntity<>(linkRecurso, HttpStatus.OK);
+    }
+
+    // Obtener linkRecursoPremium por nombre de mentor
+    @GetMapping("/link-recurso-premium/{nombre}")
+    public ResponseEntity<String> getLinkRecursoPremium(@PathVariable String nombre) {
+        String linkRecursoPremium = mentorService.getLinkRecursoPremiumByNombre(nombre);
+        return new ResponseEntity<>(linkRecursoPremium, HttpStatus.OK);
+    }
+
+    // Obtener ambos links por nombre de mentor
+    @GetMapping("/links/{nombre}")
+    public ResponseEntity<Map<String, String>> getBothLinks(@PathVariable String nombre) {
+        MentorDTO mentorDTO = mentorService.getBothLinksByNombre(nombre);
+
+        // Crear un mapa con solo los enlaces
+        Map<String, String> links = new HashMap<>();
+        links.put("linkRecurso", mentorDTO.getLinkRecurso());
+        links.put("linkRecursoPremium", mentorDTO.getLinkRecursoPremium());
+
+        return new ResponseEntity<>(links, HttpStatus.OK);
     }
 }
