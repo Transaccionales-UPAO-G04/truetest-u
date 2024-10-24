@@ -1,10 +1,10 @@
 package grupo04.truetestu.api;
 
-import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
 import grupo04.truetestu.dto.PruebaVocacionalDTO;
 import grupo04.truetestu.dto.PreguntaDTO;
 import grupo04.truetestu.dto.RespuestaDTO;
 import grupo04.truetestu.service.PruebaVocacionalService;
+import grupo04.truetestu.exception.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

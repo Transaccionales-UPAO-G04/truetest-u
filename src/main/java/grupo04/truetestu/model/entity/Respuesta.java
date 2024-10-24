@@ -19,4 +19,7 @@ public class Respuesta {
     @JoinColumn(name = "id_pregunta", nullable = false) // Cambia esto al nombre de la columna real en la base de datos
     private Pregunta pregunta; // Añade esta propiedad para la relación
 
+    @ManyToOne // Define la relación con Especialidad
+    @JoinColumn(name = "especialidad_id", nullable = false) // Cambia esto al nombre de la columna real en la base de datos
+    private Especialidad especialidad; // Añade esta propiedad para la relación
 }

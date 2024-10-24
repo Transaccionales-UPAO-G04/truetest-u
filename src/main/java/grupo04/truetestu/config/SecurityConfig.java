@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/auth/login", "/auth/register", "/prueba/vocacional/**").permitAll() // Permite acceso a estas rutas sin autenticación
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exc -> exc
