@@ -4,7 +4,10 @@ import grupo04.truetestu.dto.UserProfileDTO;
 import grupo04.truetestu.dto.UserRegistrationDTO;
 import grupo04.truetestu.exception.RoleNotFoundException;
 import grupo04.truetestu.mapper.UsuarioMapper;
+import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.model.entity.Roles;
+import grupo04.truetestu.model.entity.Usuario;
 import grupo04.truetestu.model.enums.TipoUsuario;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.repository.MentorRepository;
@@ -29,13 +32,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public UserProfileDTO registrarMentor(UserProfileDTO registrationDTO) {
-        return null;
+    public UserProfileDTO registrarMentor(UserRegistrationDTO registrationDTO) {
+        return registrarMentorWithRole(registrationDTO, TipoUsuario.MENTOR);
     }
 
     @Override
-    public UserProfileDTO registrarEstudiante(UserProfileDTO registrationDTO) {
-        return null;
+    public UserProfileDTO registrarEstudiante(UserRegistrationDTO registrationDTO) {
+        return registrarMentorWithRole(registrationDTO, TipoUsuario.ESTUDIANTE);
     }
 
     @Override
@@ -50,24 +53,45 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private UserProfileDTO registrarMentorWithRole(UserRegistrationDTO registrationDTO, TipoUsuario roleEnum) {
 
-        //verificar si el email esta registrado
-        boolean existsByEmail = usuarioRespository.existsByEmail(registrationDTO.getEmail());
-        boolean existsAsMentor = mentorRepository.existsByNombre(registrationDTO.getNombre());
-        boolean existasAsEstudiante = estudianteRepository.existsByNombre(registrationDTO.getNombre());
+            //verificar si el email esta registrado
+            boolean existsByEmail = usuarioRespository.existsByEmail(registrationDTO.getEmail());
+            boolean existsAsMentor = mentorRepository.existsByNombre(registrationDTO.getNombre());
+            boolean existasAsEstudiante = estudianteRepository.existsByNombre(registrationDTO.getNombre());
 
-        if (existsByEmail) {
-            throw new IllegalArgumentException("El email ya existe");
-        }
+            if (existsByEmail) {
+                throw new IllegalArgumentException("El email ya existe");
+            }
 
-        if (existsAsMentor || existasAsEstudiante ) {
-            throw new IllegalArgumentException("El usuario ya existe");
-        }
+            if (existsAsMentor || existasAsEstudiante ) {
+                throw new IllegalArgumentException("El usuario ya existe");
+            }
 
-        Roles role = rolesRepository.findByRole(roleEnum)
-                .orElseThrow(() -> new RoleNotFoundException("ERROR: Rol no encontrado"));
+            Roles role = rolesRepository.findByRole(roleEnum)
+                    .orElseThrow(() -> new RoleNotFoundException("ERROR: Rol no encontrado"));
 
-        registrationDTO.getPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+            registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
-        return null;
+            Usuario usuario = usuarioMapper.toUserEntity(registrationDTO);
+            usuario.setRole(role);
+
+            if (roleEnum == TipoUsuario.ESTUDIANTE) {
+                Estudiante estudiante = new Estudiante();
+                estudiante.setNombre(registrationDTO.getNombre());
+                estudiante.setUsuario(usuario);
+                usuario.setEstudiante(estudiante);
+            } else if (roleEnum == TipoUsuario.MENTOR) {
+                Mentor mentor = new Mentor();
+                mentor.setNombre(registrationDTO.getNombre());
+                mentor.setExperiencia(registrationDTO.getExperiencia());
+                mentor.setEspecialidad(registrationDTO.getEspecialidad());
+                mentor.setLinkRecurso(registrationDTO.getLinkRecurso());
+                mentor.setLinkRecursoPremium(registrationDTO.getLinkRecursoPremium());
+                mentor.setUsuario(usuario);
+                usuario.setMentor(mentor);
+            }
+
+            Usuario savedUsuario = usuarioRespository.save(usuario);
+
+        return usuarioMapper.toUserProfileDTO(savedUsuario);
     }
 }
