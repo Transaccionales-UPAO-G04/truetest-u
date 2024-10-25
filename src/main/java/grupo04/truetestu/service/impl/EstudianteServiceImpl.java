@@ -1,11 +1,10 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.dto.EstudianteDTO;
+import grupo04.truetestu.exception.BadRequestException;
 import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.mapper.EstudianteMapper;
 import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.enums.EstadoCuenta;
-import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
 import jakarta.transaction.Transactional;
@@ -21,26 +20,34 @@ public class EstudianteServiceImpl implements EstudianteService {
     private final EstudianteMapper estudianteMapper;
 
     @Override
-    public List<Estudiante> findAll() {
-        return estudianteRepository.findAll();
+    public List<EstudianteDTO> findAll() {
+        List<Estudiante> estudiantes =  estudianteRepository.findAll();
+        return estudiantes.stream()
+                .map(estudianteMapper::toDTO)
+                .toList();
     }
 
 
     @Transactional
     @Override
-    public Estudiante registerEstudiante(Estudiante estudiante) {/*
-        if (estudianteRepository.existsEstudianteByEmail(Usuario.getEmail())) {
-            throw new RuntimeException("El correo ya fue registrado");
-        }*/
+    public EstudianteDTO registerEstudiante(EstudianteDTO estudianteDTO) {
+        estudianteRepository.findByEmail(estudianteDTO.getEmail()).
+                ifPresent(existEstudiante -> {
+                    throw new BadRequestException("Usuario existente");
+                });
 
-        // Falta crear un AT
-        return estudianteRepository.save(estudiante);
+        Estudiante estudiante = estudianteMapper.toEntity(estudianteDTO);
+        estudiante = estudianteRepository.save(estudiante);
+        return estudianteMapper.toDTO(estudiante);
+
+
     }
 
     @Override
-    public Estudiante findById(int id) {
-        return estudianteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+    public EstudianteDTO findById(int id) {
+        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("El estudiante con ID "+id+" no fu eencontrado"));
+        return estudianteMapper.toDTO(estudiante);
     }
 
     @Transactional
@@ -50,48 +57,31 @@ public class EstudianteServiceImpl implements EstudianteService {
         Estudiante estudianteFromDb = estudianteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
 
+        estudianteRepository.findByEmailAndContraseña(updateEstudianteDTO.getEmail(), updateEstudianteDTO.getContraseña())
+                .filter(existingEstudiante -> !existingEstudiante.getEmail().equals(updateEstudianteDTO.getEmail()))
+                .ifPresent(existingEstudiante -> {
+                    throw new RuntimeException("Ya existe un estudiante creado con ese correo");
+                });
+
         // Aquí puedes actualizar los campos del estudiante con los valores del DTO
         estudianteFromDb.setNombre(updateEstudianteDTO.getNombre());
         estudianteFromDb.setEmail(updateEstudianteDTO.getEmail());
         estudianteFromDb.setContraseña(updateEstudianteDTO.getContraseña());
-        estudianteFromDb.setEstadoCuenta(updateEstudianteDTO.getEstadoCuenta());
-        estudianteFromDb.setEstadoPlan(updateEstudianteDTO.getEstadoPlan());
 
         // Guarda los cambios en la base de datos
-        Estudiante updatedEstudiante = estudianteRepository.save(estudianteFromDb);
+        estudianteFromDb = estudianteRepository.save(estudianteFromDb);
 
         // Retorna el estudiante actualizado convertido a DTO
-        return estudianteMapper.toDTO(updatedEstudiante);
+        return estudianteMapper.toDTO(estudianteFromDb);
     }
 
-    //PUESTO DE MOMENTO
-    @Override
-    public Estudiante sesionEstudiante(Estudiante estudiante) {
-        return null;
-    }
-/*
-    @Override
-    public Estudiante sesionEstudiante(Estudiante estudiante, Usuario usuario) {
-        Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(Usuario.getEmail(), Usuario.getContraseña());
-        if (estudianteExistente != null) {
-            return estudianteExistente;
-        } else {
-            throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
-        }
-    }*/
 
+    @Transactional
     @Override
-    public void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan) { //iniciar sesion
-        Estudiante estudiante = findById(id);
-        estudiante.setEstadoPlan(nuevoEstadoPlan);
-        estudianteRepository.save(estudiante);
-    }
-
-    @Override
-    public void cambiarCuenta(int id, EstadoCuenta nuevoEstadoCuenta) { //iniciar sesion
-        Estudiante estudiante = findById(id);
-        estudiante.setEstadoCuenta(nuevoEstadoCuenta);
-        estudianteRepository.save(estudiante);
+    public void delete(Integer id) {
+        Estudiante estudiante = estudianteRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
+        estudianteRepository.delete(estudiante);
     }
 
 

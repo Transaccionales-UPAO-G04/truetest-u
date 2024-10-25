@@ -1,24 +1,30 @@
 package grupo04.truetestu.model.entity;
 
-import grupo04.truetestu.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.Data;
 
+@Entity
+@Table (name = "Usuario")
 @Data
-@MappedSuperclass
-public abstract class Usuario {
+public class Usuario {
 
-    @Column(name = "nombre", nullable = false, length = 150)
-    private String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Column(name = "email", nullable = false, length = 150, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "contraseña", nullable = false, length = 100)
+
     private String contraseña;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "usuario_tipo", nullable = false)
-    private TipoUsuario tipoUsuario = TipoUsuario.ESTUDIANTE;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Estudiante estudiante;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Mentor mentor;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name ="role_id", referencedColumnName = "id")
+    private Roles role;
 }

@@ -1,5 +1,6 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.dto.EstudianteDTO;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.service.EstudianteService;
 import jakarta.validation.Valid;
@@ -26,10 +27,10 @@ public class AuthController {
             @ApiResponse(responseCode = "201", description = "Estudiante registrado con éxito"),
             @ApiResponse(responseCode = "400", description = "Solicitud inválida")
     })
-    @PostMapping("/register")
-    public ResponseEntity<Estudiante> register(@RequestBody @Valid Estudiante estudiante) {
-        Estudiante newEstudiante = estudianteService.registerEstudiante(estudiante);
-        return new ResponseEntity<>(newEstudiante, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity <EstudianteDTO> registrar(@Valid @RequestBody EstudianteDTO estudianteDTO) {
+        EstudianteDTO createdEstudiante = estudianteService.registerEstudiante(estudianteDTO);
+        return new ResponseEntity<>(createdEstudiante, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Iniciar sesión como estudiante", description = "Autentica a un estudiante en el sistema")

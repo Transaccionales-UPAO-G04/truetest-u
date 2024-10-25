@@ -5,13 +5,10 @@ import grupo04.truetestu.model.enums.EstadoPlan;
 import lombok.Data;
 
 @Data
-public class EstudianteDTO extends UsuarioDTO {
+public class EstudianteDTO {
 
-    private int idEstudiante;
 
-    private EstadoPlan estadoPlan = EstadoPlan.NOPREMIUM;
 
-    private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
 
     //Si se quiere incluir, pero puede hacer mas complejo todo
     //Aunque dependerá del contexto

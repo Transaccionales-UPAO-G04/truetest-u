@@ -30,6 +30,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
 
+
+    //RoleNoTFOUND
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<CustomErrorResponse> handleModelNotFoundException(RoleNotFoundException ex, WebRequest request) {
+        CustomErrorResponse err = new CustomErrorResponse(LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
+
     //BadRequestException
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<CustomErrorResponse> handleModelNotFoundException(BadRequestException ex, WebRequest request) {
@@ -42,7 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 
-    //////////////////////
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CustomErrorResponse> handleAllException(Exception ex, WebRequest request){
         CustomErrorResponse err = new CustomErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
