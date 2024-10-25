@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user/profile")
 @RequiredArgsConstructor
 public class UserProfileController {
 
@@ -24,7 +24,7 @@ public class UserProfileController {
     }
 
     //Obtener perfil de usuario por id
-    @GetMapping("/{d}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable int id) {
         UserProfileDTO userProfile = usuarioService.getUsuarioProfileById(id);
         return new ResponseEntity<>(userProfile, HttpStatus.OK);

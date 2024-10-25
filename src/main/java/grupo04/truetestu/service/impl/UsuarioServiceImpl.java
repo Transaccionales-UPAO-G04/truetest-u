@@ -2,6 +2,7 @@ package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.dto.UserProfileDTO;
 import grupo04.truetestu.dto.UserRegistrationDTO;
+import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.exception.RoleNotFoundException;
 import grupo04.truetestu.mapper.UsuarioMapper;
 import grupo04.truetestu.model.entity.Estudiante;
@@ -14,6 +15,7 @@ import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.RolesRepository;
 import grupo04.truetestu.repository.UsuarioRespository;
 import grupo04.truetestu.service.UsuarioService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,25 +31,60 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioMapper usuarioMapper;
     private final EstudianteRepository estudianteRepository;
 
-
+    @Transactional
     @Override
     public UserProfileDTO registrarMentor(UserRegistrationDTO registrationDTO) {
         return registrarMentorWithRole(registrationDTO, TipoUsuario.MENTOR);
     }
-
+    @Transactional
     @Override
     public UserProfileDTO registrarEstudiante(UserRegistrationDTO registrationDTO) {
         return registrarMentorWithRole(registrationDTO, TipoUsuario.ESTUDIANTE);
     }
 
+    @Transactional
     @Override
-    public UserProfileDTO updateUsuario(int id, UserProfileDTO updateDTO) {
-        return null;
-    }
+    public UserProfileDTO updateUsuario(int id, UserProfileDTO userProfileDTO) {
 
+        Usuario usuario = usuarioRespository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        //Verificar si ya existe un cliente o autor con el mismo nombre y apellido (excepto el usuario actual)
+        boolean existsAsEstudiante = estudianteRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),userProfileDTO.getId()) ;
+        boolean  existsAsMentor = mentorRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),userProfileDTO.getId()) ;
+
+        System.out.println("Mentor exists: " + existsAsMentor);
+
+        if(existsAsEstudiante || existsAsMentor){
+            throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre e ID");
+        }
+
+
+
+        if(usuario.getEstudiante()!=null){
+
+            usuario.getEstudiante().setNombre(userProfileDTO.getNombre());
+
+        }
+
+        if(usuario.getMentor()!=null){
+            usuario.getMentor().setNombre(userProfileDTO.getNombre());
+            usuario.getMentor().setLinkRecursoPremium(userProfileDTO.getLinkRecursoPremium());
+            usuario.getMentor().setEspecialidad(userProfileDTO.getEspecialidad());
+            usuario.getMentor().setExperiencia(userProfileDTO.getExperiencia());
+            usuario.getMentor().setLinkRecurso(userProfileDTO.getLinkRecurso());
+        }
+
+        Usuario updatedUsuario = usuarioRespository.save(usuario);
+
+        return usuarioMapper.toUserProfileDTO(updatedUsuario);
+    }
+    @Transactional
     @Override
     public UserProfileDTO getUsuarioProfileById(int id) {
-        return null;
+        Usuario usuario = usuarioRespository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Usuario no encontrado"));
+        return usuarioMapper.toUserProfileDTO(usuario);
     }
 
     private UserProfileDTO registrarMentorWithRole(UserRegistrationDTO registrationDTO, TipoUsuario roleEnum) {

@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface EstudianteRepository extends JpaRepository <Estudiante, Integer> {
 
     boolean existsByNombre(String nombre);
-
     boolean existsByNombreAndUsuarioIdNot(String nombre, int usuarioId );
 
 
