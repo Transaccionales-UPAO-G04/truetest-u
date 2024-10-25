@@ -10,12 +10,11 @@ import java.util.List;
 public interface EstudianteService {
 
 
-    List<Estudiante> findAll();
-    Estudiante registerEstudiante(Estudiante estudiante);
-    Estudiante findById(int id);
+    List<EstudianteDTO> findAll();
+    EstudianteDTO findById(int idEstudiante);
     EstudianteDTO update(Integer id, EstudianteDTO updateEstudianteDTO);
+    void delete(Integer id);
 
-    Estudiante sesionEstudiante(Estudiante estudiante);//iniciar sesion
-    void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan);
-    void cambiarCuenta(int id, EstadoCuenta nuevoEstadoCuenta);
+   /* void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan);
+    void cambiarCuenta(int id, EstadoCuenta nuevoEstadoCuenta);*/
 }

@@ -45,7 +45,7 @@ public class ReseñaController {
     }
 
     // Crear una nueva reseña asociada a un mentor
-    @Operation(summary = "Crear una nueva reseña",
+    /*@Operation(summary = "Crear una nueva reseña",
             description = "Crea una nueva reseña asociada a un mentor específico.")
     @PostMapping("/{idMentor}/crear-reseña")
     public ResponseEntity<Reseña> createReseña(@PathVariable int idMentor, @RequestParam int idEstudiante,
@@ -61,7 +61,7 @@ public class ReseñaController {
         // Guardar la reseña en la base de datos
         Reseña nuevaReseña = reseñaService.createReseña(reseña);
         return new ResponseEntity<>(nuevaReseña, HttpStatus.CREATED);
-    }
+    }*/
 
     // Eliminar una reseña por ID
     @Operation(summary = "Eliminar una reseña por ID",

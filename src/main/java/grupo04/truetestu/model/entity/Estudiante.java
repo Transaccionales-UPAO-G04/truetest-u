@@ -3,20 +3,21 @@ package grupo04.truetestu.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
-import grupo04.truetestu.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "estudiante")
-public class Estudiante extends Usuario {
+public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEstudiante;
+
+    @Column(name = "nombre_estudiante", nullable = false, length = 150)
+    private String  nombre;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_plan", nullable = false)
@@ -39,6 +40,8 @@ public class Estudiante extends Usuario {
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reseña> reseñas;
 
-
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
 
 }

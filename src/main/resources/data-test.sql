@@ -27,27 +27,44 @@ INSERT INTO especialidades (nombre, descripcion, puntaje_aproximado, carrera_id)
                                                                                      ('Derecho Civil', 'Especialidad enfocada en el derecho civil y familiar.', 85, 4),
                                                                                      ('Arquitectura Sostenible', 'Diseño y construcción con un enfoque ecológico.', 82, 5);
 -- INSERT para la tabla estudiante
-INSERT INTO estudiante (nombre, email, contraseña, estado_plan, estado_cuenta, usuario_tipo) VALUES
-                                                                                                 ('Juan Pérez', 'juan.perez@example.com', 'password123', 'NOPREMIUM', 'HABILITADO', 'ESTUDIANTE'),
-                                                                                                 ('Ana López', 'ana.lopez@example.com', 'password456', 'PREMIUM', 'HABILITADO', 'ESTUDIANTE'),
-                                                                                                 ('Carlos Ramírez', 'carlos.ramirez@example.com', 'password789', 'NOPREMIUM', 'INHABILITADO', 'ESTUDIANTE'),
-                                                                                                 ('Lucía Fernández', 'lucia.fernandez@example.com', 'password101', 'PREMIUM', 'HABILITADO', 'ESTUDIANTE'),
-                                                                                                 ('María García', 'maria.garcia@example.com', 'password202', 'NOPREMIUM', 'HABILITADO', 'ESTUDIANTE');
+-- Inserts para la tabla Roles
+INSERT INTO roles (name) VALUES
+                             ('ADMIN'),
+                             ('ESTUDIANTE'),
+                             ('MENTOR');
+
+INSERT INTO usuario (email, contraseña, role_id) VALUES
+                                                     ('jua@correo.com', 'pass123', 2),                   -- Role 'ESTUDIANTE'
+                                                     ('maria.garcia@correo.com', 'secure456', 2),        -- Role 'ESTUDIANTE'
+                                                     ('carlos.sanchez@correo.com', 'strong789', 2),      -- Role 'ESTUDIANTE'
+                                                     ('luisa.martinez@correo.com', 'luisa123', 2),       -- Role 'ESTUDIANTE'
+                                                     ('jose.ramirez@correo.com', 'jose456', 2),          -- Role 'ESTUDIANTE'
+                                                     ('ana.lopez@correo.com', 'mentorpass', 3),          -- Role 'MENTOR'
+                                                     ('pedro.diaz@correo.com', 'mentorsecure', 3),       -- Role 'MENTOR'
+                                                     ('lucia.fernandez@correo.com', 'mentor456', 3),     -- Role 'MENTOR'
+                                                     ('elena.munoz@correo.com', 'elena789', 3),          -- Role 'MENTOR'
+                                                     ('admin@correo.com', 'admin123', 1);                -- Role 'ADMIN'
+
+INSERT INTO estudiante (nombre_estudiante, estado_plan, estado_cuenta, usuario_id) VALUES
+                                                                                       ('Juan Pérez', 'NOPREMIUM', 'HABILITADO', 1),
+                                                                                       ('María García', 'PREMIUM', 'HABILITADO', 2),
+                                                                                       ('Carlos Sánchez', 'NOPREMIUM', 'INHABILITADO', 3),
+                                                                                       ('Luisa Martínez', 'PREMIUM', 'HABILITADO', 4),
+                                                                                       ('José Ramírez', 'NOPREMIUM', 'HABILITADO', 5);
 -- INSERT para la tabla mentor
-INSERT INTO mentor (nombre, email, contraseña, especialidad, experiencia, usuario_tipo,link_recurso, link_recurso_premium) VALUES
-                                                                                                                  ('Carlos Martínez', 'carlos.martinez@example.com', 'password123', 'Desarrollo de Software', '10 años de experiencia','MENTOR', 'https://example.com/resource1', 'https://example.com/premium1'),
-                                                                                                                  ('Elena Ramírez', 'elena.ramirez@example.com', 'password456', 'Neuropsicología', '8 años de experiencia','MENTOR', 'https://example.com/resource2', 'https://example.com/premium2'),
-                                                                                                                  ('José Ruiz', 'jose.ruiz@example.com', 'password789', 'Medicina General', '15 años de experiencia', 'MENTOR','https://example.com/resource3', 'https://example.com/premium3'),
-                                                                                                                  ('María Sánchez', 'maria.sanchez@example.com', 'password101', 'Derecho Civil', '10 años de experiencia', 'MENTOR','https://example.com/resource4', 'https://example.com/premium4'),
-                                                                                                                  ('Laura López', 'laura.lopez@example.com', 'password202', 'Arquitectura Sostenible', '12 años de experiencia', 'MENTOR','https://example.com/resource5', 'https://example.com/premium5');
--- INSERT para la tabla horario
+INSERT INTO mentor (nombre_mentor, experiencia, especialidad, link_recurso, link_recurso_premium, usuario_id) VALUES
+                                                                                                                  ('Ana López', '5 años en orientación vocacional', 'Psicología', 'http://recursos.com/ana/estandar', 'http://recursos.com/ana/premium', 6),
+                                                                                                                  ('Pedro Díaz', '3 años en coaching de carrera', 'Educación', 'http://coaching.com/pedro/estandar', 'http://coaching.com/pedro/premium', 7),
+                                                                                                                  ('Lucía Fernández', '10 años en desarrollo profesional', 'Desarrollo Personal', 'http://desarrollop.com/lucia/estandar', 'http://desarrollop.com/lucia/premium', 8),
+                                                                                                                  ('Elena Muñoz', '8 años en orientación académica', 'Orientación Académica', 'http://orientacion.com/elena/estandar', 'http://orientacion.com/elena/premium', 9),
+                                                                                                                  ('Raúl Torres', '6 años en liderazgo juvenil', 'Liderazgo', 'http://liderazgo.com/raul/estandar', 'http://liderazgo.com/raul/premium', 10);
+-- INSERT para la tabla horario       -- Role 'ADMIN'
 INSERT INTO horario (fecha_hora, hora_sesion, link_sesion, id_mentor) VALUES
                                                                           ('2024-09-01 09:00:00', '09:00', 'https://example.com/session1', 1),
                                                                           ('2024-09-02 10:00:00', '10:00', 'https://example.com/session2', 2),
                                                                           ('2024-09-03 11:00:00', '11:00', 'https://example.com/session3', 3),
                                                                           ('2024-09-04 12:00:00', '12:00', 'https://example.com/session4', 4),
                                                                           ('2024-09-05 13:00:00', '13:00', 'https://example.com/session5', 5);
-
 -- INSERT para la tabla plan
 INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio) VALUES
                                                                            ('Plan Básico', 9.99, 'Acceso limitado a recursos básicos.', '2024-01-01'),
@@ -97,3 +114,4 @@ INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALU
                                                                                 (90, 'Recomendado para Derecho', 3),
                                                                                 (80, 'Recomendado para Medicina', 4),
                                                                                 (70, 'Recomendado para Arquitectura', 5);
+

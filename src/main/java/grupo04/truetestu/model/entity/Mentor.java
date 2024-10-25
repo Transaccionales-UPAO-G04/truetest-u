@@ -8,11 +8,14 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "mentor")
-public class Mentor extends Usuario {
+public class Mentor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMentor;
+
+    @Column(name = "nombre_mentor", nullable = false, length = 150)
+    private String  nombre;
 
     @Column(name = "experiencia", nullable = false, columnDefinition = "TEXT")
     private String experiencia;
@@ -26,9 +29,6 @@ public class Mentor extends Usuario {
     @Column(name = "link_recurso_premium", nullable = false)
     private String linkRecursoPremium;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "usuario_tipo", nullable = false)
-    private TipoUsuario tipoUsuario = TipoUsuario.MENTOR;
 
     // Relación "Un mentor puede tener muchas reseñas"
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -36,5 +36,9 @@ public class Mentor extends Usuario {
 
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Horario> horarios;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
 
 }
