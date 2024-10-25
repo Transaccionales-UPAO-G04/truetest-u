@@ -5,7 +5,6 @@ import grupo04.truetestu.model.entity.Pago;
 import grupo04.truetestu.service.impl.PlanServiceImpl;
 import grupo04.truetestu.service.impl.PagoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation; // Importa la anotación
-import io.swagger.v3.oas.annotations.Parameter; // Importa la anotación
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

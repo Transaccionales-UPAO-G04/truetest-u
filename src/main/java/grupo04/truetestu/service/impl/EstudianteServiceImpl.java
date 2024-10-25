@@ -59,7 +59,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public EstudianteDTO update(Integer id, EstudianteDTO updateEstudianteDTO) {
         Estudiante estudianteFromDb = findById(id);
-        estudianteFromDb.setNombreEstudiante(updateEstudianteDTO.getNombreEstudiante());
+        estudianteFromDb.setNombreEstudiante(updateEstudianteDTO.getNombre());
         estudianteFromDb.setEmail(updateEstudianteDTO.getEmail());
 
         if (updateEstudianteDTO.getContraseña() != null) {
