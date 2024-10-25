@@ -11,7 +11,6 @@ public interface EstudianteService {
 
 
     List<EstudianteDTO> findAll();
-    EstudianteDTO registerEstudiante(EstudianteDTO estudiante);
     EstudianteDTO findById(int idEstudiante);
     EstudianteDTO update(Integer id, EstudianteDTO updateEstudianteDTO);
     void delete(Integer id);

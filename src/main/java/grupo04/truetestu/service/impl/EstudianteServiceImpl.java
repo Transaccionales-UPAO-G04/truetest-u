@@ -28,21 +28,6 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
 
-    @Transactional
-    @Override
-    public EstudianteDTO registerEstudiante(EstudianteDTO estudianteDTO) {
-        estudianteRepository.findByEmail(estudianteDTO.getEmail()).
-                ifPresent(existEstudiante -> {
-                    throw new BadRequestException("Usuario existente");
-                });
-
-        Estudiante estudiante = estudianteMapper.toEntity(estudianteDTO);
-        estudiante = estudianteRepository.save(estudiante);
-        return estudianteMapper.toDTO(estudiante);
-
-
-    }
-
     @Override
     public EstudianteDTO findById(int id) {
         Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(() ->
@@ -56,18 +41,6 @@ public class EstudianteServiceImpl implements EstudianteService {
         // Encuentra el estudiante en la base de datos
         Estudiante estudianteFromDb = estudianteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
-
-        estudianteRepository.findByEmailAndContraseña(updateEstudianteDTO.getEmail(), updateEstudianteDTO.getContraseña())
-                .filter(existingEstudiante -> !existingEstudiante.getEmail().equals(updateEstudianteDTO.getEmail()))
-                .ifPresent(existingEstudiante -> {
-                    throw new RuntimeException("Ya existe un estudiante creado con ese correo");
-                });
-
-        // Aquí puedes actualizar los campos del estudiante con los valores del DTO
-        estudianteFromDb.setNombre(updateEstudianteDTO.getNombre());
-        estudianteFromDb.setEmail(updateEstudianteDTO.getEmail());
-        estudianteFromDb.setContraseña(updateEstudianteDTO.getContraseña());
-
         // Guarda los cambios en la base de datos
         estudianteFromDb = estudianteRepository.save(estudianteFromDb);
 

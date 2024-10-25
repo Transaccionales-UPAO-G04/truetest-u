@@ -1,15 +1,16 @@
 package grupo04.truetestu.api;
 
 import grupo04.truetestu.dto.EstudianteDTO;
+import grupo04.truetestu.dto.UserProfileDTO;
+import grupo04.truetestu.dto.UserRegistrationDTO;
 import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.service.EstudianteService;
+import grupo04.truetestu.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
@@ -20,33 +21,23 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final EstudianteService estudianteService;
+    private final UsuarioService UsuarioService;
 
-    @Operation(summary = "Registrar un nuevo estudiante", description = "Crea un nuevo estudiante en el sistema")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Estudiante registrado con éxito"),
-            @ApiResponse(responseCode = "400", description = "Solicitud inválida")
-    })
-    @PostMapping
-    public ResponseEntity <EstudianteDTO> registrar(@Valid @RequestBody EstudianteDTO estudianteDTO) {
-        EstudianteDTO createdEstudiante = estudianteService.registerEstudiante(estudianteDTO);
-        return new ResponseEntity<>(createdEstudiante, HttpStatus.CREATED);
+
+    //ednpoint para registrar estudiantes
+
+    @PostMapping("/register/estudiante")
+    public ResponseEntity <UserProfileDTO> registerEstudiante(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserProfileDTO userProfileDTO = UsuarioService.registrarEstudiante(userRegistrationDTO);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Iniciar sesión como estudiante", description = "Autentica a un estudiante en el sistema")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso"),
-            @ApiResponse(responseCode = "401", description = "Credenciales no válidas")
-    })
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Estudiante estudiante) {
-        try {
-            Estudiante estudianteExistente = estudianteService.sesionEstudiante(estudiante);
-            return ResponseEntity.ok("INICIO DE SESION EXITOSO");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+    @PostMapping("/register/mentor")
+    public ResponseEntity <UserProfileDTO> registerMentor(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserProfileDTO userProfileDTO = UsuarioService.registrarMentor(userRegistrationDTO);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
     }
+
 
 
 }

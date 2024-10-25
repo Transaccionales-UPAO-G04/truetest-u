@@ -14,7 +14,6 @@ public class Mentor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMentor;
 
-    @Enumerated
     @Column(name = "nombre_mentor", nullable = false, length = 150)
     private String  nombre;
 

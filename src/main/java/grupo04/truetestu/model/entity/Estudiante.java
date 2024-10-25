@@ -16,7 +16,6 @@ public class Estudiante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEstudiante;
 
-    @Enumerated
     @Column(name = "nombre_estudiante", nullable = false, length = 150)
     private String  nombre;
 

@@ -14,7 +14,6 @@ public interface EstudianteRepository extends JpaRepository <Estudiante, Integer
 
     boolean existsByNombreAndUsuarioIdNot(String nombre, int usuarioId );
 
-    Optional<EstudianteDTO> findByEmailAndContraseña (String email, String contraseña); //Query de buscar contraseña e email
 
 
 }

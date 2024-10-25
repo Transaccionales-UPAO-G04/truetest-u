@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRespository usuarioRespository;
-    private final UsuarioRespository usuarioRespository2;
     private final MentorRepository mentorRepository;
     private final RolesRepository rolesRepository;
     private final PasswordEncoder passwordEncoder;
@@ -66,7 +65,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 throw new IllegalArgumentException("El usuario ya existe");
             }
 
-            Roles role = rolesRepository.findByRole(roleEnum)
+            Roles role = rolesRepository.findByName(roleEnum)
                     .orElseThrow(() -> new RoleNotFoundException("ERROR: Rol no encontrado"));
 
             registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
