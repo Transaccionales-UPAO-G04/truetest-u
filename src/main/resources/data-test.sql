@@ -33,7 +33,7 @@ INSERT INTO roles (name) VALUES
                              ('ESTUDIANTE'),
                              ('MENTOR');
 
-INSERT INTO usuario (email, contraseña, role_id) VALUES
+INSERT INTO usuario (email, password, role_id) VALUES
                                                      ('jua@correo.com', 'pass123', 2),                   -- Role 'ESTUDIANTE'
                                                      ('maria.garcia@correo.com', 'secure456', 2),        -- Role 'ESTUDIANTE'
                                                      ('carlos.sanchez@correo.com', 'strong789', 2),      -- Role 'ESTUDIANTE'

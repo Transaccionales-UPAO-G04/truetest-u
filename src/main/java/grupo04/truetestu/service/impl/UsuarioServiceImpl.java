@@ -16,6 +16,7 @@ import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.RolesRepository;
 import grupo04.truetestu.repository.UsuarioRespository;
+import grupo04.truetestu.security.TokenProvider;
 import grupo04.truetestu.security.UserPrincipal;
 import grupo04.truetestu.service.UsuarioService;
 import jakarta.transaction.Transactional;
@@ -38,6 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final EstudianteRepository estudianteRepository;
 
     private final AuthenticationManager authenticationManager;
+    private final TokenProvider tokenProvider;
 
     @Transactional
     @Override
@@ -61,11 +63,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Usuario usuario = userPrincipal.getUsuario();
 
-        String token = "asd";
+        String token = tokenProvider.createAccessToken(authentication);
 
         AuthResponseDTO responseDTO = usuarioMapper.toAuthResponseDTO(usuario,token);
 
-        return null;
+        return responseDTO;
     }
 
     @Transactional

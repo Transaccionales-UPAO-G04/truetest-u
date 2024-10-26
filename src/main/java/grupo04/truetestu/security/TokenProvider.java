@@ -49,6 +49,9 @@ public class TokenProvider {
         // TODO: Obtener el email o nombre del usuario autenticado
         String email = authentication.getName();
 
+        //UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+
         // TODO: Obtener el rol del usuario desde el objeto de autenticación
         String role = authentication
                 .getAuthorities()
@@ -88,11 +91,19 @@ public class TokenProvider {
     // TODO: Método para validar el token JWT (si está correctamente firmado y no ha expirado)
     public boolean validateToken(String token) {
         try {
-            // TODO: Parsear el token JWT para verificar su validez
             jwtParser.parseClaimsJws(token);
-            return true;  // El token es válido
-        } catch (JwtException e) {
-            return false;  // El token no es válido
+            System.out.println("Token JWT es válido.");
+            return true;
+        } catch (MalformedJwtException e) {
+            System.out.println("Token JWT malformado: " + e.getMessage());
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token JWT expirado: " + e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            System.out.println("Token JWT no soportado: " + e.getMessage());
+        } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("Error de validación del token JWT: " + e.getMessage());
         }
+        return false;
     }
+
 }

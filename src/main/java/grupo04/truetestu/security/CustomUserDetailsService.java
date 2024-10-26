@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new UserPrincipal(
                 usuario.getId(),
                 usuario.getEmail(),
-                usuario.getContraseña(),
+                usuario.getPassword(),
                 Collections.singletonList(authority),
                 usuario
         );

@@ -16,7 +16,7 @@ public class Usuario {
     private String email;
 
 
-    private String contraseña;
+    private String password;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Estudiante estudiante;
