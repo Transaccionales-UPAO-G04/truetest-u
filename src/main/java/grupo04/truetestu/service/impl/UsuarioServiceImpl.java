@@ -1,5 +1,7 @@
 package grupo04.truetestu.service.impl;
 
+import grupo04.truetestu.dto.AuthResponseDTO;
+import grupo04.truetestu.dto.LoginDTO;
 import grupo04.truetestu.dto.UserProfileDTO;
 import grupo04.truetestu.dto.UserRegistrationDTO;
 import grupo04.truetestu.exception.ResourceNotFoundException;
@@ -14,9 +16,13 @@ import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.RolesRepository;
 import grupo04.truetestu.repository.UsuarioRespository;
+import grupo04.truetestu.security.UserPrincipal;
 import grupo04.truetestu.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +37,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioMapper usuarioMapper;
     private final EstudianteRepository estudianteRepository;
 
+    private final AuthenticationManager authenticationManager;
+
     @Transactional
     @Override
     public UserProfileDTO registrarMentor(UserRegistrationDTO registrationDTO) {
@@ -40,6 +48,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UserProfileDTO registrarEstudiante(UserRegistrationDTO registrationDTO) {
         return registrarMentorWithRole(registrationDTO, TipoUsuario.ESTUDIANTE);
+    }
+
+    @Override
+    public AuthResponseDTO login(LoginDTO loginDTO) {
+        //autenticar usuariocon AutheticationManager
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword())
+        );
+
+        //una vez autenticado, el objeto contiene la inforcamacion del usuario atenticado
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        Usuario usuario = userPrincipal.getUsuario();
+
+        String token = "asd";
+
+        AuthResponseDTO responseDTO = usuarioMapper.toAuthResponseDTO(usuario,token);
+
+        return null;
     }
 
     @Transactional
