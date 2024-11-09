@@ -6,12 +6,13 @@ import java.util.List;
 
 @Data
 public class PruebaVocacionalDTO {
+    //funcionnó, mieo al tocarlo
     private int idPruebaVocacional;
     private int nroPrueba;
     private LocalDate fecha;
     private String nombre;
     private String email;
-    private int idEstudiante;
+    private int idEstudiante; // Asegúrate de que este campo existe y se inicializa correctamente
     private List<ResultadoPruebaDTO> pruebas;
 }
 

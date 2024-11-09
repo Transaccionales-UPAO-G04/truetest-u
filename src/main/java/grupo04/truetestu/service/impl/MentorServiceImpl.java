@@ -1,18 +1,22 @@
 package grupo04.truetestu.service.impl;
 import java.util.List;
+
+import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.model.entity.Mentor;
+import grupo04.truetestu.repository.HorarioRepository;
 import grupo04.truetestu.repository.MentorRepository;
-import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
+import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.service.MentorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class MentorServiceImpl implements MentorService {
-
-    @Autowired
-    private MentorRepository mentorRepository;
+    private final HorarioRepository horarioRepository;
+    private final ReseñaRepository reseñaRepository;
+    private final MentorRepository mentorRepository;
 
     @Override
     public List<Mentor> findAll() {
@@ -21,9 +25,12 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public Mentor findById(int id) {
-        return mentorRepository.findById(id)
+        Mentor mentor = mentorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Mentor no encontrado"));
+        int cantidadReseñas = mentor.getReseñas().size();
+        return mentor;
     }
+
 
     @Override
     public List<Mentor> findByEspecialidad(String especialidad) {
@@ -40,10 +47,8 @@ public class MentorServiceImpl implements MentorService {
     @Transactional
     public Mentor updateMentor(int id, Mentor mentorDetails) {
         Mentor mentor = findById(id);
-        mentor.setNombreMentor(mentorDetails.getNombreMentor());
         mentor.setExperiencia(mentorDetails.getExperiencia());
         mentor.setEspecialidad(mentorDetails.getEspecialidad());
-        mentor.setNroAsesorias(mentorDetails.getNroAsesorias());
         return mentorRepository.save(mentor);
     }
 
@@ -51,6 +56,7 @@ public class MentorServiceImpl implements MentorService {
     @Transactional
     public void deleteMentor(int id) {
         Mentor mentor = findById(id);
-        mentorRepository.delete(mentor);
+        horarioRepository.deleteById(id);
+        mentorRepository.deleteById(id);
     }
 }

@@ -1,9 +1,10 @@
-
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,7 +27,10 @@ public class Plan {
     @Column(name = "fecha_inicio", nullable = false)
     private Date fechaInicio;
 
-    @Column(name = "fecha_fin")
+    @Column(name = "fecha_fin", nullable = false)
     private Date fechaFin;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true) private List<Pago> pagos; @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_estudiante"))
+    @JsonIgnore private Estudiante estudiante;
 }
