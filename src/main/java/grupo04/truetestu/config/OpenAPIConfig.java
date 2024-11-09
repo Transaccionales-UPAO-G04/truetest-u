@@ -14,7 +14,7 @@ import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 
 
-//http://localhost:8080/api/v1/swagger-ui/index.html
+//http://localhost:8080/api/v2/swagger-ui/index.html
 @Configuration
 public class OpenAPIConfig {
 
@@ -38,8 +38,8 @@ public class OpenAPIConfig {
 
         // Información de contacto
         Contact contact = new Contact();
-        contact.setEmail("hmendo81@gmail.com");
-        contact.setName("HampCode");
+        contact.setEmail("aoncoyp1@upao.edu.pe");
+        contact.setName("Grupo05 Trasnsaccionales");
         contact.setUrl("https://hampcode.com");
 
         // Licencia
@@ -47,11 +47,11 @@ public class OpenAPIConfig {
 
         // Información general de la API
         Info info = new Info()
-                .title("API de Venta de Libros - BookHub")
+                .title("API de Prueba Vocacional TrueTest-U")
                 .version("1.0")
                 .contact(contact)
-                .description("Esta API expone endpoints para la compra y gestión de libros electrónicos.")
-                .termsOfService("https://www.hampcode.com/terms")
+                .description("Esta API expone endpoints para la gestion de pruebas vocacionales")
+                .termsOfService("https://www.truetest-u.com/terms")
                 .license(mitLicense);
 
         // Configuración de seguridad JWT

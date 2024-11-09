@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -16,14 +17,14 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idHorario;
 
-    @Column(name = "fecha_hora", nullable = false)
-    private LocalDateTime fechaHora;
+    @Column(name = "fecha", nullable = false)
+    private LocalDate fechaHora;
 
-    @Column(name = "hora_sesion", nullable = false)
+    @Column(name = "hora", nullable = false)
     private LocalTime horaSesion;
 
-    @Column(name = "link_sesion", nullable = false)
-    private String linkSesion;
+    @Column(name = "link_sesion_publica", nullable = false)
+    private String linkSesionPublica;
 
     @JsonIgnore
     @ManyToOne

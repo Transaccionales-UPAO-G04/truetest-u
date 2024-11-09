@@ -1,5 +1,6 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.dto.ReseñaDTO;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.entity.Reseña;
 import grupo04.truetestu.model.entity.Mentor;
@@ -30,8 +31,8 @@ public class ReseñaController {
     @Operation(summary = "Obtener todas las reseñas",
             description = "Devuelve una lista de todas las reseñas disponibles.")
     @GetMapping
-    public ResponseEntity<List<Reseña>> getAllReseñas() {
-        List<Reseña> reseñas = reseñaService.findAll();
+    public ResponseEntity<List<ReseñaDTO>> getAllReseñas() {
+        List<ReseñaDTO> reseñas = reseñaService.findAll();
         return ResponseEntity.ok(reseñas);
     }
 
@@ -39,8 +40,8 @@ public class ReseñaController {
     @Operation(summary = "Obtener una reseña por ID",
             description = "Devuelve una reseña específica por su ID.")
     @GetMapping("/{id}")
-    public ResponseEntity<Reseña> getReseñaById(@PathVariable int id) {
-        Reseña reseña = reseñaService.findById(id);
+    public ResponseEntity<ReseñaDTO> getReseñaById(@PathVariable int id) {
+        ReseñaDTO reseña = reseñaService.findById(id);
         return ResponseEntity.ok(reseña);
     }
 
