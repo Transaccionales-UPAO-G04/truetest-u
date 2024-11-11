@@ -4,17 +4,16 @@ import grupo04.truetestu.dto.SesionDTO;
 import grupo04.truetestu.exception.BadRequestException;
 import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.mapper.SesionMapper;
-import grupo04.truetestu.model.entity.Reseña;
 import grupo04.truetestu.model.entity.Sesion;
 import grupo04.truetestu.repository.SesionRepository;
 import grupo04.truetestu.service.SesionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @RequiredArgsConstructor
-
+@Service
 public class SesionServiceImpl implements SesionService {
 
     private final SesionRepository sesionRepository;

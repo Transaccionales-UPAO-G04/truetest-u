@@ -1,11 +1,7 @@
 package grupo04.truetestu.service.impl;
 import grupo04.truetestu.dto.ReseñaDTO;
 import grupo04.truetestu.mapper.ReseñaMapper;
-import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.model.entity.Reseña;
-import grupo04.truetestu.repository.EstudianteRepository;
-import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.service.ReseñaService;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +42,14 @@ public class ReseñaServiceImpl implements ReseñaService {
                 return reseñaMapper.toDTO(reseña);
     }
 
-
+    //listar reseñas segun el mentor
+    @Override
+    public List<ReseñaDTO> findByMentorId(int idMentor) {
+       List<Reseña> reseñaDTO = reseñaRepository.findAllByMentor_IdMentor(idMentor);
+        return reseñaDTO.stream()
+                .map(reseñaMapper::toDTO)
+                .toList();
+    }
 
     // Método para eliminar una reseña por ID
     @Override
@@ -59,4 +62,5 @@ public class ReseñaServiceImpl implements ReseñaService {
         // Eliminar la reseña
         reseñaRepository.deleteById(id);
     }
+
 }

@@ -52,6 +52,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         return registrarMentorWithRole(registrationDTO, TipoUsuario.ESTUDIANTE);
     }
 
+    ////// SOLO PARA REGISTRAR UN ADMIN, LUEGO QUITARLO
+    @Transactional
+    @Override
+    public UserProfileDTO registrarAdmin(UserRegistrationDTO registrationDTO) {
+        return registrarMentorWithRole(registrationDTO, TipoUsuario.ADMIN);
+    }
+
     @Override
     public AuthResponseDTO login(LoginDTO loginDTO) {
         //autenticar usuariocon AutheticationManager

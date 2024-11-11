@@ -12,4 +12,8 @@ public class ReseñaDTO {
 
     @NotBlank(message = "La calificacion es obligatoria")
     private int calificacion;
+
+
+    public void setEstudianteDTO(EstudianteDTO estudianteDTO) {
+    }
 }

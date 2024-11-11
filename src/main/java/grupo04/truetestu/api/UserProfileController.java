@@ -7,11 +7,13 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user/profile")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ESTUDIANTE')")
 public class UserProfileController {
 
     private final UsuarioService usuarioService;
