@@ -15,6 +15,7 @@ public interface UsuarioService {
 
     UserProfileDTO updateUsuario(int id, UserProfileDTO updateDTO);
 
+    UserProfileDTO registrarAdmin(UserRegistrationDTO registrationDTO);
 
     UserProfileDTO getUsuarioProfileById(int id);
 

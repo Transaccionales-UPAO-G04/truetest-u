@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -33,11 +34,17 @@ public class AuthController {
     }
 
     @PostMapping("/register/mentor")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity <UserProfileDTO> registerMentor(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
         UserProfileDTO userProfileDTO = usuarioService.registrarMentor(userRegistrationDTO);
         return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
     }
 
-
+    //PARA REGISTRAR UN ADMIN
+    @PostMapping("/register/admin")
+    public ResponseEntity <UserProfileDTO> registerAdmin(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserProfileDTO userProfileDTO = usuarioService.registrarAdmin(userRegistrationDTO);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+    }
 
 }

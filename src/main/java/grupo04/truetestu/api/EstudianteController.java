@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,7 +20,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/estudiantes")
-
 public class EstudianteController {
 
     @Autowired
@@ -27,6 +27,7 @@ public class EstudianteController {
 //listar
     @Operation(summary = "Listar todos los estudiantes", description = "Devuelve una lista de todos los estudiantes registrados.")
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<EstudianteDTO>> listar() {
         List<EstudianteDTO> estudiantes = estudianteService.findAll();
         return new ResponseEntity<>(estudiantes, HttpStatus.OK);
@@ -34,6 +35,7 @@ public class EstudianteController {
 
 //encontrar por id
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity <EstudianteDTO> findById(@PathVariable int id) {
         EstudianteDTO estudiante = estudianteService.findById(id);
         return new ResponseEntity<>(estudiante, HttpStatus.OK);
@@ -82,11 +84,13 @@ public class EstudianteController {
 
 //modificar
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
     public ResponseEntity<EstudianteDTO> updateEstudiante(@PathVariable int id,@Valid @RequestBody EstudianteDTO estudianteDTO) {
         EstudianteDTO updateEstudianteDTO = estudianteService.update(id, estudianteDTO);
         return new ResponseEntity<>(updateEstudianteDTO, HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
     public ResponseEntity<Void> deleteEstudiante(@PathVariable int id) {
         estudianteService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
