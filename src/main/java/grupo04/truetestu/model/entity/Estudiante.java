@@ -5,7 +5,6 @@ import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -18,13 +17,7 @@ public class Estudiante {
     private int idEstudiante;
 
     @Column(name = "nombre_estudiante", nullable = false, length = 150)
-    private String nombreEstudiante;
-
-    @Column(name = "email", nullable = false, length = 150, unique = true)
-    private String email;
-
-    @Column(name = "contraseña", nullable = false, length = 100)
-    private String contraseña;
+    private String  nombre;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_plan", nullable = false)
@@ -34,15 +27,21 @@ public class Estudiante {
     @Column(name = "estado_Cuenta", nullable = false)
     private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
 
-    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pago> pagos;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Plan> planes;
+
+    @JsonIgnore
     @OneToMany (mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PruebaVocacional> pruebasVocacionales;  // Agregado para cascada
 
+    @JsonIgnore
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Recurso> recursos;
+    private List<Reseña> reseñas;
 
-    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Sesion> sesiones;
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
+
 }

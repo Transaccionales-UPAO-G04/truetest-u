@@ -3,6 +3,7 @@ package grupo04.truetestu.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,5 +26,11 @@ public class Plan {
     @Column(name = "fecha_inicio", nullable = false)
     private Date fechaInicio;
 
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pago> pagos;
 
+    @ManyToOne
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
+    foreignKey = @ForeignKey(name = "FK_estudiante"))
+    private Estudiante estudiante;
 }

@@ -23,12 +23,8 @@ public class Pago {
     @Column(name = "fecha_pago", nullable = false)
     private Date fechaPago;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_pago_estudiante"))
-    private Estudiante estudiante;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan"))
     private Plan plan;
 }

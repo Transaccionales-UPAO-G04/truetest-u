@@ -1,12 +1,15 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.dto.EstudianteDTO;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.enums.EstadoCuenta;
 import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.service.EstudianteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,19 +20,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/estudiantes")
-
 public class EstudianteController {
 
     @Autowired
     private EstudianteService estudianteService;
-
+//listar
     @Operation(summary = "Listar todos los estudiantes", description = "Devuelve una lista de todos los estudiantes registrados.")
     @GetMapping
-    public List<Estudiante> listarEstudiantes() {
-        return estudianteService.findAll();
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<List<EstudianteDTO>> listar() {
+        List<EstudianteDTO> estudiantes = estudianteService.findAll();
+        return new ResponseEntity<>(estudiantes, HttpStatus.OK);
     }
 
-
+//encontrar por id
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity <EstudianteDTO> findById(@PathVariable int id) {
+        EstudianteDTO estudiante = estudianteService.findById(id);
+        return new ResponseEntity<>(estudiante, HttpStatus.OK);
+    }
+/*
     @Operation(summary = "Cambiar plan de un estudiante",
             description = "Cambia el plan de un estudiante por el ID proporcionado.",
             parameters = {
@@ -39,9 +50,9 @@ public class EstudianteController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Plan cambiado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado")
-    })
+    })*/
     // Endpoint para cambiar el plan de un estudiante
-    @PatchMapping("/{id}/cambiar-plan")
+   /*@PatchMapping("/{id}/cambiar-plan")
     public ResponseEntity<?> cambiarPlan(@PathVariable int id, @RequestParam EstadoPlan nuevoPlan) {
         estudianteService.cambiarPlan(id, nuevoPlan);
         return ResponseEntity.ok().build();
@@ -56,9 +67,9 @@ public class EstudianteController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Estado de cuenta cambiado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado")
-    })
+    })*/
   //inhabilitar mentor
-  @PatchMapping("/{id}/cambiar-estadoCuenta")
+  /*@PatchMapping("/{id}/cambiar-estadoCuenta")
   public ResponseEntity<?> cambiarCuenta(@PathVariable int id, @RequestParam EstadoCuenta cambioEstadoCuenta) {
       estudianteService.cambiarCuenta(id, cambioEstadoCuenta);
       return ResponseEntity.ok().build();
@@ -69,12 +80,20 @@ public class EstudianteController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Estudiante actualizado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado")
-    })
+    })*/
+
+//modificar
     @PutMapping("/{id}")
-    public ResponseEntity<Estudiante> updateEstudiante(@PathVariable int id,
-                                                       @RequestBody Estudiante estudiante) {
-        Estudiante updateEstudiante = estudianteService.update(id, estudiante);
-        return new ResponseEntity<>(updateEstudiante, HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
+    public ResponseEntity<EstudianteDTO> updateEstudiante(@PathVariable int id,@Valid @RequestBody EstudianteDTO estudianteDTO) {
+        EstudianteDTO updateEstudianteDTO = estudianteService.update(id, estudianteDTO);
+        return new ResponseEntity<>(updateEstudianteDTO, HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
+    public ResponseEntity<Void> deleteEstudiante(@PathVariable int id) {
+        estudianteService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

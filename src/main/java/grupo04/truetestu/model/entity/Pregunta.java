@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name= "preguntas")
@@ -21,20 +23,13 @@ public class Pregunta {
         private int punto;
 
         @JsonIgnore
-        @OneToOne
-        @JoinColumn (name = "id_respuestas",referencedColumnName = "idRespuesta"
-                , foreignKey = @ForeignKey(name = "FK_pregunta_respuesta"))
-        private Respuestas respuestas;
+        @OneToMany(mappedBy = "pregunta",cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Respuestas> respuestas;
 
         @JsonIgnore
         @ManyToOne
         @JoinColumn(name = "id_prueba_vocacional", referencedColumnName = "idPruebaVocacional",
-                foreignKey = @ForeignKey(name = "FK_pregunta_prueba-vocacional"))
+                foreignKey = @ForeignKey(name = "FK_PruebaVocacional"))
         private PruebaVocacional pruebaVocacional;
 
-        @JsonIgnore
-        @ManyToOne
-        @JoinColumn(name = "id_carrera", referencedColumnName = "idCarrera",
-                foreignKey = @ForeignKey(name = "FK_pregunta_carrera"))
-        private Carrera carrera;
 }
