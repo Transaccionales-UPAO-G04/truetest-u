@@ -37,8 +37,8 @@ INSERT INTO estudiante (nombre, email, contraseña, estado_plan, estado_cuenta, 
 INSERT INTO mentor (nombre, email, contraseña, especialidad, experiencia, usuario_tipo,link_recurso, link_recurso_premium) VALUES
                                                                                                                   ('Carlos Martínez', 'carlos.martinez@example.com', 'password123', 'Desarrollo de Software', '10 años de experiencia','MENTOR', 'https://example.com/resource1', 'https://example.com/premium1'),
                                                                                                                   ('Elena Ramírez', 'elena.ramirez@example.com', 'password456', 'Neuropsicología', '8 años de experiencia','MENTOR', 'https://example.com/resource2', 'https://example.com/premium2'),
-                                                                                                                  ('José Ruiz', 'jose.ruiz@example.com', 'password789', 'Medicina General', '15 años de experiencia', 'MENTOR','https://example.com/resource3', 'https://example.com/premium3'),
-                                                                                                                  ('María Sánchez', 'maria.sanchez@example.com', 'password101', 'Derecho Civil', '10 años de experiencia', 'MENTOR','https://example.com/resource4', 'https://example.com/premium4'),
+
+                                                                                                     ('María Sánchez', 'maria.sanchez@example.com', 'password101', 'Derecho Civil', '10 años de experiencia', 'MENTOR','https://example.com/resource4', 'https://example.com/premium4'),
                                                                                                                   ('Laura López', 'laura.lopez@example.com', 'password202', 'Arquitectura Sostenible', '12 años de experiencia', 'MENTOR','https://example.com/resource5', 'https://example.com/premium5');
 -- INSERT para la tabla horario
 INSERT INTO horario (fecha_hora, hora_sesion, link_sesion, id_mentor) VALUES
