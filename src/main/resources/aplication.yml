@@ -1,0 +1,16 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: briyandavilaortiz@gmail.com
+    password: xrlc grkx vznz jqjc
+    port: 587
+    properties:
+      mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+protocol: smtp
+test-connection: false
