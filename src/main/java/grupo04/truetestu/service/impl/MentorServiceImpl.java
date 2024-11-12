@@ -1,4 +1,5 @@
 package grupo04.truetestu.service.impl;
+
 import java.util.List;
 
 import grupo04.truetestu.dto.MentorDetailsDTO;
@@ -7,8 +8,11 @@ import grupo04.truetestu.mapper.MentorMapper;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.repository.HorarioRepository;
 import grupo04.truetestu.repository.MentorRepository;
+import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.repository.UsuarioRespository;
+import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.service.MentorService;
+import grupo04.truetestu.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MentorServiceImpl implements MentorService {
     private final HorarioRepository horarioRepository;
+    private final ReseñaRepository reseñaRepository;
     private final MentorRepository mentorRepository;
     private final MentorMapper mentorMapper;
     private final UsuarioRespository usuarioRespository;

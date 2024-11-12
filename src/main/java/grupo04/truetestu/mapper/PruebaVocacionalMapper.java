@@ -2,22 +2,13 @@ package grupo04.truetestu.mapper;
 
 import grupo04.truetestu.dto.PruebaVocacionalDTO;
 import grupo04.truetestu.model.entity.PruebaVocacional;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class PruebaVocacionalMapper {
-    private final ModelMapper modelMapper;
+@Mapper
+public interface PruebaVocacionalMapper {
+    PruebaVocacionalMapper INSTANCE = Mappers.getMapper(PruebaVocacionalMapper.class);
 
-    public PruebaVocacionalMapper() {
-        modelMapper = new ModelMapper();
-    }
-
-    public PruebaVocacionalDTO toDTO(PruebaVocacionalDTO pruebaVocacionalDTO) {
-        return modelMapper.map(pruebaVocacionalDTO, PruebaVocacionalDTO.class);
-    }
-
-    public PruebaVocacional toEntity(PruebaVocacionalDTO pruebaVocacionalDTO) {
-        return modelMapper.map(pruebaVocacionalDTO, PruebaVocacional.class);
-    }
+    PruebaVocacionalDTO toDTO(PruebaVocacional pruebaVocacional);
+    PruebaVocacional toEntity(PruebaVocacionalDTO pruebaVocacionalDTO);
 }

@@ -2,24 +2,15 @@ package grupo04.truetestu.mapper;
 
 import grupo04.truetestu.dto.CarreraDTO;
 import grupo04.truetestu.model.entity.Carrera;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class CarreraMapper {
-    private final ModelMapper modelMapper;
+@Mapper
+public interface CarreraMapper {
 
-    public CarreraMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-
-    public CarreraDTO toDTO(Carrera carrera) {
-        return modelMapper.map(carrera, CarreraDTO.class);
-    }
-
-    public Carrera toEntity(CarreraDTO carreraDTO) {
-        return modelMapper.map(carreraDTO, Carrera.class);
-    }
-
-
+    CarreraMapper INSTANCE = Mappers.getMapper(CarreraMapper.class);
+    CarreraDTO toDto(Carrera carrera);
+    Carrera toEntity(CarreraDTO carreraDTO);
 }
+
+

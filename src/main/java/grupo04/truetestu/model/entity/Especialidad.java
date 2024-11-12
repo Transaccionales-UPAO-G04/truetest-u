@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -31,6 +30,5 @@ public class Especialidad {
 
     @JsonIgnore
     @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Respuestas> respuestas;
+    private List<Respuesta> respuestas;
 }
-

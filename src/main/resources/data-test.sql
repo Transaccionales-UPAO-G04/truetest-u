@@ -65,6 +65,7 @@ INSERT INTO horario (fecha_hora, hora_sesion, link_sesion, id_mentor) VALUES
                                                                           ('2024-09-03 11:00:00', '11:00', 'https://example.com/session3', 3),
                                                                           ('2024-09-04 12:00:00', '12:00', 'https://example.com/session4', 4),
                                                                           ('2024-09-05 13:00:00', '13:00', 'https://example.com/session5', 5);
+
 -- INSERT para la tabla plan
 INSERT INTO plan (nombre_plan, precio, descripcion_plan, fecha_inicio) VALUES
                                                                            ('Plan Básico', 9.99, 'Acceso limitado a recursos básicos.', '2024-01-01'),

@@ -1,15 +1,18 @@
 package grupo04.truetestu.service.impl;
 
 import grupo04.truetestu.dto.EstudianteDTO;
-import grupo04.truetestu.exception.BadRequestException;
 import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.mapper.EstudianteMapper;
 import grupo04.truetestu.model.entity.Estudiante;
+import grupo04.truetestu.model.enums.EstadoCuenta;
+import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @RequiredArgsConstructor

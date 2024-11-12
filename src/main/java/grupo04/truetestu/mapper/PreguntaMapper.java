@@ -2,22 +2,14 @@ package grupo04.truetestu.mapper;
 
 import grupo04.truetestu.dto.PreguntaDTO;
 import grupo04.truetestu.model.entity.Pregunta;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class PreguntaMapper {
-    private final ModelMapper modelMapper;
+@Mapper
+public interface PreguntaMapper {
+    PreguntaMapper INSTANCE = Mappers.getMapper(PreguntaMapper.class);
 
-    public PreguntaMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-
-    public PreguntaDTO toDTO(Pregunta pregunta) {
-        return modelMapper.map(pregunta, PreguntaDTO.class);
-    }
-
-    public Pregunta toEntity(PreguntaDTO preguntaDTO) {
-        return modelMapper.map(preguntaDTO, Pregunta.class);
-    }
+    PreguntaDTO toDTO(Pregunta pregunta);
+    Pregunta toEntity(PreguntaDTO preguntaDTO);
 }
+
