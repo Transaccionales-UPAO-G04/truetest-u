@@ -1,39 +1,50 @@
 package grupo04.truetestu.api;
 
+import grupo04.truetestu.dto.*;
 import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.service.EstudianteService;
+import grupo04.truetestu.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
+
+
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    private final EstudianteService estudianteService;
-@PostMapping("/register")
-    public ResponseEntity<Estudiante> register(@RequestBody @Valid Estudiante estudiante) {
-        Estudiante newEstudiante = estudianteService.registerEstudiante(estudiante);
-        return new ResponseEntity<>(newEstudiante, HttpStatus.CREATED);
-    }
+    private final UsuarioService usuarioService;
 
+
+    //ednpoint para registrar estudiantes
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Estudiante estudiante) {
-        try {
-            Estudiante estudianteExistente = estudianteService.sesionEstudiante(estudiante);
-            return ResponseEntity.ok("INICIO DE SESION EXITOSO");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+    public ResponseEntity<AuthResponseDTO> login(@Valid  @RequestBody LoginDTO loginDTO) {
+        AuthResponseDTO authResponse = usuarioService.login(loginDTO);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Estudiante> updateEstudiante(@PathVariable int id,
-                                                       @RequestBody Estudiante estudiante) {
-        Estudiante updateEstudiante = estudianteService.update(id, estudiante);
-        return new ResponseEntity<>(updateEstudiante, HttpStatus.OK);
+    @PostMapping("/register/estudiante")
+    public ResponseEntity <UserProfileDTO> registerEstudiante(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserProfileDTO userProfileDTO = usuarioService.registrarEstudiante(userRegistrationDTO);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
     }
+
+    @PostMapping("/register/mentor")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity <UserProfileDTO> registerMentor(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserProfileDTO userProfileDTO = usuarioService.registrarMentor(userRegistrationDTO);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+    }
+
+    //PARA REGISTRAR UN ADMIN
+    @PostMapping("/register/admin")
+    public ResponseEntity <UserProfileDTO> registerAdmin(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserProfileDTO userProfileDTO = usuarioService.registrarAdmin(userRegistrationDTO);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+    }
+
 }

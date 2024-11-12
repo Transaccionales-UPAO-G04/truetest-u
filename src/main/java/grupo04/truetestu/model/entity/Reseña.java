@@ -1,5 +1,6 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,7 +11,6 @@ public class Reseña {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reseña")
     private int idReseña;
 
     @Column(name = "texto", nullable = false, columnDefinition = "TEXT")
@@ -19,8 +19,8 @@ public class Reseña {
     @Column(name = "calificacion", nullable = false)
     private int calificacion;
 
-
-    // Relación con Mentor (Many-to-One)
+    // Relación con Mentor (Muchos a uno)
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
             foreignKey = @ForeignKey(name = "FK_reseña_mentor"))

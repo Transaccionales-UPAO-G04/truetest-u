@@ -3,6 +3,9 @@ package grupo04.truetestu.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -14,14 +17,14 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idHorario;
 
-    @Column(name = "dia_semana", nullable = false)
-    private String diaSemana;
+    @Column(name = "fecha", nullable = false)
+    private LocalDate fechaHora;
 
-    @Column(name = "hora_inicio", nullable = false)
-    private LocalTime horaInicio;
+    @Column(name = "hora", nullable = false)
+    private LocalTime horaSesion;
 
-    @Column(name = "hora_fin", nullable = false)
-    private LocalTime horaFin;
+    @Column(name = "link_sesion_publica", nullable = false)
+    private String linkSesionPublica;
 
     @JsonIgnore
     @ManyToOne

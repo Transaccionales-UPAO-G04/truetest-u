@@ -1,72 +1,62 @@
 package grupo04.truetestu.service.impl;
 
-import grupo04.truetestu.Infra.exception.ResourceNotFoundException;
+import grupo04.truetestu.dto.EstudianteDTO;
+import grupo04.truetestu.exception.BadRequestException;
+import grupo04.truetestu.exception.ResourceNotFoundException;
+import grupo04.truetestu.mapper.EstudianteMapper;
 import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.enums.EstadoCuenta;
-import grupo04.truetestu.model.enums.EstadoPlan;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.service.EstudianteService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class EstudianteServiceImpl implements EstudianteService {
+
     private final EstudianteRepository estudianteRepository;
+    private final EstudianteMapper estudianteMapper;
+
+    @Override
+    public List<EstudianteDTO> findAll() {
+        List<Estudiante> estudiantes =  estudianteRepository.findAll();
+        return estudiantes.stream()
+                .map(estudianteMapper::toDTO)
+                .toList();
+    }
+
+
+    @Override
+    public EstudianteDTO findById(int id) {
+        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("El estudiante con ID "+id+" no fu eencontrado"));
+        return estudianteMapper.toDTO(estudiante);
+    }
 
     @Transactional
     @Override
-    public Estudiante registerEstudiante(Estudiante estudiante) {
-        if (estudianteRepository.existsEstudianteByEmail(estudiante.getEmail())) {
-            throw new RuntimeException("El correo ya fue registrado");
-        }
+    public EstudianteDTO update(Integer id, EstudianteDTO updateEstudianteDTO) {
+        // Encuentra el estudiante en la base de datos
+        Estudiante estudianteFromDb = estudianteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
+        // Guarda los cambios en la base de datos
+        estudianteFromDb = estudianteRepository.save(estudianteFromDb);
 
-        //falta crear un AT
-
-        return estudianteRepository.save(estudiante);
+        // Retorna el estudiante actualizado convertido a DTO
+        return estudianteMapper.toDTO(estudianteFromDb);
     }
 
-    @Override
-    public Estudiante findById(int id) {
-        return estudianteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
-    }
 
     @Transactional
     @Override
-    public Estudiante update(Integer id, Estudiante updateEstudiante) {
-        Estudiante estudianteFromDb = findById(id);
-        estudianteFromDb.setNombreEstudiante(updateEstudiante.getNombreEstudiante());
-        estudianteFromDb.setEmail(updateEstudiante.getEmail());
-        estudianteFromDb.setContraseña(updateEstudiante.getContraseña());
-        return estudianteRepository.save(estudianteFromDb);
+    public void delete(Integer id) {
+        Estudiante estudiante = estudianteRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
+        estudianteRepository.delete(estudiante);
     }
 
-    @Override
-    public Estudiante sesionEstudiante(Estudiante estudiante) {
-        Estudiante estudianteExistente = estudianteRepository.findByEmailAndContraseña(estudiante.getEmail(), estudiante.getContraseña());
-        if (estudianteExistente != null) {
-            return estudianteExistente;
-        } else {
-            throw new RuntimeException("ERROR: Correo o contraseña incorrectos");
-        }
-    }
-
-
-    @Override
-    public void inhabilitarCuenta(int id) {
-        Estudiante estudiante = findById(id);
-        estudiante.setEstadoCuenta(EstadoCuenta.INHABILITADO);
-        estudianteRepository.save(estudiante);
-    }
-
-    @Override
-    public void cambiarPlan(int id, EstadoPlan nuevoEstadoPlan) {
-        Estudiante estudiante = findById(id);
-        estudiante.setEstadoPlan(nuevoEstadoPlan);
-        estudianteRepository.save(estudiante);
-    }
 
 }
+
