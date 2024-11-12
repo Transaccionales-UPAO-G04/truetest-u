@@ -16,9 +16,7 @@ public class UsuarioMapper {
     private final ModelMapper modelMapper;
 
     //Convertir de LoginDTO a User (cuando procesas el login)
-    public Usuario toUserEntity(LoginDTO loginDTO) {
-        return modelMapper.map(loginDTO, Usuario.class);
-    }
+
 
     //Convertir de User a AuthResponseDTO para la respuesta de autenticación
     public AuthResponseDTO toAuthResponseDTO(Usuario usuario, String token){

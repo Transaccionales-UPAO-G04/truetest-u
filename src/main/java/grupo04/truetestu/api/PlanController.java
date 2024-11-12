@@ -7,12 +7,14 @@ import grupo04.truetestu.service.impl.PagoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation; // Importa la anotación
 import io.swagger.v3.oas.annotations.Parameter; // Importa la anotación
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/planes")
+@PreAuthorize("hasAnyRole('ESTUDIANTE')")
 public class PlanController {
 
     @Autowired

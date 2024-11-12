@@ -1,5 +1,4 @@
 package grupo04.truetestu.model.entity;
-import grupo04.truetestu.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.Data;
 
