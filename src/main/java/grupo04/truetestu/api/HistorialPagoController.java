@@ -1,17 +1,12 @@
 package grupo04.truetestu.api;
 
-import grupo04.truetestu.model.entity.HistorialPago;
-import grupo04.truetestu.service.impl.HistorialPagoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/historial-pagos")
-public class HistorialPagoController {
+@PreAuthorize("hasAnyRole('ESTUDIANTE')")
+public class HistorialPagoController {/*
 
     @Autowired
     private HistorialPagoService historialPagoService;
@@ -22,5 +17,5 @@ public class HistorialPagoController {
     @GetMapping("/{idEstudiante}")
     public List<HistorialPago> obtenerHistorialDePagos(@PathVariable int idEstudiante) {
         return historialPagoService.obtenerHistorialPorEstudiante(idEstudiante);
-    }
+    }*/
 }

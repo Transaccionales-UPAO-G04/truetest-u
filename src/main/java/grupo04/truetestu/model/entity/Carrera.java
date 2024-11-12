@@ -3,6 +3,8 @@ package grupo04.truetestu.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 @Entity
@@ -17,9 +19,10 @@ public class Carrera {
     @Column(name= "nombre_carrera", nullable = false, length = 150)
     private String nombreCarrera;
 
-    @Column(name= "puntaje_aproximado", nullable = false)
-    private int puntajeAproximado;
-
     @Column(name= "descripcion_carrera", nullable = false, columnDefinition = "TEXT")
     private String descripcionCarrera;
+
+    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Especialidad> especialidades;
+
 }

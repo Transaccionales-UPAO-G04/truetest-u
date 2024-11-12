@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter; // Importa la anotación
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/resultados")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ESTUDIANTE')")
 public class ResultadoPruebaController {
 
     private final ResultadoPruebaService ResultadoPruebaService;
@@ -38,6 +40,7 @@ public class ResultadoPruebaController {
     }
 
     // Obtener todos los ResultadosPrueba
+
     @Operation(summary = "Obtener todos los ResultadosPrueba",
             description = "Devuelve una lista de todos los resultados de prueba.")
     @GetMapping

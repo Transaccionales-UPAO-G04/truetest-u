@@ -1,7 +1,11 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -12,13 +16,21 @@ public class Especialidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name= "nombre" , nullable = false)
     private String nombre;
 
-    @Column(length = 500)
+    @Column(name= "descripcion",length = 500)
     private String descripcion;
 
-    // Aquí podrías agregar relaciones, como por ejemplo con otra entidad
-    // @ManyToOne, @OneToMany, etc., dependiendo de tus necesidades.
+    @Column(name= "puntaje_aproximado", nullable = false)
+    private int puntajeAproximado;
+
+    @ManyToOne
+    @JoinColumn(name = "carrera_id", referencedColumnName = "idCarrera", foreignKey = @ForeignKey(name = "FK_carerra"))
+    private Carrera carrera;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Respuestas> respuestas;
 }
 

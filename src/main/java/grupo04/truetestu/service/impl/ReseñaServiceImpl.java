@@ -1,9 +1,7 @@
 package grupo04.truetestu.service.impl;
-import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.entity.Mentor;
+import grupo04.truetestu.dto.ReseñaDTO;
+import grupo04.truetestu.mapper.ReseñaMapper;
 import grupo04.truetestu.model.entity.Reseña;
-import grupo04.truetestu.repository.EstudianteRepository;
-import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.service.ReseñaService;
 import lombok.RequiredArgsConstructor;
@@ -16,42 +14,42 @@ import java.util.List;
 public class ReseñaServiceImpl implements ReseñaService {
 
     private final ReseñaRepository reseñaRepository;
-    private final EstudianteRepository estudianteRepository;
-    private final MentorRepository mentorRepository;
+    private final ReseñaMapper reseñaMapper;
 
     // Método para obtener todas las reseñas
     @Override
-    public List<Reseña> findAll() {
-        return reseñaRepository.findAll();
+    public List<ReseñaDTO> findAll() {
+        List<Reseña> reseñas = reseñaRepository.findAll();
+        return reseñas.stream()
+                .map(reseñaMapper::toDTO)
+                .toList();
     }
 
     // Método para encontrar una reseña por ID
     @Override
-    public Reseña findById(int id) {
-        return reseñaRepository.findById(id)
+    public ReseñaDTO findById(int id) {
+        Reseña reseña = reseñaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reseña no encontrada con id: " + id));
+        return reseñaMapper.toDTO(reseña);
     }
 
     // Método para crear una nueva reseña
+    @Transactional
     @Override
-    public Reseña createReseña(Reseña reseña) {
-        // Verificar si el estudiante existe
-        Estudiante estudiante = estudianteRepository.findById(reseña.getEstudiante().getIdEstudiante())
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id: " + reseña.getEstudiante().getIdEstudiante()));
-
-        // Verificar si el mentor existe
-        Mentor mentor = mentorRepository.findById(reseña.getMentor().getIdMentor())
-                .orElseThrow(() -> new RuntimeException("Mentor no encontrado con id: " + reseña.getMentor().getIdMentor()));
-
-        // Asignar el mentor y estudiante a la reseña
-        reseña.setEstudiante(estudiante);
-        reseña.setMentor(mentor);
-
-        // Guardar la reseña en el repositorio
-        return reseñaRepository.save(reseña);
+    public ReseñaDTO createReseña(ReseñaDTO reseñaDTO) {
+        Reseña reseña = reseñaMapper.toEntity(reseñaDTO);
+                reseña = reseñaRepository.save(reseña);
+                return reseñaMapper.toDTO(reseña);
     }
 
-
+    //listar reseñas segun el mentor
+    @Override
+    public List<ReseñaDTO> findByMentorId(int idMentor) {
+       List<Reseña> reseñaDTO = reseñaRepository.findAllByMentor_IdMentor(idMentor);
+        return reseñaDTO.stream()
+                .map(reseñaMapper::toDTO)
+                .toList();
+    }
 
     // Método para eliminar una reseña por ID
     @Override
@@ -64,4 +62,5 @@ public class ReseñaServiceImpl implements ReseñaService {
         // Eliminar la reseña
         reseñaRepository.deleteById(id);
     }
+
 }
