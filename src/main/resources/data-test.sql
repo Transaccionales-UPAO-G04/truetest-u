@@ -34,7 +34,7 @@ INSERT INTO roles (name) VALUES
                              ('MENTOR');
 
 INSERT INTO usuario (email, password, role_id) VALUES
-                                                     ('jua@correo.com', 'pass123', 2),                   -- Role 'ESTUDIANTE'
+                                                     ('codespacepe22@gmail.com', 'pass123', 2),                   -- Role 'ESTUDIANTE'
                                                      ('maria.garcia@correo.com', 'secure456', 2),        -- Role 'ESTUDIANTE'
                                                      ('carlos.sanchez@correo.com', 'strong789', 2),      -- Role 'ESTUDIANTE'
                                                      ('luisa.martinez@correo.com', 'luisa123', 2),       -- Role 'ESTUDIANTE'

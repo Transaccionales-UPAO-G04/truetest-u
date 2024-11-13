@@ -8,5 +8,4 @@ public interface PasswordResetTokenService {
     void removeResetToken(PasswordResetToken passwordResetToken);
     boolean isValidToken(String token);
     void resetPassword(String token, String newPassword);
-
 }
