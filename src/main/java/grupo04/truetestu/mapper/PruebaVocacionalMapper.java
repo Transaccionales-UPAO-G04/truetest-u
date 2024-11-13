@@ -5,7 +5,7 @@ import grupo04.truetestu.model.entity.PruebaVocacional;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Maper
 public interface PruebaVocacionalMapper {
     PruebaVocacionalMapper INSTANCE = Mappers.getMapper(PruebaVocacionalMapper.class);
 
