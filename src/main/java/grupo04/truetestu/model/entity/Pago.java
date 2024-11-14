@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "pago")
 public class Pago {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPago;
@@ -16,15 +17,20 @@ public class Pago {
     @Column(name = "monto", nullable = false)
     private double monto;
 
-    @Column(name = "fecha_pago", nullable = false)
-    private Date fechaPago;
-
     @Column(name = "metodo_pago", nullable = false)
     private String metodoPago;
 
-    @Column(name = "estado_pago", nullable = false)
-    private String EstadoPago;
+    @Column(name = "fecha_pago", nullable = false)
+    private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan")) @JsonIgnore private Plan plan; @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante", foreignKey = @ForeignKey(name = "FK_pago_estudiante"))
-    @JsonIgnore private Estudiante estudiante;
+
+    @ManyToOne
+    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan"))
+    private Plan plan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_Estudiante", referencedColumnName = "idEstudiante")
+    private Estudiante estudiante;
+
+
 }

@@ -1,14 +1,12 @@
 package grupo04.truetestu.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserRegistrationDTO {
+public class UsuarioRegistrationDTO {
 
     @NotBlank(message = "El campo es obligtario")
     private String nombre;

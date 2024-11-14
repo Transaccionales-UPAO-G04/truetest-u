@@ -1,8 +1,8 @@
 package grupo04.truetestu.api;
 
 import grupo04.truetestu.dto.EstudianteDTO;
-import grupo04.truetestu.dto.UserProfileDTO;
-import grupo04.truetestu.dto.UserRegistrationDTO;
+import grupo04.truetestu.dto.UsuarioProfileDTO;
+import grupo04.truetestu.dto.UsuarioRegistrationDTO;
 import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -27,15 +27,15 @@ public class AuthController {
     //ednpoint para registrar estudiantes
 
     @PostMapping("/register/estudiante")
-    public ResponseEntity <UserProfileDTO> registerEstudiante(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
-        UserProfileDTO userProfileDTO = UsuarioService.registrarEstudiante(userRegistrationDTO);
-        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+    public ResponseEntity <UsuarioProfileDTO> registerEstudiante(@Valid @RequestBody UsuarioRegistrationDTO usuarioRegistrationDTO) {
+        UsuarioProfileDTO usuarioProfileDTO = UsuarioService.registrarEstudiante(usuarioRegistrationDTO);
+        return new ResponseEntity<>(usuarioProfileDTO, HttpStatus.CREATED);
     }
 
     @PostMapping("/register/mentor")
-    public ResponseEntity <UserProfileDTO> registerMentor(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
-        UserProfileDTO userProfileDTO = UsuarioService.registrarMentor(userRegistrationDTO);
-        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+    public ResponseEntity <UsuarioProfileDTO> registerMentor(@Valid @RequestBody UsuarioRegistrationDTO usuarioRegistrationDTO) {
+        UsuarioProfileDTO usuarioProfileDTO = UsuarioService.registrarMentor(usuarioRegistrationDTO);
+        return new ResponseEntity<>(usuarioProfileDTO, HttpStatus.CREATED);
     }
 
 

@@ -1,18 +1,18 @@
 package grupo04.truetestu.service;
 
-import grupo04.truetestu.dto.UserProfileDTO;
-import grupo04.truetestu.dto.UserRegistrationDTO;
+import grupo04.truetestu.dto.UsuarioProfileDTO;
+import grupo04.truetestu.dto.UsuarioRegistrationDTO;
 
 public interface UsuarioService {
 
-    UserProfileDTO registrarMentor(UserRegistrationDTO registrationDTO);
+    UsuarioProfileDTO registrarMentor(UsuarioRegistrationDTO registrationDTO);
 
-    UserProfileDTO registrarEstudiante(UserRegistrationDTO registrationDTO);
+    UsuarioProfileDTO registrarEstudiante(UsuarioRegistrationDTO registrationDTO);
 
-    UserProfileDTO updateUsuario(int id, UserProfileDTO updateDTO);
+    UsuarioProfileDTO updateUsuario(int id, UsuarioProfileDTO updateDTO);
 
 
-    UserProfileDTO getUsuarioProfileById(int id);
+    UsuarioProfileDTO getUsuarioProfileById(int id);
 
 
 

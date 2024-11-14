@@ -34,8 +34,8 @@ public class EstudianteController {
 
 //encontrar por id
     @GetMapping("/{id}")
-    public ResponseEntity <EstudianteDTO> findById(@PathVariable int id) {
-        EstudianteDTO estudiante = estudianteService.findById(id);
+    public ResponseEntity <EstudianteDTO> findById(@PathVariable int idEstudiante) {
+        EstudianteDTO estudiante = estudianteService.findById(idEstudiante);
         return new ResponseEntity<>(estudiante, HttpStatus.OK);
     }
 /*

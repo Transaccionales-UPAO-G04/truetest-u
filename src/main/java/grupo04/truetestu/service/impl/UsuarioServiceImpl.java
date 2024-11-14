@@ -1,7 +1,7 @@
 package grupo04.truetestu.service.impl;
 
-import grupo04.truetestu.dto.UserProfileDTO;
-import grupo04.truetestu.dto.UserRegistrationDTO;
+import grupo04.truetestu.dto.UsuarioProfileDTO;
+import grupo04.truetestu.dto.UsuarioRegistrationDTO;
 import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.exception.RoleNotFoundException;
 import grupo04.truetestu.mapper.UsuarioMapper;
@@ -13,7 +13,7 @@ import grupo04.truetestu.model.enums.TipoUsuario;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.RolesRepository;
-import grupo04.truetestu.repository.UsuarioRespository;
+import grupo04.truetestu.repository.UsuarioRepository;
 import grupo04.truetestu.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private final UsuarioRespository usuarioRespository;
+    private final UsuarioRepository usuarioRepository;
     private final MentorRepository mentorRepository;
     private final RolesRepository rolesRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,20 +33,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Transactional
     @Override
-    public UserProfileDTO registrarMentor(UserRegistrationDTO registrationDTO) {
+    public UsuarioProfileDTO registrarMentor(UsuarioRegistrationDTO registrationDTO) {
         return registrarMentorWithRole(registrationDTO, TipoUsuario.MENTOR);
     }
     @Transactional
     @Override
-    public UserProfileDTO registrarEstudiante(UserRegistrationDTO registrationDTO) {
+    public UsuarioProfileDTO registrarEstudiante(UsuarioRegistrationDTO registrationDTO) {
         return registrarMentorWithRole(registrationDTO, TipoUsuario.ESTUDIANTE);
     }
 
     @Transactional
     @Override
-    public UserProfileDTO updateUsuario(int id, UserProfileDTO userProfileDTO) {
+    public UsuarioProfileDTO updateUsuario(int id, UsuarioProfileDTO userProfileDTO) {
 
-        Usuario usuario = usuarioRespository.findById(id)
+        Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         //Verificar si ya existe un cliente o autor con el mismo nombre y apellido (excepto el usuario actual)
@@ -75,22 +75,22 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.getMentor().setLinkRecurso(userProfileDTO.getLinkRecurso());
         }
 
-        Usuario updatedUsuario = usuarioRespository.save(usuario);
+        Usuario updatedUsuario = usuarioRepository.save(usuario);
 
-        return usuarioMapper.toUserProfileDTO(updatedUsuario);
+        return usuarioMapper.toUsuarioProfileDTO(updatedUsuario);
     }
     @Transactional
     @Override
-    public UserProfileDTO getUsuarioProfileById(int id) {
-        Usuario usuario = usuarioRespository.findById(id)
+    public UsuarioProfileDTO getUsuarioProfileById(int id) {
+        Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Usuario no encontrado"));
-        return usuarioMapper.toUserProfileDTO(usuario);
+        return usuarioMapper.toUsuarioProfileDTO(usuario);
     }
 
-    private UserProfileDTO registrarMentorWithRole(UserRegistrationDTO registrationDTO, TipoUsuario roleEnum) {
+    private UsuarioProfileDTO registrarMentorWithRole(UsuarioRegistrationDTO registrationDTO, TipoUsuario roleEnum) {
 
             //verificar si el email esta registrado
-            boolean existsByEmail = usuarioRespository.existsByEmail(registrationDTO.getEmail());
+            boolean existsByEmail = usuarioRepository.existsByEmail(registrationDTO.getEmail());
             boolean existsAsMentor = mentorRepository.existsByNombre(registrationDTO.getNombre());
             boolean existasAsEstudiante = estudianteRepository.existsByNombre(registrationDTO.getNombre());
 
@@ -107,7 +107,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
             registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
-            Usuario usuario = usuarioMapper.toUserEntity(registrationDTO);
+            Usuario usuario = usuarioMapper.toUsuarioEntity(registrationDTO);
             usuario.setRole(role);
 
             if (roleEnum == TipoUsuario.ESTUDIANTE) {
@@ -126,8 +126,8 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuario.setMentor(mentor);
             }
 
-            Usuario savedUsuario = usuarioRespository.save(usuario);
+            Usuario savedUsuario = usuarioRepository.save(usuario);
 
-        return usuarioMapper.toUserProfileDTO(savedUsuario);
+        return usuarioMapper.toUsuarioProfileDTO(savedUsuario);
     }
 }
