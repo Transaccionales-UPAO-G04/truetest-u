@@ -10,7 +10,7 @@
     </parent>
     <groupId>grupo04</groupId>
     <artifactId>truetest-u</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>truetest-u</name>
     <description>truetest-u</description>
     <url/>
