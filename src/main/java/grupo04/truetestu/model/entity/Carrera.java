@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "carreras")
+@Table(name = "carrera")
 
 public class Carrera {
 
