@@ -4,7 +4,7 @@ import grupo04.truetestu.model.enums.TipoUsuario;
 import lombok.Data;
 
 @Data
-public class UsuarioProfileDTO {
+public class UserProfileDTO {
 
     private int id;
     private String nombre;

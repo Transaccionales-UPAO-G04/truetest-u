@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UsuarioRegistrationDTO {
+public class UserRegistrationDTO {
 
     @NotBlank(message = "El campo es obligtario")
     private String nombre;

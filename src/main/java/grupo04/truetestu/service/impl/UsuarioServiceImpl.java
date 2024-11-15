@@ -15,7 +15,7 @@ import grupo04.truetestu.model.enums.TipoUsuario;
 import grupo04.truetestu.repository.EstudianteRepository;
 import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.RolesRepository;
-import grupo04.truetestu.repository.UsuarioRespository;
+import grupo04.truetestu.repository.UsuarioRepository;
 import grupo04.truetestu.security.TokenProvider;
 import grupo04.truetestu.security.UserPrincipal;
 import grupo04.truetestu.service.UsuarioService;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private final UsuarioRespository usuarioRespository;
+    private final UsuarioRepository usuarioRespository;
     private final MentorRepository mentorRepository;
     private final RolesRepository rolesRepository;
     private final PasswordEncoder passwordEncoder;

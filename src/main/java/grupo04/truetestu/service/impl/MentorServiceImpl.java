@@ -7,7 +7,7 @@ import grupo04.truetestu.mapper.MentorMapper;
 import grupo04.truetestu.model.entity.Mentor;
 import grupo04.truetestu.repository.HorarioRepository;
 import grupo04.truetestu.repository.MentorRepository;
-import grupo04.truetestu.repository.UsuarioRespository;
+import grupo04.truetestu.repository.UsuarioRepository;
 import grupo04.truetestu.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class MentorServiceImpl implements MentorService {
     private final HorarioRepository horarioRepository;
     private final MentorRepository mentorRepository;
     private final MentorMapper mentorMapper;
-    private final UsuarioRespository usuarioRespository;
+    private final UsuarioRepository usuarioRespository;
 
     @Override
     public List<MentorDetailsDTO> findAll() {
