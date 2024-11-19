@@ -10,9 +10,9 @@ import java.util.Map;
 @NoArgsConstructor
 
 public class Mail {
-    private String from;
-    private String to;
-    private String subject;
-    private Map<String, Object> model;
+    private String from; //remitente del correo
+    private String to; //destinatario del correo
+    private String subject; // Asunto del correo
+    private Map<String, Object> model; // Modelo de datos para la pantalla
 
 }

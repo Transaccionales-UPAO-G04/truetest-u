@@ -1,6 +1,5 @@
 package grupo04.truetestu.model.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,15 +13,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
-
 public class PasswordResetToken {
     @Id
-    @GeneratedValue(strategy  = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
-    @Size(min = 32, max = 64)
+    @Size(min=32, max=64)
     @Column(nullable = false, unique = true)
     private String token;
 
@@ -32,19 +29,15 @@ public class PasswordResetToken {
 
     @NotNull
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name= "usuario_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private Usuario usuario;
 
-
     public void setExpiration(int minutes) {
-            this.expiration = LocalDateTime.now().plusMinutes(minutes);
-        }
-
-        public boolean isExpired() {
-        return LocalDateTime.now().isAfter(expiration);
-        }
-
+        this.expiration = LocalDateTime.now().plusMinutes(minutes);
     }
 
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(expiration);
+    }
 
-
+}

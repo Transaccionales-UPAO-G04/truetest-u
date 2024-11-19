@@ -6,7 +6,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
@@ -50,6 +49,9 @@ public void sendMail(Mail mail, String templateName) throws MessagingException {
     helper.setText(html, true);
     helper.setSubject(mail.getSubject());
     helper.setFrom(mail.getFrom());
+
+    // Si necesitas adjuntar un archivo
+    //helper.addAttachment("MyTestFile.txt", new ByteArrayResource("test".getBytes()));
 
     mailSender.send(message);
 
