@@ -21,11 +21,16 @@ public class Pago {
     private String metodoPago;
 
     @Column(name = "fecha_pago", nullable = false)
-    private Date fechaPago;
+    private Date createdAt;
 
 
     @ManyToOne
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan", foreignKey = @ForeignKey(name = "FK_pago_plan"))
     private Plan plan;
-}
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_Estudiante", referencedColumnName = "idEstudiante")
+    private Estudiante estudiante;
+
+
+}

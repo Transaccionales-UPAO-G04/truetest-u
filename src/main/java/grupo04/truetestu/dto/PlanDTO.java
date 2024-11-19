@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 public class PlanDTO {
-    private int idPlan;
+    private int Plan;
 
     @NotBlank(message = "El nombre del plan es obligatorio")
     private String nombrePlan;
@@ -24,6 +24,6 @@ public class PlanDTO {
     private String descripcionPlan;
 
     @NotBlank(message = "La fecha de inicio es obligatoria")
-    private Date fechaInicio;
+    private Date createdAt;
 
 }

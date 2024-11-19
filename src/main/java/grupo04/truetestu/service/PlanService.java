@@ -5,4 +5,9 @@ import java.util.List;
 
 public interface PlanService {
     List<Plan> obtenerTodosLosPlanes();
+    Plan obtenerPlanPorId(int idPlan); // Método para obtener un plan por ID
+    Plan agregarPlan(Plan plan); //Agregar nuevo plan
+    void eliminarPlan(int idPlan); //Eliminar plan
+    Plan modificarPlan(int idPlan, Plan plan); //Modificar plan
+    double getPlanAmount(int idPlan); // Modificado para recibir el pagoId y devolver el monto
 }
