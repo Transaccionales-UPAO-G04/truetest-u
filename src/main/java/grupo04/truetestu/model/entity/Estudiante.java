@@ -17,7 +17,7 @@ public class Estudiante {
     private int idEstudiante;
 
     @Column(name = "nombre_estudiante", nullable = false, length = 150)
-    private String  nombre;
+    private String nombre;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_plan", nullable = false)
@@ -27,14 +27,13 @@ public class Estudiante {
     @Column(name = "estado_Cuenta", nullable = false)
     private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
 
+    @ManyToOne(fetch = FetchType.LAZY)  // Relación muchos a uno con Plan
+    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan")  // Referencia a 'id' en la entidad Plan
+    private Plan plan;  // Un estudiante tiene un solo plan
 
     @JsonIgnore
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Plan> planes;
-
-    @JsonIgnore
-    @OneToMany (mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PruebaVocacional> pruebasVocacionales;  // Agregado para cascada
+    private List<PruebaVocacional> pruebasVocacionales;
 
     @JsonIgnore
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)

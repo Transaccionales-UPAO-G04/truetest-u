@@ -15,40 +15,17 @@ import org.springframework.stereotype.Component;
 public class UsuarioMapper {
     private final ModelMapper modelMapper;
 
-    //Convertir de LoginDTO a User (cuando procesas el login)
-
-
-    //Convertir de User a AuthResponseDTO para la respuesta de autenticación
-    public AuthResponseDTO toAuthResponseDTO(Usuario usuario, String token){
-        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-        authResponseDTO.setToken(token);
-
-        // Obtener el nombre y apellido
-        String nombre = (usuario.getEstudiante() != null) ? usuario.getEstudiante().getNombre()
-                : (usuario.getMentor() != null) ? usuario.getMentor().getNombre()
-                : "Admin";
-       /* String lastName = (usuario.getEstudiante() != null) ? usuario.getEstudiante()
-                : (usuario.getMentor() != null) ? usuario.getMentor()
-                : "User";*/
-
-        authResponseDTO.setNombre(nombre);
-        /*authResponseDTO.setLastName(lastName);*/
-
-        authResponseDTO.setRole(usuario.getRole().getName().name());
-
-        return authResponseDTO;
-    }
-
-
     public Usuario toUserEntity(UserRegistrationDTO userRegistrationDTO) {
         return modelMapper.map(userRegistrationDTO, Usuario.class);
     }
+
+
 
     public UserProfileDTO toUserProfileDTO(Usuario usuario) {
         UserProfileDTO userProfileDTO = modelMapper.map(usuario, UserProfileDTO.class);
 
         if(usuario.getMentor()!=null) {
-
+            userProfileDTO.setId(usuario.getMentor().getIdMentor());
             userProfileDTO.setNombre(usuario.getMentor().getNombre());
             userProfileDTO.setEspecialidad(usuario.getMentor().getEspecialidad());
             userProfileDTO.setExperiencia(usuario.getMentor().getExperiencia());
@@ -57,9 +34,32 @@ public class UsuarioMapper {
         }
 
         if(usuario.getEstudiante()!=null) {
+            userProfileDTO.setId(usuario.getEstudiante().getIdEstudiante());
             userProfileDTO.setNombre(usuario.getEstudiante().getNombre());
         }
 
         return userProfileDTO;
     }
+
+    //Convertir de LoginDTO a User (cuando procesas el login)
+    public Usuario toUserEntity(LoginDTO loginDTO) {
+        return modelMapper.map(loginDTO, Usuario.class);
+    }
+    //Convertir de User a AuthResponseDTO para la respuesta de autenticación
+    public AuthResponseDTO toAuthResponseDTO(Usuario usuario, String token){
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+        authResponseDTO.setToken(token);
+
+        authResponseDTO.setId(usuario.getId());
+
+        // Obtener el nombre y apellido
+        String nombre = (usuario.getEstudiante() != null) ? usuario.getEstudiante().getNombre()
+                : (usuario.getMentor() != null) ? usuario.getMentor().getNombre()
+                : "Admin";
+        authResponseDTO.setNombre(nombre);
+        authResponseDTO.setRole(usuario.getRole().getName().name());
+
+        return authResponseDTO;
+    }
+
 }
