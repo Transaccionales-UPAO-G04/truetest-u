@@ -7,13 +7,12 @@ import grupo04.truetestu.dto.CompraReportDTO;
 import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.mapper.CompraMapper;
 import grupo04.truetestu.model.entity.Compra;
-import grupo04.truetestu.model.entity.Estudiante;
 import grupo04.truetestu.model.entity.Usuario;
 import grupo04.truetestu.model.entity.Plan;
 import grupo04.truetestu.model.enums.EstadoPago;
 import grupo04.truetestu.repository.CompraRepository;
 import grupo04.truetestu.repository.EstudianteRepository;
-import grupo04.truetestu.repository.UsuarioRepository;
+import grupo04.truetestu.repository.UsuarioRespository;
 import grupo04.truetestu.repository.PlanRepository;
 import grupo04.truetestu.service.CompraService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 public class CompraServiceImpl implements CompraService {
 
     private final CompraRepository compraRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRespository usuarioRepository;
     private final CompraMapper compraMapper;
     private final PlanRepository planRepository;
     private final EstudianteRepository estudianteRepository;

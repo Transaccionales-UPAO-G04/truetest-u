@@ -1,7 +1,7 @@
 package grupo04.truetestu.security;
 
 import grupo04.truetestu.model.entity.Usuario;
-import grupo04.truetestu.repository.UsuarioRepository;
+import grupo04.truetestu.repository.UsuarioRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +16,7 @@ import java.util.Collections;
 
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UsuarioRepository usuarioRespository;
+    private final UsuarioRespository usuarioRespository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

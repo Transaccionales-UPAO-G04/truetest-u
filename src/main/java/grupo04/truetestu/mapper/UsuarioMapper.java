@@ -25,7 +25,7 @@ public class UsuarioMapper {
         UserProfileDTO userProfileDTO = modelMapper.map(usuario, UserProfileDTO.class);
 
         if(usuario.getMentor()!=null) {
-
+            userProfileDTO.setId(usuario.getMentor().getIdMentor());
             userProfileDTO.setNombre(usuario.getMentor().getNombre());
             userProfileDTO.setEspecialidad(usuario.getMentor().getEspecialidad());
             userProfileDTO.setExperiencia(usuario.getMentor().getExperiencia());
@@ -34,6 +34,7 @@ public class UsuarioMapper {
         }
 
         if(usuario.getEstudiante()!=null) {
+            userProfileDTO.setId(usuario.getEstudiante().getIdEstudiante());
             userProfileDTO.setNombre(usuario.getEstudiante().getNombre());
         }
 
@@ -49,17 +50,13 @@ public class UsuarioMapper {
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setToken(token);
 
+        authResponseDTO.setId(usuario.getId());
+
         // Obtener el nombre y apellido
         String nombre = (usuario.getEstudiante() != null) ? usuario.getEstudiante().getNombre()
                 : (usuario.getMentor() != null) ? usuario.getMentor().getNombre()
                 : "Admin";
-       /* String lastName = (usuario.getEstudiante() != null) ? usuario.getEstudiante()
-                : (usuario.getMentor() != null) ? usuario.getMentor()
-                : "User";*/
-
         authResponseDTO.setNombre(nombre);
-        /*authResponseDTO.setLastName(lastName);*/
-
         authResponseDTO.setRole(usuario.getRole().getName().name());
 
         return authResponseDTO;
