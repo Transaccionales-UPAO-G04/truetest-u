@@ -15,6 +15,8 @@ public class Usuario {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "foto_perfil") // Opcional: Nombre de la columna en la BD
+    private String fotoPerfil;
 
     private String password;
 

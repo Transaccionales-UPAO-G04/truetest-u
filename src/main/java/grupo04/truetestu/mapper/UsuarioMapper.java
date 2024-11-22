@@ -25,7 +25,7 @@ public class UsuarioMapper {
         UserProfileDTO userProfileDTO = modelMapper.map(usuario, UserProfileDTO.class);
 
         if(usuario.getMentor()!=null) {
-            userProfileDTO.setId(usuario.getMentor().getIdMentor());
+            userProfileDTO.setUserId(usuario.getMentor().getIdMentor());
             userProfileDTO.setNombre(usuario.getMentor().getNombre());
             userProfileDTO.setEspecialidad(usuario.getMentor().getEspecialidad());
             userProfileDTO.setExperiencia(usuario.getMentor().getExperiencia());
@@ -34,7 +34,7 @@ public class UsuarioMapper {
         }
 
         if(usuario.getEstudiante()!=null) {
-            userProfileDTO.setId(usuario.getEstudiante().getIdEstudiante());
+            userProfileDTO.setUserId(usuario.getEstudiante().getIdEstudiante());
             userProfileDTO.setNombre(usuario.getEstudiante().getNombre());
             userProfileDTO.setFotoPerfil(usuario.getEstudiante().getFotoPerfil());
         }
