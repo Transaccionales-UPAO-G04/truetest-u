@@ -3,7 +3,6 @@ package grupo04.truetestu.api;
 
 import grupo04.truetestu.dto.UserProfileDTO;
 import grupo04.truetestu.service.UsuarioService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
