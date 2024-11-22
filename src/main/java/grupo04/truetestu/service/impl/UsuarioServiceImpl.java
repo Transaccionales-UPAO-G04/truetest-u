@@ -84,43 +84,61 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = usuarioRespository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        //Verificar si ya existe un cliente o autor con el mismo nombre y apellido (excepto el usuario actual)
-        boolean existsAsEstudiante = estudianteRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),id) ;
-        boolean  existsAsMentor = mentorRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),id) ;
+        // Verificar si ya existe un cliente o autor con el mismo nombre (excepto el actual)
+        boolean existsAsEstudiante = estudianteRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(), id);
+        boolean existsAsMentor = mentorRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(), id);
 
-        System.out.println("Mentor exists: " + existsAsMentor);
-
-        if(existsAsEstudiante || existsAsMentor){
+        if (existsAsEstudiante || existsAsMentor) {
             throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre e ID");
         }
 
+        if (usuario.getEstudiante() != null) {
+            // Mantener el nombre existente si no se proporciona uno nuevo
+            String nombreActual = usuario.getEstudiante().getNombre();
+            usuario.getEstudiante().setNombre(userProfileDTO.getNombre() != null ? userProfileDTO.getNombre() : nombreActual);
 
-
-        if(usuario.getEstudiante()!=null){
-
-            usuario.getEstudiante().setNombre(userProfileDTO.getNombre());
-
+            // Actualizar solo si se proporciona una nueva foto
+            usuario.getEstudiante().setFotoPerfil(
+                    userProfileDTO.getFotoPerfil() != null ? userProfileDTO.getFotoPerfil() : usuario.getEstudiante().getFotoPerfil()
+            );
         }
 
-        if(usuario.getMentor()!=null){
-            usuario.getMentor().setNombre(userProfileDTO.getNombre());
-            usuario.getMentor().setLinkRecursoPremium(userProfileDTO.getLinkRecursoPremium());
-            usuario.getMentor().setEspecialidad(userProfileDTO.getEspecialidad());
-            usuario.getMentor().setExperiencia(userProfileDTO.getExperiencia());
-            usuario.getMentor().setLinkRecurso(userProfileDTO.getLinkRecurso());
+        if (usuario.getMentor() != null) {
+            usuario.getMentor().setNombre(userProfileDTO.getNombre() != null ? userProfileDTO.getNombre() : usuario.getMentor().getNombre());
+            usuario.getMentor().setLinkRecursoPremium(userProfileDTO.getLinkRecursoPremium() != null
+                    ? userProfileDTO.getLinkRecursoPremium()
+                    : usuario.getMentor().getLinkRecursoPremium());
+            usuario.getMentor().setEspecialidad(userProfileDTO.getEspecialidad() != null
+                    ? userProfileDTO.getEspecialidad()
+                    : usuario.getMentor().getEspecialidad());
+            usuario.getMentor().setExperiencia(userProfileDTO.getExperiencia() != null
+                    ? userProfileDTO.getExperiencia()
+                    : usuario.getMentor().getExperiencia());
+            usuario.getMentor().setLinkRecurso(userProfileDTO.getLinkRecurso() != null
+                    ? userProfileDTO.getLinkRecurso()
+                    : usuario.getMentor().getLinkRecurso());
         }
 
         Usuario updatedUsuario = usuarioRespository.save(usuario);
 
         return usuarioMapper.toUserProfileDTO(updatedUsuario);
     }
+
     @Transactional
     @Override
-    public UserProfileDTO getUsuarioProfileById(int id) {
-        Usuario usuario = usuarioRespository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Usuario no encontrado"));
+    public UserProfileDTO getUsuarioProfileById(int userId) {
+        // Buscar el usuario asociado al ID
+        Usuario usuario = usuarioRespository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        // Validar si el usuario es un estudiante
+        if (usuario.getEstudiante() == null) {
+            throw new IllegalArgumentException("El usuario no está asociado a un estudiante");
+        }
+
         return usuarioMapper.toUserProfileDTO(usuario);
     }
+
 
     private UserProfileDTO registrarMentorWithRole(UserRegistrationDTO registrationDTO, TipoUsuario roleEnum) {
 

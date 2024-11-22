@@ -32,4 +32,12 @@ public class UserProfileController {
         UserProfileDTO userProfile = usuarioService.getUsuarioProfileById(id);
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
+    @PutMapping("/{id}/foto")
+    public ResponseEntity<UserProfileDTO> updateProfilePhoto(@PathVariable int id, @RequestBody UserProfileDTO userProfileDTO) {
+        // Aquí se actualiza únicamente la foto de perfil
+        UserProfileDTO updatedProfile = usuarioService.updateUsuariosProfile(id, userProfileDTO);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
+
+
 }

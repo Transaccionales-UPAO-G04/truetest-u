@@ -36,6 +36,7 @@ public class UsuarioMapper {
         if(usuario.getEstudiante()!=null) {
             userProfileDTO.setId(usuario.getEstudiante().getIdEstudiante());
             userProfileDTO.setNombre(usuario.getEstudiante().getNombre());
+            userProfileDTO.setFotoPerfil(usuario.getEstudiante().getFotoPerfil());
         }
 
         return userProfileDTO;
@@ -61,5 +62,7 @@ public class UsuarioMapper {
 
         return authResponseDTO;
     }
+
+
 
 }

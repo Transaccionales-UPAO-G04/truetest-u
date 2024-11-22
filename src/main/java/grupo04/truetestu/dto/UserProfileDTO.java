@@ -10,6 +10,7 @@ public class UserProfileDTO {
     private String nombre;
     private String email;
     private TipoUsuario tipoUsuario;
+    private String fotoPerfil;//foto de perfil
 
 
     private String experiencia;
