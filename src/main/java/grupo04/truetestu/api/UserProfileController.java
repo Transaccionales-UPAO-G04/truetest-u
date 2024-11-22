@@ -25,12 +25,6 @@ public class UserProfileController {
         return new ResponseEntity<>(updateUserProfile, HttpStatus.OK);
     }
 
-    //Obtener perfil de usuario por id
-    @GetMapping("/{id}")
-    public ResponseEntity<UserProfileDTO> getProfile(@PathVariable int id) {
-        UserProfileDTO userProfile = usuarioService.getUsuarioProfileById(id);
-        return new ResponseEntity<>(userProfile, HttpStatus.OK);
-    }
     @PutMapping("/{id}/foto")
     public ResponseEntity<UserProfileDTO> updateProfilePhoto(@PathVariable int id, @RequestBody UserProfileDTO userProfileDTO) {
         // Aquí se actualiza únicamente la foto de perfil
@@ -38,5 +32,11 @@ public class UserProfileController {
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
+    //Obtener perfil de usuario por id
+    @GetMapping("/{id}")
+    public ResponseEntity<UserProfileDTO> getProfile(@PathVariable int id) {
+        UserProfileDTO userProfile = usuarioService.getUsuarioProfileById(id);
+        return new ResponseEntity<>(userProfile, HttpStatus.OK);
+    }
 
 }
