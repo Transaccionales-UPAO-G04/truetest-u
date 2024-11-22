@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class EstudianteDTO {
 
-
+    
 
 
     //Si se quiere incluir, pero puede hacer mas complejo todo
