@@ -13,7 +13,7 @@ public interface UsuarioService {
 
     AuthResponseDTO login(LoginDTO loginDTO);
 
-    UserProfileDTO updateUsuario(int id, UserProfileDTO updateDTO);
+    UserProfileDTO updateUsuariosProfile(int id, UserProfileDTO userProfileDTO);
 
     UserProfileDTO registrarAdmin(UserRegistrationDTO registrationDTO);
 

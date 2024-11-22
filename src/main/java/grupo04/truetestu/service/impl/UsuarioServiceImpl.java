@@ -79,14 +79,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Transactional
     @Override
-    public UserProfileDTO updateUsuario(int id, UserProfileDTO userProfileDTO) {
+    public UserProfileDTO updateUsuariosProfile(int id, UserProfileDTO userProfileDTO) {
 
         Usuario usuario = usuarioRespository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         //Verificar si ya existe un cliente o autor con el mismo nombre y apellido (excepto el usuario actual)
-        boolean existsAsEstudiante = estudianteRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),userProfileDTO.getId()) ;
-        boolean  existsAsMentor = mentorRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),userProfileDTO.getId()) ;
+        boolean existsAsEstudiante = estudianteRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),id) ;
+        boolean  existsAsMentor = mentorRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),id) ;
 
         System.out.println("Mentor exists: " + existsAsMentor);
 
