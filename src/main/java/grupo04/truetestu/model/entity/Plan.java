@@ -1,8 +1,9 @@
 package grupo04.truetestu.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -15,22 +16,29 @@ public class Plan {
     private int idPlan;
 
     @Column(name = "nombre_plan", nullable = false, length = 100)
-    private String nombrePlan;
+    private String nombre;
 
-    @Column(name = "precio", nullable = false)
+    @Column(unique = true, nullable = false)
+    private String slug;
+
+    @Column(nullable = false)
     private double precio;
 
-    @Column(name = "descripcion_plan", nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String descripcionPlan;
 
     @Column(name = "fecha_inicio", nullable = false)
-    private Date fechaInicio;
+    private LocalDateTime createdAt;
 
+    @Column(name = "fecha_fin", nullable = false)
+    private LocalDateTime fechaFin;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Estudiante> estudiantes; // La relación uno a muchos con Estudiantes
+
+    @JsonIgnore
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pago> pagos;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
-    foreignKey = @ForeignKey(name = "FK_estudiante"))
-    private Estudiante estudiante;
 }

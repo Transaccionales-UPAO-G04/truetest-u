@@ -1,11 +1,9 @@
 package grupo04.truetestu.exception;
 
-
 public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(){
+    public ResourceNotFoundException() {
         super();
     }
-
     public ResourceNotFoundException(String message) {
         super(message);
     }

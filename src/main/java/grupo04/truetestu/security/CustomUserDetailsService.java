@@ -1,6 +1,5 @@
 package grupo04.truetestu.security;
 
-import grupo04.truetestu.dto.EstudianteDTO;
 import grupo04.truetestu.model.entity.Usuario;
 import grupo04.truetestu.repository.UsuarioRespository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 
 @Service

@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "especialidades")  // Nombre de la tabla en la base de datos
+@Table(name = "especialidad")  // Nombre de la tabla en la base de datos
 public class Especialidad {
 
     @Id
