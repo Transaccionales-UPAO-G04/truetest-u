@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class UserProfileDTO {
 
-    private int id;
+    private int userId;
     private String nombre;
     private String email;
     private TipoUsuario tipoUsuario;
