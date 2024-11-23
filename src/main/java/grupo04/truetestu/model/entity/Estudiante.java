@@ -18,9 +18,6 @@ public class Estudiante {
     @Column(name = "nombre_estudiante", nullable = false, length = 150)
     private String nombre;
 
-    @Column(name = "foto_perfil", length = 255)
-    private String fotoPerfil; // Ruta o URL de la foto de perfil seleccionada
-
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_plan", nullable = false)
     private EstadoPlan estadoPlan = EstadoPlan.NOPREMIUM;

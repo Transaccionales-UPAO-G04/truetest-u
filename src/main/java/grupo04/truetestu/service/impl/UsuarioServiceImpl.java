@@ -96,7 +96,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         if(usuario.getEstudiante()!=null){
             usuario.getEstudiante().setNombre(userProfileDTO.getNombre());
-            usuario.getEstudiante().setFotoPerfil(userProfileDTO.getFotoPerfil());
         }
 
         if(usuario.getMentor()!=null){
@@ -163,6 +162,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioMapper.toUserProfileDTO(savedUsuario);
     }
+
+    @Transactional
+    @Override
+    public void actualizarFotoPerfil(int id, String fotoPerfil) {
+        Usuario usuario = usuarioRespository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        usuario.setFotoPerfil(fotoPerfil); // Actualizar directamente en Usuario
+
+        usuarioRespository.save(usuario); // Guardar los cambios
+    }
+
 
 
 }

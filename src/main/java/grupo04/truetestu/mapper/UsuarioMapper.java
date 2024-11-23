@@ -24,8 +24,13 @@ public class UsuarioMapper {
     public UserProfileDTO toUserProfileDTO(Usuario usuario) {
         UserProfileDTO userProfileDTO = modelMapper.map(usuario, UserProfileDTO.class);
 
-        if(usuario.getMentor()!=null) {
-            userProfileDTO.setUserId(usuario.getMentor().getIdMentor());
+        // Asignar siempre el ID del usuario principal
+        userProfileDTO.setUserId(usuario.getId()); // ID del usuario principal
+        userProfileDTO.setFotoPerfil(usuario.getFotoPerfil()); // Mapear fotoPerfil directamente desde Usuario
+
+
+        // Verificar si es mentor y asignar sus propiedades adicionales
+        if (usuario.getMentor() != null) {
             userProfileDTO.setNombre(usuario.getMentor().getNombre());
             userProfileDTO.setEspecialidad(usuario.getMentor().getEspecialidad());
             userProfileDTO.setExperiencia(usuario.getMentor().getExperiencia());
@@ -33,14 +38,14 @@ public class UsuarioMapper {
             userProfileDTO.setLinkRecursoPremium(usuario.getMentor().getLinkRecursoPremium());
         }
 
-        if(usuario.getEstudiante()!=null) {
-            userProfileDTO.setUserId(usuario.getEstudiante().getIdEstudiante());
+        // Verificar si es estudiante y asignar su nombre
+        if (usuario.getEstudiante() != null) {
             userProfileDTO.setNombre(usuario.getEstudiante().getNombre());
-            userProfileDTO.setFotoPerfil(usuario.getEstudiante().getFotoPerfil());
         }
 
         return userProfileDTO;
     }
+
 
     //Convertir de LoginDTO a User (cuando procesas el login)
     public Usuario toUserEntity(LoginDTO loginDTO) {

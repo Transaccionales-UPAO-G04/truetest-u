@@ -19,7 +19,7 @@ public interface UsuarioService {
 
     UserProfileDTO getUsuarioProfileById(int id);
 
-
+    void actualizarFotoPerfil(int id, String fotoPerfil);
 
 
 }

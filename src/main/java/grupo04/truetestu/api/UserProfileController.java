@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user/profile")
 @RequiredArgsConstructor
@@ -26,10 +28,15 @@ public class UserProfileController {
     }
 
     @PutMapping("/{id}/foto")
-    public ResponseEntity<UserProfileDTO> updateProfilePhoto(@PathVariable int id, @RequestBody UserProfileDTO userProfileDTO) {
-        // Aquí se actualiza únicamente la foto de perfil
-        UserProfileDTO updatedProfile = usuarioService.updateUsuariosProfile(id, userProfileDTO);
-        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    public ResponseEntity<String> updateProfilePhoto(@PathVariable int id, @RequestBody Map<String, String> body) {
+        String fotoPerfil = body.get("fotoPerfil");
+
+        if (fotoPerfil == null || fotoPerfil.isEmpty()) {
+            return ResponseEntity.badRequest().body("La foto de perfil no puede estar vacía.");
+        }
+
+        usuarioService.actualizarFotoPerfil(id, fotoPerfil);
+        return ResponseEntity.ok("Foto de perfil actualizada con éxito.");
     }
 
     //Obtener perfil de usuario por id
