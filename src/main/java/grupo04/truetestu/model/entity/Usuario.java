@@ -15,8 +15,10 @@ public class Usuario {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-
     private String password;
+
+    @Column(name = "foto_perfil", length = 255)
+    private String fotoPerfil; // Ruta o URL de la foto de perfil seleccionada
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Estudiante estudiante;
