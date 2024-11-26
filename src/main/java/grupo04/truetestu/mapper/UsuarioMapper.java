@@ -31,6 +31,7 @@ public class UsuarioMapper {
 
         // Verificar si es mentor y asignar sus propiedades adicionales
         if (usuario.getMentor() != null) {
+            userProfileDTO.setIdMentor(usuario.getMentor().getIdMentor());
             userProfileDTO.setNombre(usuario.getMentor().getNombre());
             userProfileDTO.setEspecialidad(usuario.getMentor().getEspecialidad());
             userProfileDTO.setExperiencia(usuario.getMentor().getExperiencia());
@@ -40,6 +41,7 @@ public class UsuarioMapper {
 
         // Verificar si es estudiante y asignar su nombre
         if (usuario.getEstudiante() != null) {
+            userProfileDTO.setIdEstudiante(usuario.getEstudiante().getIdEstudiante());
             userProfileDTO.setNombre(usuario.getEstudiante().getNombre());
         }
 
