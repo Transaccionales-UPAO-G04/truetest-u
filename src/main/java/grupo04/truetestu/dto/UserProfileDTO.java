@@ -17,4 +17,7 @@ public class UserProfileDTO {
     private String linkRecurso;
     private String linkRecursoPremium;
 
+    private int idEstudiante; //ID ESTUDIANTE
+    private int idMentor; //ID MENTOR
+
 }
