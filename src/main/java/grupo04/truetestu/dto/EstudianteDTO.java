@@ -14,8 +14,13 @@ public class EstudianteDTO {
     private EstadoPlan estadoPlan;  // Estado del plan, como "ACTIVO", "INACTIVO"
 
 
-    // Aquí se podrían incluir las listas de otros DTOs si fueran necesarios
-    // private List<PlanDTO> planes;
-    // private List<PruebaVocacionalDTO> pruebasVocacionales;
-    // private List<ReseñaDTO> reseñas;
+
+
+
+    //Si se quiere incluir, pero puede hacer mas complejo todo
+    //Aunque dependerá del contexto
+    //private List<PlanDTO> planes;
+    //private List<PruebaVocacionalDTO> pruebasVocacionales;
+    //private List<ReseñaDTO> reseñas;
+
 }

@@ -18,7 +18,7 @@ public class Horario {
     private int idHorario;
 
     @Column(name = "fecha", nullable = false)
-    private LocalDate fechaHora;
+    private LocalDate fecha;
 
     @Column(name = "hora", nullable = false)
     private LocalTime horaSesion;
