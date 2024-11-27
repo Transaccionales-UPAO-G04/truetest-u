@@ -9,7 +9,7 @@ public interface ReseñaService {
 
     List<ReseñaDTO> findAll();
     ReseñaDTO findById(int id);
-    ReseñaDTO createReseña(ReseñaDTO reseña);
+    ReseñaDTO createReseña(int idMentor,int idEstudiante,ReseñaDTO reseña);
 
     //listar reseñas segun el mentor
     List<ReseñaDTO> findByMentorId(int idMentor);

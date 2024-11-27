@@ -2,6 +2,8 @@ package grupo04.truetestu.service.impl;
 import grupo04.truetestu.dto.ReseñaDTO;
 import grupo04.truetestu.mapper.ReseñaMapper;
 import grupo04.truetestu.model.entity.Reseña;
+import grupo04.truetestu.repository.EstudianteRepository;
+import grupo04.truetestu.repository.MentorRepository;
 import grupo04.truetestu.repository.ReseñaRepository;
 import grupo04.truetestu.service.ReseñaService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ public class ReseñaServiceImpl implements ReseñaService {
 
     private final ReseñaRepository reseñaRepository;
     private final ReseñaMapper reseñaMapper;
+    private final MentorRepository mentorRepository;
+    private final EstudianteRepository estudianteRepository;
 
     // Método para obtener todas las reseñas
     @Override
@@ -36,10 +40,13 @@ public class ReseñaServiceImpl implements ReseñaService {
     // Método para crear una nueva reseña
     @Transactional
     @Override
-    public ReseñaDTO createReseña(ReseñaDTO reseñaDTO) {
-        Reseña reseña = reseñaMapper.toEntity(reseñaDTO);
-                reseña = reseñaRepository.save(reseña);
-                return reseñaMapper.toDTO(reseña);
+    public ReseñaDTO createReseña(int idMentor, int idEstudiante, ReseñaDTO reseñaDTO) {
+        var mentor = mentorRepository.findById(idMentor).orElseThrow(() -> new RuntimeException("Mentor no encontrado"));
+        var estudiante = estudianteRepository.findById(idEstudiante).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+        var reseña = reseñaMapper.toEntity(reseñaDTO);
+        reseña.setMentor(mentor);
+        reseña.setEstudiante(estudiante);
+        return reseñaMapper.toDTO(reseñaRepository.save(reseña));
     }
 
     //listar reseñas segun el mentor
