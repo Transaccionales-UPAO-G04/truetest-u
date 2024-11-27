@@ -9,6 +9,8 @@ import lombok.Data;
 public class ReseñaDTO {
     private int idReseña;
 
+    private String nombreEstudiante;
+
     @NotBlank(message = "La reseña es obligatoria")
     private String texto;
 
@@ -17,8 +19,4 @@ public class ReseñaDTO {
     @Max(value = 5, message = "La calificación máxima es 5")
     private int calificacion;
 
-
-
-    public void setEstudianteDTO(UserProfileDTO estudianteDTO) {
-    }
 }
