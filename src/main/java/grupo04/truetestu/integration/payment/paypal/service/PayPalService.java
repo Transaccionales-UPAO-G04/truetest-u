@@ -2,8 +2,8 @@ package grupo04.truetestu.integration.payment.paypal.service;
 
 import grupo04.truetestu.exception.ResourceNotFoundException;
 import grupo04.truetestu.integration.payment.paypal.dto.*;
-import grupo04.truetestu.model.entity.Compra;
-import grupo04.truetestu.repository.CompraRepository;
+import grupo04.truetestu.model.entity.Purchase;
+import grupo04.truetestu.repository.PurchaseRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class PayPalService {
     private String apiBase;
 
     @NonNull
-    private CompraRepository compraRepository;
+    private PurchaseRepository purchaseRepository;
     private RestClient paypalClient;
 
     @PostConstruct
@@ -57,36 +57,35 @@ public class PayPalService {
                                         .encodeToString((clientId + ":" + clientSecret).getBytes()))
                                 .body(body)
                                 .retrieve()
-                                .toEntity(TokenResponse.class)
-                                .getBody())
+                                .toEntity(TokenResponse.class).getBody())
                 .getAccessToken();  // Extraemos el token de acceso de la respuesta
     }
 
-    public OrderResponse createOrder(Integer compraId, String returnUrl, String cancelUrl) {
-        // Buscar la Compra por ID en el repositorio
-        Compra compra = compraRepository.findById(compraId)
+    public OrderResponse createOrder(Integer purchaseId, String returnUrl, String cancelUrl) {
+        // Buscar la purchase por ID en el repositorio
+        Purchase purchase = purchaseRepository.findById(purchaseId)
                 .orElseThrow(ResourceNotFoundException::new);
 
-        // Construcción de la solicitud de Pedido de Compra
+        // Construcción de la solicitud de Pedido de Pago
         OrderRequest orderRequest = new OrderRequest();
         orderRequest.setIntent("CAPTURE");
 
-        // Creación del monto (en USD) con el valor obtenido de la compra
+        // Creación del monto (en USD) con el valor obtenido de la purchase
         Amount amount = new Amount();
         amount.setCurrencyCode("USD");
-        amount.setValue(compra.getMonto().toString());  // 'compra.getMonto()' debe devolver el monto del pago
+        amount.setValue(purchase.getMonto().toString());   // 'purchase.getMonto()' debe devolver el monto del pago
 
-        // Creación de la unidad de compra con el monto y la referencia del compra
-        CompraUnit compraUnit = new CompraUnit();  // Aquí usamos CompraUnit
-        compraUnit.setReferenceId(compra.getId().toString());  // Usamos el ID del 'compra' como referencia
-        compraUnit.setAmount(amount);  // Se asigna el monto calculado previamente
+        // Creación de la unidad de purchase con el monto y la referencia del purchase
+        PurchaseUnit purchaseUnit = new PurchaseUnit();  // Aquí usamos purchaseUnit
+        purchaseUnit.setReferenceId(purchase.getId().toString());  // Usamos el ID del 'purchase' como referencia
+        purchaseUnit.setAmount(amount);  // Se asigna el monto calculado previamente
 
-        // Añadimos la unidad de compra a la solicitud de orden
-        orderRequest.setCompraUnits(Collections.singletonList(compraUnit));  // Usamos el método adecuado para agregar la unidad de compra
+        // Añadimos la unidad de purchase a la solicitud de orden
+        orderRequest.setPurchaseUnits(Collections.singletonList(purchaseUnit));  // Usamos el método adecuado para agregar la unidad de purchase
 
         // Creación del contexto de la aplicación (como las URLs de retorno y cancelación)
         ApplicationContext applicationContext = ApplicationContext.builder()
-                .brandName("TrueTestu")  // Usamos el nombre de tu aplicación
+                .brandName("Truetest-u")  // Usamos el nombre de tu aplicación
                 .returnURL(returnUrl)
                 .cancelURL(cancelUrl)
                 .build();

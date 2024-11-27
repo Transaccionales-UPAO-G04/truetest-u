@@ -139,19 +139,20 @@ INSERT INTO resultado_prueba (puntaje, recomendacion, id_prueba_vocacional) VALU
                                                                                 (80, 'Recomendado para Medicina', 4),
                                                                                 (70, 'Recomendado para Arquitectura', 5);
 
--- INSERT para la tabla compra
-INSERT INTO compra (monto, created_at, estado_pago, usuario_id, id_plan) VALUES
-                                                                             (29.99, '2024-01-05 10:00:00', 'COMPLETADO', 1, 1), -- Compra realizada por usuario 1, Plan 1
-                                                                             (49.99, '2024-01-06 11:00:00', 'PENDIENTE', 2, 2), -- Compra realizada por usuario 2, Plan 2
-                                                                             (19.99, '2024-01-07 12:00:00', 'COMPLETADO', 3, 3), -- Compra realizada por usuario 3, Plan 3
-                                                                             (39.99, '2024-01-08 13:00:00', 'COMPLETADO', 4, 4), -- Compra realizada por usuario 4, Plan 4
-                                                                             (59.99, '2024-01-09 14:00:00', 'COMPLETADO', 5, 5); -- Compra realizada por usuario 5, Plan 5
+-- INSERT para la tabla purchase
+-- INSERT para la tabla purchase
+INSERT INTO purchases (monto, created_at, estado_pago, id) VALUES
+                                                               (29.99, '2024-01-05 10:00:00', 'PAGADO', 1), -- purchase realizada por usuario 1, Plan 1
+                                                               (49.99, '2024-01-06 11:00:00', 'PENDIENTE', 2), --  purchase realizada por usuario 2, Plan 2
+                                                               (19.99, '2024-01-07 12:00:00', 'PAGADO', 3), -- purchase realizada por usuario 3, Plan 3
+                                                               (39.99, '2024-01-08 13:00:00', 'PENDIENTE', 4), -- purchase realizada por usuario 4, Plan 4
+                                                               (59.99, '2024-01-09 14:00:00', 'PAGADO', 5); -- purchase realizada por usuario 5, Plan 5
 
--- INSERT para la tabla compra_items
-INSERT INTO compra_items (precio, id_plan, compra_id) VALUES
-                                                          (29.99, 1, 1), -- Compra item relacionado con la compra 1, Plan 1
-                                                          (49.99, 2, 2), -- Compra item relacionado con la compra 2, Plan 2
-                                                          (19.99, 3, 3), -- Compra item relacionado con la compra 3, Plan 3
-                                                          (39.99, 4, 4), -- Compra item relacionado con la compra 4, Plan 4
-                                                          (59.99, 5, 5); -- Compra item relacionado con la compra 5, Plan 5
+-- INSERT para la tabla purchase
+INSERT INTO purchase_items ( id_plan, purchase_id) VALUES
+                                                          (1, 1), -- purchase item relacionado con la purchase 1, Plan 1
+                                                          (2, 2), -- purchase item relacionado con la purchase 2, Plan 2
+                                                          ( 3, 3), -- purchase item relacionado con la purchase 3, Plan 3
+                                                          ( 4, 4), -- purchase item relacionado con la purchase 4, Plan 4
+                                                          (5, 5); -- purchase item relacionado con la purchase 5, Plan 5
 

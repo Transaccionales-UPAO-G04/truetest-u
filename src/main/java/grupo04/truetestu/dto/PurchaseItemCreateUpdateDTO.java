@@ -3,7 +3,7 @@ package grupo04.truetestu.dto;
 import lombok.Data;
 
 @Data
-public class PagoItemCreateUpdateDTO {
+public class PurchaseItemCreateUpdateDTO {
     private Integer idPlan;
-    private Float precio;
+    private double precio;
 }

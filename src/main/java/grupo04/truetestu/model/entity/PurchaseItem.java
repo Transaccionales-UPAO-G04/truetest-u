@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "compra_items")
-public class CompraItem {
+@Table(name = "purchase_items")
+public class PurchaseItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -16,12 +16,12 @@ public class CompraItem {
 
     @ManyToOne
     @JoinColumn(name = "id_plan", referencedColumnName = "idPlan"
-            , foreignKey = @ForeignKey(name = "FK_compra_item_plan"))
+            , foreignKey = @ForeignKey(name = "FK_purchase_item_plan"))
     private Plan plan;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "compra_id", referencedColumnName = "id"
-            , foreignKey = @ForeignKey(name = "FK_compra_item_compra"))
-    public Compra compra;
+    @JoinColumn(name = "purchase_id", referencedColumnName = "id"
+            , foreignKey = @ForeignKey(name = "FK_purchase_item_purchase"))
+    public Purchase purchase;
 }

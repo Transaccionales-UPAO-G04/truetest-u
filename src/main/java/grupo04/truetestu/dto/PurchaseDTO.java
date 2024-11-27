@@ -1,3 +1,4 @@
+//revisado y ok
 package grupo04.truetestu.dto;
 
 import grupo04.truetestu.model.enums.EstadoPago;
@@ -7,12 +8,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class CompraDTO {
+public class PurchaseDTO {
     private Integer id;
-    private Integer idPlan;
-    private Double total;
     private LocalDateTime createdAt;
-    private String estadoPago;
+    private EstadoPago estadoPago;
     private String estudianteName;
-    private List<CompraItemDTO> items;
+    private List<PurchaseItemDTO> items;
 }

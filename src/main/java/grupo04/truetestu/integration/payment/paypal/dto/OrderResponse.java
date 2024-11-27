@@ -10,7 +10,7 @@ public class OrderResponse {
     private String status;
 
     @JsonProperty("payment_source")
-    private PagoSource pagoSource;
+    private PurchaseSource pagoSource;
 
     private List<Link> links;
 }

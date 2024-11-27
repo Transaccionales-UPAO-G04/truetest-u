@@ -2,8 +2,6 @@ package grupo04.truetestu.api;
 
 import grupo04.truetestu.service.impl.PlanServiceImpl;
 import grupo04.truetestu.model.entity.Plan;
-import grupo04.truetestu.dto.PagoCaptureResponse;
-import grupo04.truetestu.dto.PagoOrderResponse;
 import grupo04.truetestu.service.impl.CheckoutServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,38 +28,6 @@ public class PlanController {
     @GetMapping
     public List<Plan> obtenerPlanes() {
         return planService.obtenerTodosLosPlanes();
-    }
-
-    // Endpoint para crear una orden de pago
-    @Operation(summary = "Crear una orden de pago", description = "Crea una orden de pago para activar el plan solicitado.")
-    @PostMapping("/crear-orden")
-    public ResponseEntity<PagoOrderResponse> crearOrdenDePago(
-            @RequestParam Integer pagoId,
-            @RequestParam String returnUrl,
-            @RequestParam String cancelUrl) {
-        try {
-            PagoOrderResponse response = checkoutService.createPago(pagoId, returnUrl, cancelUrl);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Endpoint para capturar el pago
-    @Operation(summary = "Capturar el pago", description = "Captura el pago después de que se haya creado la orden.")
-    @PostMapping("/capturar-pago")
-    public ResponseEntity<PagoCaptureResponse> capturarPago(
-            @RequestParam String orderId) {
-        try {
-            PagoCaptureResponse response = checkoutService.capturePago(orderId);
-            if (response.isCompleted()) {
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     // Endpoint para agregar un nuevo plan

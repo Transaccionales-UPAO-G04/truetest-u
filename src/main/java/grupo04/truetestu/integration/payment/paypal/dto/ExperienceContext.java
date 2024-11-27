@@ -19,7 +19,7 @@ public class ExperienceContext {
     private String landingPage;
 
     @JsonProperty("user_action")
-    private String usuarioAction;
+    private String userAction;
 
     @JsonProperty("return_url")
     private String returnURL;

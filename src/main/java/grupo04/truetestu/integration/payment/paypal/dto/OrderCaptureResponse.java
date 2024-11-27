@@ -1,3 +1,4 @@
+//perfecto
 package grupo04.truetestu.integration.payment.paypal.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,6 +9,7 @@ import java.util.List;
 public class OrderCaptureResponse {
     private String status;
 
-    @JsonProperty("compra_units")
-    private List<CompraUnit> compraUnits;
+    @JsonProperty("purchase_units")
+    private List<PurchaseUnit> purchaseUnits;
+
 }

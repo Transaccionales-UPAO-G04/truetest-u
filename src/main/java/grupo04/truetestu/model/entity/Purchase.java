@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "compra")
-public class Compra {
+@Table(name = "purchases")
+public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,11 +23,11 @@ public class Compra {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id"
-            , foreignKey = @ForeignKey(name = "FK_compra_usuario"))
+            , foreignKey = @ForeignKey(name = "FK_purchase_usuario"))
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
-    private List<CompraItem> items;
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+    private List<PurchaseItem> items;
 
 
 }

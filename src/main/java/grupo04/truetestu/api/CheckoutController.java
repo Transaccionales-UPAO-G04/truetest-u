@@ -28,22 +28,13 @@ public class CheckoutController {
      */
     @PostMapping("/create")
     public ResponseEntity<PagoOrderResponse> createPagoOrder(
-            @RequestParam @NotNull Integer pagoId,  // Añadí validación para evitar que falte el ID
-            @RequestParam @NotNull String returnUrl,  // Validación para el URL de retorno
-            @RequestParam @NotNull String cancelUrl,  // Validación para el URL de cancelación
+            @RequestParam Integer purchaseId,  // Añadí validación para evitar que falte el ID
+            @RequestParam String returnUrl,  // Validación para el URL de retorno
+            @RequestParam String cancelUrl,  // Validación para el URL de cancelación
             @RequestParam(required = false, defaultValue = "paypal") String paymentProvider
-    ) {
-        try {
-            // Llamada al servicio para crear la orden de pago
-            PagoOrderResponse response = checkoutService.createPago(pagoId, returnUrl, cancelUrl);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (MessagingException e) {
-            // Manejamos MessagingException específicamente
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch (Exception e) {
-            // Manejo de excepciones
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    ) throws MessagingException {
+        PagoOrderResponse response = checkoutService.createPago(purchaseId, returnUrl, cancelUrl);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     /**
@@ -53,19 +44,13 @@ public class CheckoutController {
     public ResponseEntity<PagoCaptureResponse> capturePagosOrder(
             @RequestParam @NotNull String orderId,  // Validación para el orderId
             @RequestParam(required = false, defaultValue = "paypal") String paymentProvider
-    ) {
-        try {
-            // Llamada al servicio para capturar la orden de pago
-            PagoCaptureResponse response = checkoutService.capturePago(orderId);
+    ) throws MessagingException {
+        PagoCaptureResponse response = checkoutService.capturePago(orderId);
 
-            if (response.isCompleted()) {
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
-            // Manejo de excepciones
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (response.isCompleted()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 
 @Data
-public class PagoSource {
+public class PurchaseSource {
     private Paypal paypal;
 }
