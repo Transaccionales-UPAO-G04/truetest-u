@@ -7,6 +7,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,7 +20,7 @@ public class Horario {
     private int idHorario;
 
     @Column(name = "fecha", nullable = false)
-    private LocalDate fechaHora;
+    private LocalDate fecha;
 
     @Column(name = "hora", nullable = false)
     private LocalTime horaSesion;
@@ -31,5 +33,11 @@ public class Horario {
     @JoinColumn(name = "id_mentor", referencedColumnName = "idMentor",
             foreignKey = @ForeignKey(name = "FK_horario_mentor"))
     private Mentor mentor;
+
+    @ManyToOne
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "idEstudiante",
+            foreignKey = @ForeignKey(name = "FK_horario_estudiante"))
+    private Estudiante estudiante;
+
 }
 

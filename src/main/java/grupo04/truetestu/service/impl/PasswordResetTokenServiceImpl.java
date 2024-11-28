@@ -45,7 +45,7 @@ import java.util.UUID;
         passwordResetTokenRepository.save(passwordResetToken);
 
         Map<String, Object> model = new HashMap<>();
-        String resetUrl = "http://localhost:4200/#/forgot/" + passwordResetToken.getToken();
+        String resetUrl = "http://localhost:4200/auth/password-reset/" + passwordResetToken.getToken();
         model.put("usuario", usuario.getEmail());
         model.put("resetUrl", resetUrl);
 

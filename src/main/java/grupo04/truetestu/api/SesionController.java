@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/sesiones/")
+@RequestMapping("/api/sesiones")
 public class SesionController {
 
     @Autowired
@@ -26,5 +28,26 @@ public class SesionController {
     public ResponseEntity<SesionDTO> updateByLinkSesionPrivada(@PathVariable int id, @RequestBody SesionDTO updateSesionDTO) {
         SesionDTO updatedSesion = sesionService.updateByLinkSesionPrivada(id, updateSesionDTO);
         return ResponseEntity.ok(updatedSesion);
+    }
+
+    // Listar todas las sesiones
+    @GetMapping
+    public ResponseEntity<List<SesionDTO>> findAll() {
+        List<SesionDTO> sesiones = sesionService.findAll();
+        return ResponseEntity.ok(sesiones);
+    }
+
+    // Obtener una sesión por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<SesionDTO> findById(@PathVariable int id) {
+        SesionDTO sesion = sesionService.findById(id);
+        return ResponseEntity.ok(sesion);
+    }
+
+    // Eliminar una sesión por ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id) {
+        sesionService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

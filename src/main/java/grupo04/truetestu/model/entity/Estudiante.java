@@ -6,7 +6,6 @@ import grupo04.truetestu.model.enums.EstadoPlan;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
-
 @Data
 @Entity
 @Table(name = "estudiante")
@@ -27,9 +26,9 @@ public class Estudiante {
     @Column(name = "estado_Cuenta", nullable = false)
     private EstadoCuenta estadoCuenta = EstadoCuenta.HABILITADO;
 
-    @ManyToOne(fetch = FetchType.LAZY)  // Relación muchos a uno con Plan
-    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan")  // Referencia a 'id' en la entidad Plan
-    private Plan plan;  // Un estudiante tiene un solo plan
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_plan", referencedColumnName = "idPlan")
+    private Plan plan;
 
     @JsonIgnore
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,8 +38,13 @@ public class Estudiante {
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reseña> reseñas;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Horario> horarios;
+
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
 }
+

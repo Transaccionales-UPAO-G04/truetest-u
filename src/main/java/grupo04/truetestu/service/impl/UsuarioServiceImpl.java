@@ -89,17 +89,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         boolean  existsAsMentor = mentorRepository.existsByNombreAndUsuarioIdNot(userProfileDTO.getNombre(),id) ;
 
         System.out.println("Mentor exists: " + existsAsMentor);
-
         if(existsAsEstudiante || existsAsMentor){
             throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre e ID");
         }
 
 
-
         if(usuario.getEstudiante()!=null){
-
             usuario.getEstudiante().setNombre(userProfileDTO.getNombre());
-
         }
 
         if(usuario.getMentor()!=null){
@@ -114,6 +110,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioMapper.toUserProfileDTO(updatedUsuario);
     }
+
     @Transactional
     @Override
     public UserProfileDTO getUsuarioProfileById(int id) {
@@ -124,45 +121,59 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private UserProfileDTO registrarMentorWithRole(UserRegistrationDTO registrationDTO, TipoUsuario roleEnum) {
 
-            //verificar si el email esta registrado
-            boolean existsByEmail = usuarioRespository.existsByEmail(registrationDTO.getEmail());
-            boolean existsAsMentor = mentorRepository.existsByNombre(registrationDTO.getNombre());
-            boolean existasAsEstudiante = estudianteRepository.existsByNombre(registrationDTO.getNombre());
+        //verificar si el email esta registrado
+        boolean existsByEmail = usuarioRespository.existsByEmail(registrationDTO.getEmail());
+        boolean existsAsMentor = mentorRepository.existsByNombre(registrationDTO.getNombre());
+        boolean existasAsEstudiante = estudianteRepository.existsByNombre(registrationDTO.getNombre());
 
-            if (existsByEmail) {
-                throw new IllegalArgumentException("El email ya existe");
-            }
+        if (existsByEmail) {
+            throw new IllegalArgumentException("El email ya existe");
+        }
 
-            if (existsAsMentor || existasAsEstudiante ) {
-                throw new IllegalArgumentException("El usuario ya existe");
-            }
+        if (existsAsMentor || existasAsEstudiante ) {
+            throw new IllegalArgumentException("El usuario ya existe");
+        }
 
-            Roles role = rolesRepository.findByName(roleEnum)
-                    .orElseThrow(() -> new RoleNotFoundException("ERROR: Rol no encontrado"));
+        Roles role = rolesRepository.findByName(roleEnum)
+                .orElseThrow(() -> new RoleNotFoundException("ERROR: Rol no encontrado"));
 
-            registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+        registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
-            Usuario usuario = usuarioMapper.toUserEntity(registrationDTO);
-            usuario.setRole(role);
+        Usuario usuario = usuarioMapper.toUserEntity(registrationDTO);
+        usuario.setRole(role);
 
-            if (roleEnum == TipoUsuario.ESTUDIANTE) {
-                Estudiante estudiante = new Estudiante();
-                estudiante.setNombre(registrationDTO.getNombre());
-                estudiante.setUsuario(usuario);
-                usuario.setEstudiante(estudiante);
-            } else if (roleEnum == TipoUsuario.MENTOR) {
-                Mentor mentor = new Mentor();
-                mentor.setNombre(registrationDTO.getNombre());
-                mentor.setExperiencia(registrationDTO.getExperiencia());
-                mentor.setEspecialidad(registrationDTO.getEspecialidad());
-                mentor.setLinkRecurso(registrationDTO.getLinkRecurso());
-                mentor.setLinkRecursoPremium(registrationDTO.getLinkRecursoPremium());
-                mentor.setUsuario(usuario);
-                usuario.setMentor(mentor);
-            }
+        if (roleEnum == TipoUsuario.ESTUDIANTE) {
+            Estudiante estudiante = new Estudiante();
+            estudiante.setNombre(registrationDTO.getNombre());
+            estudiante.setUsuario(usuario);
+            usuario.setEstudiante(estudiante);
+        } else if (roleEnum == TipoUsuario.MENTOR) {
+            Mentor mentor = new Mentor();
+            mentor.setNombre(registrationDTO.getNombre());
+            mentor.setExperiencia(registrationDTO.getExperiencia());
+            mentor.setEspecialidad(registrationDTO.getEspecialidad());
+            mentor.setLinkRecurso(registrationDTO.getLinkRecurso());
+            mentor.setLinkRecursoPremium(registrationDTO.getLinkRecursoPremium());
+            mentor.setUsuario(usuario);
+            usuario.setMentor(mentor);
+        }
 
-            Usuario savedUsuario = usuarioRespository.save(usuario);
+        Usuario savedUsuario = usuarioRespository.save(usuario);
 
         return usuarioMapper.toUserProfileDTO(savedUsuario);
     }
+
+    @Transactional
+    @Override
+    public void actualizarFotoPerfil(int id, String fotoPerfil) {
+        Usuario usuario = usuarioRespository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        usuario.setFotoPerfil(fotoPerfil); // Actualizar directamente en Usuario
+
+        usuarioRespository.save(usuario); // Guardar los cambios
+    }
+
+
+
 }

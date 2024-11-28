@@ -1,16 +1,11 @@
 package grupo04.truetestu.api;
 
-import grupo04.truetestu.dto.EstudianteDTO;
-import grupo04.truetestu.dto.MentorDetailsDTO;
 import grupo04.truetestu.dto.ReseñaDTO;
-import grupo04.truetestu.model.entity.Estudiante;
-import grupo04.truetestu.model.entity.Reseña;
-import grupo04.truetestu.model.entity.Mentor;
-import grupo04.truetestu.service.EstudianteService;
+import grupo04.truetestu.dto.UserProfileDTO;
 import grupo04.truetestu.service.ReseñaService;
 import grupo04.truetestu.service.MentorService;
+import grupo04.truetestu.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation; // Importa la anotación
-import io.swagger.v3.oas.annotations.Parameter; // Importa la anotación
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,17 +21,16 @@ public class ReseñaController {
     @Autowired
     private ReseñaService reseñaService;
     @Autowired
-    private EstudianteService estudianteService;
+    private UsuarioService usuarioService;
     @Autowired
     private MentorService mentorService;
 
     // Obtener todas las reseñas
     @Operation(summary = "Obtener todas las reseñas",
             description = "Devuelve una lista de todas las reseñas disponibles segun el mentor.")
-    @GetMapping("/{id}/")
-    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
+    @GetMapping("/{idMentor}/")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE', 'MENTOR')")
     public ResponseEntity<List<ReseñaDTO>> getAllReseñasPorMentor(@PathVariable int idMentor) {
-
         List<ReseñaDTO> reseñas = reseñaService.findByMentorId(idMentor);
         return ResponseEntity.ok(reseñas);
     }
@@ -55,15 +49,9 @@ public class ReseñaController {
             description = "Crea una nueva reseña asociada a un mentor específico.")
     @PostMapping("/{idMentor}/crear-reseña")
     public ResponseEntity<ReseñaDTO> createReseña(@PathVariable int idMentor, @RequestParam int idEstudiante,
-                                               @RequestBody ReseñaDTO reseñaDTO) {
+                                                  @RequestBody ReseñaDTO reseñaDTO) {
 
-        EstudianteDTO estudianteDTO = estudianteService.findById(idEstudiante);
-        // Asignar al estudiante a la reseña
-        reseñaDTO.setEstudianteDTO(estudianteDTO);
-
-        // Guardar la reseña en la base de datos
-        ReseñaDTO nuevaReseñaDTO = reseñaService.createReseña(new ReseñaDTO());
-        return new ResponseEntity<>(nuevaReseñaDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(reseñaService.createReseña(idMentor,idEstudiante,reseñaDTO), HttpStatus.CREATED);
     }
 
     // Eliminar una reseña por ID
@@ -71,7 +59,7 @@ public class ReseñaController {
             description = "Elimina una reseña específica por su ID.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReseña(@PathVariable int id) {
-        reseñaService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
+            reseñaService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
 }

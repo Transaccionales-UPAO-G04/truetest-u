@@ -13,8 +13,16 @@ public class ReseñaMapper {
         this.modelMapper = modelMapper;
     }
 
-    public ReseñaDTO toDTO(Reseña reseña){
-        return modelMapper.map(reseña, ReseñaDTO.class);
+    // Convertir de entidad a DTO
+    public ReseñaDTO toDTO(Reseña reseña) {
+        ReseñaDTO reseñaDTO = modelMapper.map(reseña, ReseñaDTO.class);
+
+        // Verificar si el estudiante está presente y asignar su nombre al DTO
+        if (reseña.getEstudiante() != null) {
+            reseñaDTO.setNombreEstudiante(reseña.getEstudiante().getNombre());
+        }
+
+        return reseñaDTO;
     }
 
     public Reseña toEntity(ReseñaDTO reseñaDTO){

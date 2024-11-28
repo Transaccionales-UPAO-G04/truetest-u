@@ -6,15 +6,18 @@ import lombok.Data;
 @Data
 public class UserProfileDTO {
 
-    private int id;
+    private int userId;
     private String nombre;
     private String email;
-    private TipoUsuario tipoUsuario;
+    private String fotoPerfil;//foto de perfil
 
 
     private String experiencia;
     private String especialidad;
     private String linkRecurso;
     private String linkRecursoPremium;
+
+    private int idEstudiante; //ID ESTUDIANTE
+    private int idMentor; //ID MENTOR
 
 }
