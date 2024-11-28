@@ -34,6 +34,4 @@ public class Sesion {
             foreignKey = @ForeignKey(name = "FK_sesion_mentor"))
     private Mentor mentor;
 
-
-
 }
