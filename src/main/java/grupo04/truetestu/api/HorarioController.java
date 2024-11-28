@@ -40,4 +40,28 @@ public class HorarioController {
     public ResponseEntity<List<HorarioDTO>> getHorariosByMentorId(@PathVariable int idMentor) {
         return ResponseEntity.ok(horarioService.getHorariosByMentorId(idMentor));
     }
+
+    @PostMapping("/{idHorario}/estudiante/{idEstudiante}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
+    public ResponseEntity<HorarioDTO> registerStudentToHorario(
+            @PathVariable int idHorario, @PathVariable int idEstudiante) {
+        return new ResponseEntity<>(horarioService.registerStudentToHorario(idHorario, idEstudiante), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{idHorario}/estudiante/{idEstudiante}")
+    @PreAuthorize("hasAnyRole('ESTUDIANTE')")
+    public ResponseEntity<Void> unregisterStudentFromHorarioByStudent(
+            @PathVariable int idHorario, @PathVariable int idEstudiante) {
+        horarioService.unregisterStudentFromHorario(idHorario, idEstudiante, idEstudiante);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{idHorario}/mentor/{idMentor}/estudiante/{idEstudiante}")
+    @PreAuthorize("hasAnyRole('MENTOR')")
+    public ResponseEntity<Void> unregisterStudentFromHorarioByMentor(
+            @PathVariable int idHorario, @PathVariable int idMentor, @PathVariable int idEstudiante) {
+        horarioService.unregisterStudentFromHorario(idHorario, idEstudiante, idMentor);
+        return ResponseEntity.noContent().build();
+    }
+
 }
