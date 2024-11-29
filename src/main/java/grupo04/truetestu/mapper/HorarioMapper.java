@@ -24,9 +24,9 @@ public class HorarioMapper {
         } else {
             horarioDTO.setNombre(null);  // Si no hay estudiante, asignamos null
         }
-
         return horarioDTO;
     }
+
 
     public Horario toEntity(HorarioDTO horarioDTO) {
         return modelMapper.map(horarioDTO, Horario.class);
