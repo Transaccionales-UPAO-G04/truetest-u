@@ -15,7 +15,17 @@ public class HorarioMapper {
     }
 
     public HorarioDTO toDTO(Horario horario) {
-        return modelMapper.map(horario, HorarioDTO.class);
+        // Mapeo automático con ModelMapper
+        HorarioDTO horarioDTO = modelMapper.map(horario, HorarioDTO.class);
+
+        // Si el horario tiene un estudiante asociado, asignamos el nombre del estudiante al DTO
+        if (horario.getEstudiante() != null) {
+            horarioDTO.setNombre(horario.getEstudiante().getNombre());
+        } else {
+            horarioDTO.setNombre(null);  // Si no hay estudiante, asignamos null
+        }
+
+        return horarioDTO;
     }
 
     public Horario toEntity(HorarioDTO horarioDTO) {

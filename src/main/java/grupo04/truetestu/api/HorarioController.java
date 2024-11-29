@@ -38,7 +38,8 @@ public class HorarioController {
 
     @GetMapping("/mentor/{idMentor}")
     public ResponseEntity<List<HorarioDTO>> getHorariosByMentorId(@PathVariable int idMentor) {
-        return ResponseEntity.ok(horarioService.getHorariosByMentorId(idMentor));
+        List<HorarioDTO> horarios = horarioService.getHorariosByMentorId(idMentor);
+        return ResponseEntity.ok(horarios);
     }
 
     @PostMapping("/{idHorario}/estudiante/{idEstudiante}")
