@@ -20,6 +20,7 @@ public class HorarioDTO {
     @NotBlank(message = "Es necesario un link publico")
     private String linkSesionPublica;
 
+    private String nombre;
     public void setEstudianteDTO(EstudianteDTO estudianteDTO) {
     }
 }
